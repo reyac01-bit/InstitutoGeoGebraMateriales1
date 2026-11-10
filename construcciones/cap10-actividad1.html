@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Actividad 1: El rectángulo que se desarma · Capítulo 10</title>
+<meta name="description" content="Poner a la par un dibujo y una construcción que se ven iguales, y dejar que el arrastre los distinga.">
+<style>
+:root{
+  --bg:#F4F6F9; --ink:#002855; --text:#26313F; --muted:#5B6675; --accent:#EF3340; --accent-r:#B3202C;
+  --mid:#3D5A8A; --card:#FFFFFF; --soft:#EEF2F7; --line:#D5DCE6;
+  --ok:#2E7D32; --ok-bg:#E8F3E9; --no:#B3202C; --no-bg:#FCECEE; --amber:#B26A00;
+  --serif:'Palatino Linotype',Palatino,'Book Antiqua','TeX Gyre Pagella',Georgia,serif;
+  --sans:'Helvetica Neue',Helvetica,Arial,'TeX Gyre Heros',sans-serif;
+  --mono:'DejaVu Sans Mono',Consolas,Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 var(--serif);overflow-x:hidden}
+a{color:var(--mid);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--sans);color:var(--ink);margin:0;line-height:1.2}
+p{margin:0 0 14px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 18px}
+.read{max-width:760px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-60px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;z-index:60}
+.skip:focus{top:12px}
+.small{font-size:15px}.muted{color:var(--muted)}.mono{font-family:var(--mono);font-size:.92em}
+
+.topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:#fff}
+.topbar .wrap{display:flex;align-items:center;gap:16px;min-height:58px}
+.brand{font:700 16px var(--sans);color:#fff;text-decoration:none;white-space:nowrap}
+.brand span{color:#FF8D95}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:#fff;font:600 14.5px var(--sans);padding:10px 12px;border-radius:8px;min-height:44px;display:flex;align-items:center}
+.nav a:hover{background:rgba(255,255,255,.14)}
+
+.hero{background:var(--ink);color:#fff;padding:34px 0 40px;border-bottom:6px solid var(--accent)}
+.hero h1{color:#fff;font-size:clamp(28px,4.6vw,44px);margin:6px 0 10px}
+.hero .lead{font-size:19px;max-width:780px;color:#E6ECF5}
+.kicker{font:700 13px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--accent-r);display:block;margin-bottom:8px}
+.hero .kicker{color:#FF8D95}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 12px;font:600 14px var(--sans);color:var(--ink)}
+.chip.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hero .chip{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+
+section.block{padding:42px 0 6px}
+.sec-title{font-size:clamp(24px,3.2vw,32px);margin-bottom:12px}
+.sub-title{font-size:20px;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,28px)}
+.stack>*+*{margin-top:22px}
+.grid{display:grid;gap:16px}
+@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:0;border-radius:10px;padding:10px 20px;background:var(--accent-r);color:#fff;font:700 16px/1.2 var(--sans);cursor:pointer;text-decoration:none}
+.btn:active{transform:scale(.98)}
+.btn.sec{background:var(--ink)}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.sm{min-height:42px;padding:8px 14px;font-size:15px}
+.btn[disabled],.icon-btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.icon-btn{width:46px;height:46px;border-radius:10px;border:0;background:var(--ink);color:#fff;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+
+.note{display:flex;gap:12px;background:var(--soft);border-left:5px solid var(--mid);border-radius:8px;padding:12px 14px;font-size:16px}
+.note .ic{flex:none;font:700 13px var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--mid);padding-top:3px;min-width:92px}
+.note.ok{background:var(--ok-bg);border-left-color:var(--ok)}.note.ok .ic{color:var(--ok)}
+.note.warn{background:#FFF6E5;border-left-color:var(--amber)}.note.warn .ic{color:var(--amber)}
+@media(max-width:600px){.note{flex-direction:column;gap:2px}}
+
+/* Laboratorio */
+.lab-grid{display:grid;gap:16px}
+@media(min-width:760px){.lab-grid{grid-template-columns:1fr 1fr}}
+.lab-panel{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px}
+.lab-panel h4{font-size:17px;margin-bottom:2px}
+.lab-panel svg{display:block;width:100%;height:auto;touch-action:none;border-radius:8px;background:#FCFDFE}
+.handle{cursor:grab}.handle:focus{outline:none}
+.handle:focus-visible circle.ring{stroke:var(--accent);stroke-width:3}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 12px;font:14.5px var(--mono);margin-top:10px}
+.verdict{margin-top:8px;font:700 16px var(--sans)}
+.verdict.ok{color:var(--ok)}.verdict.no{color:var(--no)}
+
+/* Cápsulas */
+.vt{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:14px}
+.vt>*{min-width:0}
+@media(min-width:960px){.vt{grid-template-columns:270px minmax(0,1fr)}}
+.vt-list{display:flex;flex-direction:column;gap:8px}
+@media(max-width:959px){.vt-list{flex-direction:row;overflow-x:auto;padding-bottom:6px}.vt-list button{min-width:230px}}
+.vt-list button{display:flex;gap:12px;align-items:center;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;font:500 15px/1.3 var(--sans);color:var(--ink);min-height:56px}
+.vt-list button[aria-selected="true"]{border-color:var(--ink);background:var(--soft)}
+.vt-list .vnum{flex:none;width:38px;height:38px;border-radius:8px;background:var(--ink);color:#fff;font:700 18px var(--sans);display:flex;align-items:center;justify-content:center}
+.vt-list button[aria-selected="true"] .vnum{background:var(--accent-r)}
+.vt-list b{display:block}.vt-list small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.pane-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.vg-now{background:var(--ink);color:#E6ECF5;border-radius:12px 12px 0 0;padding:14px 18px;min-height:128px;font-family:var(--sans)}
+.vg-now .vg-k{font:700 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:#FF8D95}
+.vg-now .vg-tool{font-size:19px;color:#fff;margin-top:4px}
+.vg-now .vg-tool b{color:#FFD08A}
+.vg-now .vg-where{margin:2px 0 6px;font-size:14.5px;color:#C9D4E4}
+.vg-now .vg-say{margin:0;font-size:17px;color:#fff}
+.vg-host{position:relative;height:540px;border:2px solid var(--ink);border-top:0;border-radius:0 0 12px 12px;overflow:hidden;background:#fff}
+@media(max-width:600px){.vg-host{height:430px}}
+#vgBox{position:absolute;inset:0}
+.ggb-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;background:var(--soft);font-family:var(--sans)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;font-family:var(--sans)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--sans);cursor:pointer;min-height:44px}
+.toggle input{width:20px;height:20px;accent-color:var(--accent-r)}
+.rate-sel{min-height:40px;border:2px solid var(--line);border-radius:8px;padding:4px 8px;font:600 14.5px var(--sans);background:#fff;color:var(--ink)}
+.vg-watch{margin-top:12px;font-family:var(--sans)}
+.vg-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.vg-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font:400 15.5px/1.4 var(--sans);color:var(--text)}
+.vg-list .st{flex:none;width:30px;height:30px;border-radius:8px;background:var(--soft);color:var(--ink);font-weight:800;display:flex;align-items:center;justify-content:center}
+.vg-list b{display:block;color:var(--ink)}.vg-list small{display:block;font-size:14.5px}
+.vg-list li.done .st{background:var(--ok-bg);color:var(--ok)}
+.vg-list li.now button{border-color:var(--accent-r)}
+.vg-list li.now .st{background:var(--accent-r);color:#fff}
+.code{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:12px 6px;font:14.5px/1.5 var(--mono);overflow-x:auto}
+.code button.line{display:block;width:100%;text-align:left;background:transparent;border:0;color:inherit;font:inherit;padding:2px 10px;border-radius:6px;cursor:copy;white-space:pre}
+.code button.line:hover,.code button.line:focus-visible{background:#234468}
+.code .cm{color:#9FB3CC;padding:2px 10px;white-space:pre-wrap}
+details.lib{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:16px}
+details.lib summary{cursor:pointer;font:700 16px var(--sans);color:var(--ink);min-height:44px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Práctica */
+.level-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.score{font:600 15px var(--mono);background:var(--soft);border-radius:999px;padding:5px 14px;border:1px solid var(--line)}
+.qitem+.qitem{margin-top:22px;padding-top:22px;border-top:2px dashed var(--line)}
+.bubble{background:var(--soft);border-radius:12px 12px 12px 4px;padding:12px 16px;margin:6px 0 10px;color:var(--ink);font-size:18px}
+.bubble .who{display:block;font:700 12.5px var(--sans);color:var(--accent-r);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.answers{display:grid;gap:8px}
+.answers button{text-align:left;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;font:500 16px/1.45 var(--sans);color:var(--ink);cursor:pointer}
+.answers button:hover{border-color:var(--ink)}
+.answers button.sel-ok{border-color:var(--ok);background:var(--ok-bg)}
+.answers button.sel-no{border-color:var(--no);background:var(--no-bg)}
+.fb{margin-top:10px;border-radius:10px;padding:12px 14px;font-size:16px}
+.fb.ok{background:var(--ok-bg);color:#17421A}.fb.no{background:var(--no-bg);color:#6E1620}
+.fb b{display:block;font-family:var(--sans)}
+
+/* Panel GeoGebra */
+.ggb-fab{position:fixed;right:16px;bottom:16px;z-index:40;box-shadow:0 6px 18px rgba(0,40,85,.3)}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(640px,100vw);background:#fff;z-index:50;transform:translateX(105%);transition:transform 350ms var(--ease);display:flex;flex-direction:column;border-left:3px solid var(--ink)}
+.drawer.open{transform:none}
+.drawer-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-bottom:2px solid var(--line)}
+.drawer-head h2{font-size:19px;margin-right:auto}
+.ggb-host{flex:1;position:relative;min-height:0;background:#fff}
+#ggbBox{position:absolute;inset:0}
+.ggb-log{font:13.5px var(--mono);padding:8px 12px;border-top:2px solid var(--line);max-height:130px;overflow:auto;background:var(--soft)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font:600 15px var(--sans);z-index:70;opacity:0;pointer-events:none;transition:opacity 180ms,transform 180ms;max-width:min(560px,92vw);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%)}
+footer{padding:44px 0 110px;font-size:15px}
+footer li{margin-bottom:8px;overflow-wrap:anywhere}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+@media print{.topbar,.ggb-fab,.drawer,.toast{display:none}body{background:#fff}}
+
+.brand small{font-weight:500;opacity:.85}
+.topbar a.home{color:#fff;text-decoration:none;font:600 14.5px var(--sans);padding:10px 12px;border-radius:8px;white-space:nowrap}
+.topbar a.home:hover{background:rgba(255,255,255,.14)}
+.applet-wrap{background:#fff;border:2px solid var(--ink);border-radius:12px;overflow:hidden;margin-top:14px}
+#ggbApplet{width:100%;height:600px}
+@media(max-width:700px){#ggbApplet{height:470px}}
+.cards{display:grid;gap:16px}@media(min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
+.cards .card h3{font-size:19px;margin:6px 0 8px}
+.list{list-style:none;padding:0;margin:0;display:grid;gap:10px}@media(min-width:760px){.list{grid-template-columns:1fr 1fr}}
+.list a{display:flex;gap:14px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font:500 16px/1.35 var(--sans);min-height:64px}
+.list a:hover{border-color:var(--ink)}
+.list .vnum{flex:none;min-width:46px;height:40px;border-radius:8px;background:var(--ink);color:#fff;font:700 15px var(--sans);display:flex;align-items:center;justify-content:center;padding:0 8px}
+.list small{display:block;color:var(--muted);font-size:14px}
+pre.listado{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:14px;font:14px/1.55 var(--mono);overflow-x:auto;white-space:pre}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="../index.html">Construir, enseñar e investigar con GeoGebra</a>
+  <nav class="nav" aria-label="Navegación"><a href="../index.html">Todos los materiales</a><a href="../recursos-interactivos/cap10-cuadrilateros.html#act1">Cápsula guiada</a></nav>
+</div></header>
+<main id="main">
+<section class="hero"><div class="wrap">
+  <span class="kicker">Capítulo 10 · Sección 10.5 · Actividad 1</span>
+  <h1>El rectángulo que se desarma</h1>
+  <p class="lead">Poner a la par un dibujo y una construcción que se ven iguales, y dejar que el arrastre los distinga.</p>
+</div></section>
+<section class="block" style="padding-top:24px"><div class="wrap">
+  <div class="btn-row">
+    <a class="btn" href="../ggb/ejemplo7a-dibujo-construccion.ggb" download>Descargar el archivo .ggb</a>
+    <a class="btn sec" href="../recursos-interactivos/cap10-cuadrilateros.html#act1">Verla construirse paso a paso</a>
+    <button class="btn ghost" type="button" id="btnReset">Volver al estado inicial</button>
+  </div>
+  <div class="applet-wrap"><div id="ggbApplet"></div><div class="ggb-msg" id="ggbMsg" style="position:relative;min-height:200px"><p><b>Cargando GeoGebra…</b></p><p class="small">Requiere conexión a internet.</p></div></div>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="note ok"><span class="ic">Reto</span><span>Antes de arrastrar, escriba cuál de las dos figuras seguirá siendo rectángulo y por qué. Después arrastre C, G y F, y compare con su anticipación.</span></div>
+    <div class="note"><span class="ic">Archivo</span><span>Guardado por GeoGebra Classic el 10 de noviembre de 2026 tras ejecutar el listado del libro y aplicar su configuración (casillas, condiciones, guiones y colores dinámicos).</span></div>
+  </div>
+  <details class="lib">
+    <summary><span class="chip dark">Listado</span>Comandos para la Barra de Entrada, como aparecen en el libro</summary>
+    <p class="small muted" style="font-family:var(--sans)">Se pegan línea por línea en GeoGebra Classic 6 en español. Las líneas con # se configuran a mano.</p>
+    <div class="btn-row" style="margin-bottom:10px"><button class="btn ghost sm" type="button" id="btnCopy">Copiar el listado</button></div>
+    <pre class="listado" id="listado"># Capítulo 10, actividad 1 - El rectángulo que se desarma
+# Pegar línea por línea en la barra de entrada (GeoGebra Classic 6, español).
+# Lo que va en comentario (#) se aplica a mano en Configuración del objeto.
+# Comandos ejecutados en GeoGebra Classic por la API el 10-nov-2026 (véase LEEME.txt).
+# Lo que va en comentario (#) se configura a mano y no formó parte de esa prueba.
+
+# Figura izquierda: dibujo (cuatro puntos libres)
+A = (0, 0)
+B = (4, 0)
+C = (4, 2.5)
+D = (0, 2.5)
+dib = Polígono(A, B, C, D)
+
+# Figura derecha: construcción (dependencias)
+E = (6, 0)
+F = (10, 0)
+rEF = Recta(E, F)
+pE = Perpendicular(E, rEF)
+pF = Perpendicular(F, rEF)
+G = Punto(pF)
+rG = Recta(G, rEF)
+H = Interseca(rG, pE)
+con = Polígono(E, F, G, H)
+# Ocultar rEF, pE, pF, rG (o dejarlas en gris claro, estilo punteado).
+# Mover G a una posición inicial sobre pF, por ejemplo (10, 2.5).
+
+# Estado y medidas condicionadas
+est_medir = false
+# Insertar casilla de control vinculada a est_medir, leyenda &quot;Mostrar medidas&quot;.
+angDib = ÁngulosInteriores(dib)
+angCon = ÁngulosInteriores(con)
+esq1 = Esquina(1)
+txtDib = Si(est_medir, Texto(&quot;Izquierda: ¿siguen siendo rectos?&quot;, esq1 + (0.4, 0.6)))
+# GeoGebra nombra los ángulos angDib_1 ... angDib_4 y angCon_1 ... angCon_4
+# (ÁngulosInteriores no crea una lista; corregido el 10-nov-2026).
+# Condición para mostrar el objeto (pestaña Avanzado) de esos ocho ángulos:  est_medir
+# Marcar esq1 como auxiliar.
+rectDib = SonPerpendiculares(Recta(A, B), Recta(B, C)) &amp;&amp; SonPerpendiculares(Recta(B, C), Recta(C, D)) &amp;&amp; SonPerpendiculares(Recta(C, D), Recta(D, A))
+# Color dinámico del polígono dib (relleno):
+#   Rojo:  Si(rectDib, 0.1, 0.8)
+#   Verde: Si(rectDib, 0.6, 0.2)
+#   Azul:  0.2</pre>
+  </details>
+  <div class="btn-row" style="margin-top:22px;justify-content:space-between"><a class="btn ghost sm" href="cap09-ejemplo6.html">← Ejemplo 6 (cap. 9)</a><a class="btn ghost sm" href="cap10-actividad2.html">Actividad 2 (cap. 10) →</a></div>
+</div></section>
+</main>
+<script>
+"use strict";
+const GGB64 = "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";
+const toast = m => { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(window.__tt); window.__tt = setTimeout(() => t.classList.remove('show'), 2400); };
+let api = null;
+function inject() {
+  const host = document.getElementById('ggbApplet');
+  const params = {appName:'classic', ggbBase64:GGB64, width:host.clientWidth, height:host.clientHeight, language:'es', showToolBar:true, showAlgebraInput:true,
+    showMenuBar:false, showResetIcon:true, enableShiftDragZoom:true, enableRightClick:true, errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
+    appletOnLoad:a => { api = a; document.getElementById('ggbMsg').hidden = true; }};
+  new GGBApplet(params, true).inject('ggbApplet');
+}
+const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js';
+s.onload = inject;
+s.onerror = () => { document.getElementById('ggbMsg').innerHTML = '<p><b>No se pudo cargar GeoGebra.</b></p><p class="small">Revise la conexión. Puede descargar el archivo .ggb y abrirlo en GeoGebra Classic.</p>'; };
+document.head.appendChild(s);
+document.getElementById('btnReset').addEventListener('click', () => { if (api) { api.reset(); toast('Construcción en su estado inicial'); } });
+document.getElementById('btnCopy').addEventListener('click', async () => {
+  const txt = document.getElementById('listado').textContent;
+  try { await navigator.clipboard.writeText(txt); toast('Listado copiado'); } catch (e) { toast('Seleccione el texto y cópielo'); }
+});
+</script>
+<footer id="creditos"><div class="wrap">
+  <p class="small">Materiales del libro: Acuña-Chacón, R., y Gutiérrez-Montenegro, M. (2026). <i>Construir, enseñar e investigar con GeoGebra</i> (versión de trabajo). Instituto GeoGebra de Costa Rica, Escuela de Matemática, Instituto Tecnológico de Costa Rica.</p>
+  <p class="small muted">GeoGebra® es una marca registrada de GeoGebra GmbH. Estos materiales se elaboran desde el Instituto GeoGebra de Costa Rica con fines educativos no comerciales; no son un producto de GeoGebra GmbH. Las construcciones se ejecutan con GeoGebra (Made with GeoGebra®).</p>
+</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

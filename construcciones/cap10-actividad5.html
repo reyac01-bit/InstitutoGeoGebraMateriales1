@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Actividad 5: Del arrastre a la justificación (Varignon) · Capítulo 10</title>
+<meta name="description" content="Encontrar una regularidad con el arrastre y pasar de «siempre ocurre» a «por qué ocurre», con las diagonales como pista.">
+<style>
+:root{
+  --bg:#F4F6F9; --ink:#002855; --text:#26313F; --muted:#5B6675; --accent:#EF3340; --accent-r:#B3202C;
+  --mid:#3D5A8A; --card:#FFFFFF; --soft:#EEF2F7; --line:#D5DCE6;
+  --ok:#2E7D32; --ok-bg:#E8F3E9; --no:#B3202C; --no-bg:#FCECEE; --amber:#B26A00;
+  --serif:'Palatino Linotype',Palatino,'Book Antiqua','TeX Gyre Pagella',Georgia,serif;
+  --sans:'Helvetica Neue',Helvetica,Arial,'TeX Gyre Heros',sans-serif;
+  --mono:'DejaVu Sans Mono',Consolas,Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 var(--serif);overflow-x:hidden}
+a{color:var(--mid);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--sans);color:var(--ink);margin:0;line-height:1.2}
+p{margin:0 0 14px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 18px}
+.read{max-width:760px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-60px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;z-index:60}
+.skip:focus{top:12px}
+.small{font-size:15px}.muted{color:var(--muted)}.mono{font-family:var(--mono);font-size:.92em}
+
+.topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:#fff}
+.topbar .wrap{display:flex;align-items:center;gap:16px;min-height:58px}
+.brand{font:700 16px var(--sans);color:#fff;text-decoration:none;white-space:nowrap}
+.brand span{color:#FF8D95}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:#fff;font:600 14.5px var(--sans);padding:10px 12px;border-radius:8px;min-height:44px;display:flex;align-items:center}
+.nav a:hover{background:rgba(255,255,255,.14)}
+
+.hero{background:var(--ink);color:#fff;padding:34px 0 40px;border-bottom:6px solid var(--accent)}
+.hero h1{color:#fff;font-size:clamp(28px,4.6vw,44px);margin:6px 0 10px}
+.hero .lead{font-size:19px;max-width:780px;color:#E6ECF5}
+.kicker{font:700 13px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--accent-r);display:block;margin-bottom:8px}
+.hero .kicker{color:#FF8D95}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 12px;font:600 14px var(--sans);color:var(--ink)}
+.chip.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hero .chip{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+
+section.block{padding:42px 0 6px}
+.sec-title{font-size:clamp(24px,3.2vw,32px);margin-bottom:12px}
+.sub-title{font-size:20px;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,28px)}
+.stack>*+*{margin-top:22px}
+.grid{display:grid;gap:16px}
+@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:0;border-radius:10px;padding:10px 20px;background:var(--accent-r);color:#fff;font:700 16px/1.2 var(--sans);cursor:pointer;text-decoration:none}
+.btn:active{transform:scale(.98)}
+.btn.sec{background:var(--ink)}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.sm{min-height:42px;padding:8px 14px;font-size:15px}
+.btn[disabled],.icon-btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.icon-btn{width:46px;height:46px;border-radius:10px;border:0;background:var(--ink);color:#fff;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+
+.note{display:flex;gap:12px;background:var(--soft);border-left:5px solid var(--mid);border-radius:8px;padding:12px 14px;font-size:16px}
+.note .ic{flex:none;font:700 13px var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--mid);padding-top:3px;min-width:92px}
+.note.ok{background:var(--ok-bg);border-left-color:var(--ok)}.note.ok .ic{color:var(--ok)}
+.note.warn{background:#FFF6E5;border-left-color:var(--amber)}.note.warn .ic{color:var(--amber)}
+@media(max-width:600px){.note{flex-direction:column;gap:2px}}
+
+/* Laboratorio */
+.lab-grid{display:grid;gap:16px}
+@media(min-width:760px){.lab-grid{grid-template-columns:1fr 1fr}}
+.lab-panel{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px}
+.lab-panel h4{font-size:17px;margin-bottom:2px}
+.lab-panel svg{display:block;width:100%;height:auto;touch-action:none;border-radius:8px;background:#FCFDFE}
+.handle{cursor:grab}.handle:focus{outline:none}
+.handle:focus-visible circle.ring{stroke:var(--accent);stroke-width:3}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 12px;font:14.5px var(--mono);margin-top:10px}
+.verdict{margin-top:8px;font:700 16px var(--sans)}
+.verdict.ok{color:var(--ok)}.verdict.no{color:var(--no)}
+
+/* Cápsulas */
+.vt{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:14px}
+.vt>*{min-width:0}
+@media(min-width:960px){.vt{grid-template-columns:270px minmax(0,1fr)}}
+.vt-list{display:flex;flex-direction:column;gap:8px}
+@media(max-width:959px){.vt-list{flex-direction:row;overflow-x:auto;padding-bottom:6px}.vt-list button{min-width:230px}}
+.vt-list button{display:flex;gap:12px;align-items:center;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;font:500 15px/1.3 var(--sans);color:var(--ink);min-height:56px}
+.vt-list button[aria-selected="true"]{border-color:var(--ink);background:var(--soft)}
+.vt-list .vnum{flex:none;width:38px;height:38px;border-radius:8px;background:var(--ink);color:#fff;font:700 18px var(--sans);display:flex;align-items:center;justify-content:center}
+.vt-list button[aria-selected="true"] .vnum{background:var(--accent-r)}
+.vt-list b{display:block}.vt-list small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.pane-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.vg-now{background:var(--ink);color:#E6ECF5;border-radius:12px 12px 0 0;padding:14px 18px;min-height:128px;font-family:var(--sans)}
+.vg-now .vg-k{font:700 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:#FF8D95}
+.vg-now .vg-tool{font-size:19px;color:#fff;margin-top:4px}
+.vg-now .vg-tool b{color:#FFD08A}
+.vg-now .vg-where{margin:2px 0 6px;font-size:14.5px;color:#C9D4E4}
+.vg-now .vg-say{margin:0;font-size:17px;color:#fff}
+.vg-host{position:relative;height:540px;border:2px solid var(--ink);border-top:0;border-radius:0 0 12px 12px;overflow:hidden;background:#fff}
+@media(max-width:600px){.vg-host{height:430px}}
+#vgBox{position:absolute;inset:0}
+.ggb-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;background:var(--soft);font-family:var(--sans)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;font-family:var(--sans)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--sans);cursor:pointer;min-height:44px}
+.toggle input{width:20px;height:20px;accent-color:var(--accent-r)}
+.rate-sel{min-height:40px;border:2px solid var(--line);border-radius:8px;padding:4px 8px;font:600 14.5px var(--sans);background:#fff;color:var(--ink)}
+.vg-watch{margin-top:12px;font-family:var(--sans)}
+.vg-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.vg-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font:400 15.5px/1.4 var(--sans);color:var(--text)}
+.vg-list .st{flex:none;width:30px;height:30px;border-radius:8px;background:var(--soft);color:var(--ink);font-weight:800;display:flex;align-items:center;justify-content:center}
+.vg-list b{display:block;color:var(--ink)}.vg-list small{display:block;font-size:14.5px}
+.vg-list li.done .st{background:var(--ok-bg);color:var(--ok)}
+.vg-list li.now button{border-color:var(--accent-r)}
+.vg-list li.now .st{background:var(--accent-r);color:#fff}
+.code{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:12px 6px;font:14.5px/1.5 var(--mono);overflow-x:auto}
+.code button.line{display:block;width:100%;text-align:left;background:transparent;border:0;color:inherit;font:inherit;padding:2px 10px;border-radius:6px;cursor:copy;white-space:pre}
+.code button.line:hover,.code button.line:focus-visible{background:#234468}
+.code .cm{color:#9FB3CC;padding:2px 10px;white-space:pre-wrap}
+details.lib{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:16px}
+details.lib summary{cursor:pointer;font:700 16px var(--sans);color:var(--ink);min-height:44px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Práctica */
+.level-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.score{font:600 15px var(--mono);background:var(--soft);border-radius:999px;padding:5px 14px;border:1px solid var(--line)}
+.qitem+.qitem{margin-top:22px;padding-top:22px;border-top:2px dashed var(--line)}
+.bubble{background:var(--soft);border-radius:12px 12px 12px 4px;padding:12px 16px;margin:6px 0 10px;color:var(--ink);font-size:18px}
+.bubble .who{display:block;font:700 12.5px var(--sans);color:var(--accent-r);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.answers{display:grid;gap:8px}
+.answers button{text-align:left;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;font:500 16px/1.45 var(--sans);color:var(--ink);cursor:pointer}
+.answers button:hover{border-color:var(--ink)}
+.answers button.sel-ok{border-color:var(--ok);background:var(--ok-bg)}
+.answers button.sel-no{border-color:var(--no);background:var(--no-bg)}
+.fb{margin-top:10px;border-radius:10px;padding:12px 14px;font-size:16px}
+.fb.ok{background:var(--ok-bg);color:#17421A}.fb.no{background:var(--no-bg);color:#6E1620}
+.fb b{display:block;font-family:var(--sans)}
+
+/* Panel GeoGebra */
+.ggb-fab{position:fixed;right:16px;bottom:16px;z-index:40;box-shadow:0 6px 18px rgba(0,40,85,.3)}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(640px,100vw);background:#fff;z-index:50;transform:translateX(105%);transition:transform 350ms var(--ease);display:flex;flex-direction:column;border-left:3px solid var(--ink)}
+.drawer.open{transform:none}
+.drawer-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-bottom:2px solid var(--line)}
+.drawer-head h2{font-size:19px;margin-right:auto}
+.ggb-host{flex:1;position:relative;min-height:0;background:#fff}
+#ggbBox{position:absolute;inset:0}
+.ggb-log{font:13.5px var(--mono);padding:8px 12px;border-top:2px solid var(--line);max-height:130px;overflow:auto;background:var(--soft)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font:600 15px var(--sans);z-index:70;opacity:0;pointer-events:none;transition:opacity 180ms,transform 180ms;max-width:min(560px,92vw);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%)}
+footer{padding:44px 0 110px;font-size:15px}
+footer li{margin-bottom:8px;overflow-wrap:anywhere}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+@media print{.topbar,.ggb-fab,.drawer,.toast{display:none}body{background:#fff}}
+
+.brand small{font-weight:500;opacity:.85}
+.topbar a.home{color:#fff;text-decoration:none;font:600 14.5px var(--sans);padding:10px 12px;border-radius:8px;white-space:nowrap}
+.topbar a.home:hover{background:rgba(255,255,255,.14)}
+.applet-wrap{background:#fff;border:2px solid var(--ink);border-radius:12px;overflow:hidden;margin-top:14px}
+#ggbApplet{width:100%;height:600px}
+@media(max-width:700px){#ggbApplet{height:470px}}
+.cards{display:grid;gap:16px}@media(min-width:760px){.cards{grid-template-columns:repeat(3,1fr)}}
+.cards .card h3{font-size:19px;margin:6px 0 8px}
+.list{list-style:none;padding:0;margin:0;display:grid;gap:10px}@media(min-width:760px){.list{grid-template-columns:1fr 1fr}}
+.list a{display:flex;gap:14px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font:500 16px/1.35 var(--sans);min-height:64px}
+.list a:hover{border-color:var(--ink)}
+.list .vnum{flex:none;min-width:46px;height:40px;border-radius:8px;background:var(--ink);color:#fff;font:700 15px var(--sans);display:flex;align-items:center;justify-content:center;padding:0 8px}
+.list small{display:block;color:var(--muted);font-size:14px}
+pre.listado{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:14px;font:14px/1.55 var(--mono);overflow-x:auto;white-space:pre}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="../index.html">Construir, enseñar e investigar con GeoGebra</a>
+  <nav class="nav" aria-label="Navegación"><a href="../index.html">Todos los materiales</a><a href="../recursos-interactivos/cap10-cuadrilateros.html#act5">Cápsula guiada</a></nav>
+</div></header>
+<main id="main">
+<section class="hero"><div class="wrap">
+  <span class="kicker">Capítulo 10 · Sección 10.5 · Actividad 5</span>
+  <h1>Del arrastre a la justificación (Varignon)</h1>
+  <p class="lead">Encontrar una regularidad con el arrastre y pasar de «siempre ocurre» a «por qué ocurre», con las diagonales como pista.</p>
+</div></section>
+<section class="block" style="padding-top:24px"><div class="wrap">
+  <div class="btn-row">
+    <a class="btn" href="../ggb/ejemplo7e-varignon.ggb" download>Descargar el archivo .ggb</a>
+    <a class="btn sec" href="../recursos-interactivos/cap10-cuadrilateros.html#act5">Verla construirse paso a paso</a>
+    <button class="btn ghost" type="button" id="btnReset">Volver al estado inicial</button>
+  </div>
+  <div class="applet-wrap"><div id="ggbApplet"></div><div class="ggb-msg" id="ggbMsg" style="position:relative;min-height:200px"><p><b>Cargando GeoGebra…</b></p><p class="small">Requiere conexión a internet.</p></div></div>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="note ok"><span class="ic">Reto</span><span>Formule la conjetura por escrito. Busque un contraejemplo con cuadriláteros cóncavos y cruzados. Luego use las diagonales para justificarla con el teorema del segmento medio.</span></div>
+    <div class="note"><span class="ic">Archivo</span><span>Guardado por GeoGebra Classic el 10 de noviembre de 2026 tras ejecutar el listado del libro y aplicar su configuración (casillas, condiciones, guiones y colores dinámicos).</span></div>
+  </div>
+  <details class="lib">
+    <summary><span class="chip dark">Listado</span>Comandos para la Barra de Entrada, como aparecen en el libro</summary>
+    <p class="small muted" style="font-family:var(--sans)">Se pegan línea por línea en GeoGebra Classic 6 en español. Las líneas con # se configuran a mano.</p>
+    <div class="btn-row" style="margin-bottom:10px"><button class="btn ghost sm" type="button" id="btnCopy">Copiar el listado</button></div>
+    <pre class="listado" id="listado"># Capítulo 10, actividad 5 - Del arrastre a la justificación (Varignon)
+# Pegar línea por línea en la barra de entrada (GeoGebra Classic 6, español).
+# Comandos ejecutados en GeoGebra Classic por la API el 10-nov-2026 (véase LEEME.txt).
+# Lo que va en comentario (#) se configura a mano y no formó parte de esa prueba.
+
+A = (0, 0)
+B = (5, 0.5)
+C = (6, 4)
+D = (1, 3)
+cuad = Polígono(A, B, C, D)
+M_1 = PuntoMedio(A, B)
+M_2 = PuntoMedio(B, C)
+M_3 = PuntoMedio(C, D)
+M_4 = PuntoMedio(D, A)
+var = Polígono(M_1, M_2, M_3, M_4)
+
+# Fases de la justificación, gobernadas por un entero
+est_fase = 0
+# Marcar est_fase como auxiliar.
+dAC = Segmento(A, C)
+dBD = Segmento(B, D)
+# Condición para mostrar (Avanzado) de dAC:  est_fase &gt;= 1
+# Condición para mostrar (Avanzado) de dBD:  est_fase &gt;= 2
+esq1 = Esquina(1)
+txtPista = Si(est_fase == 1, Texto(&quot;Mire los triángulos ABC y ACD. ¿Qué dice el teorema del segmento medio?&quot;, esq1 + (0.4, 0.6)), Si(est_fase == 2, Texto(&quot;Ahora los triángulos ABD y BCD. Combine.&quot;, esq1 + (0.4, 0.6))))
+# Botón &quot;Pista 1&quot;, Al hacer clic:   Valor(est_fase, 1)
+# Botón &quot;Pista 2&quot;, Al hacer clic:   Valor(est_fase, 2)
+# Botón &quot;Reiniciar&quot;, Al hacer clic:
+#   Valor(est_fase, 0)
+#   Valor(A, (0, 0))
+#   Valor(B, (5, 0.5))
+#   Valor(C, (6, 4))
+#   Valor(D, (1, 3))
+
+# Comprobación numérica opcional (auxiliar)
+parVar = SonParalelas(Recta(M_1, M_2), Recta(M_4, M_3)) &amp;&amp; SonParalelas(Recta(M_2, M_3), Recta(M_1, M_4))
+# Color dinámico de var (relleno):
+#   Rojo:  Si(parVar, 0.1, 0.8)
+#   Verde: Si(parVar, 0.6, 0.2)
+#   Azul:  0.2
+# Con el cuadrilátero cruzado, Área devuelve el valor absoluto del área con signo
+# (comprobado el 10-nov-2026): la razón 1/2 se mantiene respecto de ese valor.</pre>
+  </details>
+  <div class="btn-row" style="margin-top:22px;justify-content:space-between"><a class="btn ghost sm" href="cap10-actividad4.html">← Actividad 4 (cap. 10)</a></div>
+</div></section>
+</main>
+<script>
+"use strict";
+const GGB64 = "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";
+const toast = m => { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(window.__tt); window.__tt = setTimeout(() => t.classList.remove('show'), 2400); };
+let api = null;
+function inject() {
+  const host = document.getElementById('ggbApplet');
+  const params = {appName:'classic', ggbBase64:GGB64, width:host.clientWidth, height:host.clientHeight, language:'es', showToolBar:true, showAlgebraInput:true,
+    showMenuBar:false, showResetIcon:true, enableShiftDragZoom:true, enableRightClick:true, errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
+    appletOnLoad:a => { api = a; document.getElementById('ggbMsg').hidden = true; }};
+  new GGBApplet(params, true).inject('ggbApplet');
+}
+const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js';
+s.onload = inject;
+s.onerror = () => { document.getElementById('ggbMsg').innerHTML = '<p><b>No se pudo cargar GeoGebra.</b></p><p class="small">Revise la conexión. Puede descargar el archivo .ggb y abrirlo en GeoGebra Classic.</p>'; };
+document.head.appendChild(s);
+document.getElementById('btnReset').addEventListener('click', () => { if (api) { api.reset(); toast('Construcción en su estado inicial'); } });
+document.getElementById('btnCopy').addEventListener('click', async () => {
+  const txt = document.getElementById('listado').textContent;
+  try { await navigator.clipboard.writeText(txt); toast('Listado copiado'); } catch (e) { toast('Seleccione el texto y cópielo'); }
+});
+</script>
+<footer id="creditos"><div class="wrap">
+  <p class="small">Materiales del libro: Acuña-Chacón, R., y Gutiérrez-Montenegro, M. (2026). <i>Construir, enseñar e investigar con GeoGebra</i> (versión de trabajo). Instituto GeoGebra de Costa Rica, Escuela de Matemática, Instituto Tecnológico de Costa Rica.</p>
+  <p class="small muted">GeoGebra® es una marca registrada de GeoGebra GmbH. Estos materiales se elaboran desde el Instituto GeoGebra de Costa Rica con fines educativos no comerciales; no son un producto de GeoGebra GmbH. Las construcciones se ejecutan con GeoGebra (Made with GeoGebra®).</p>
+</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
