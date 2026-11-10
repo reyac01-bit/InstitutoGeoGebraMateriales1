@@ -189,6 +189,7 @@ pre.listado{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:14px;fon
     <a class="btn" href="../ggb/ejemplo2-euler.ggb" download>Descargar el archivo .ggb</a>
     <a class="btn sec" href="../recursos-interactivos/cap09-ejemplos.html#ej2">Verla construirse paso a paso</a>
     <button class="btn ghost" type="button" id="btnReset">Volver al estado inicial</button>
+    <button class="btn ghost" type="button" id="btnAlg" aria-pressed="false">Mostrar la Vista Algebraica</button>
   </div>
   <div class="applet-wrap"><div id="ggbApplet"></div><div class="ggb-msg" id="ggbMsg" style="position:relative;min-height:200px"><p><b>Cargando GeoGebra…</b></p><p class="small">Requiere conexión a internet.</p></div></div>
   <div class="grid g2" style="margin-top:18px">
@@ -226,18 +227,26 @@ ce1 = CasillaEntrada(g)
 const GGB64 = "UEsDBBQAAAAIAFYHH13XcvtiiwcAAC4eAAAMAAAAZ2VvZ2VicmEueG1s3Vndcts2Fr6unwLDi649a0ukLKt2KqXjJm6bGSf1RNlMpxnPDkgeUahBgCVAicrOPtBedvoIebE9APgnyY5cb9bdzYw0IMAD4Jzv/AIcf1OmnCwgV0yKiRf0fI+AiGTMRDLxCj07OvW+ebo3TkAmEOaUzGSeUj3xTgxlM2/U83tngzMzRrNs4kWcKsUij2ScajNl4i09Uir2RMhXNAWV0Qim0RxSeikjqu0ic60z9aTfXy6XvXq/nsyTPi6p+qWK+0kS9rDFlVIu1MSrHp7gwm56NXt5bOcNfD/o//Ty0m10xITSVETgGXkK9nTvi/GSiVguyZLFeo7S4wSPzIElc5TwK9PpG6oMxcwg0mwBCvtrA4TFE0+nmWde4BsqkMY2hDeSeSRmCxZDPvH83uDUIzJnIHT1NjDbjPtuql1lwWDpHt2z3QTJFkyxkANumBfgESZmOYI58WaUK+wrveIQ0rx+3zKAcxV7j5SnRignNY76/qH5j/A/rKVd23PwB/asBtpNj+tNj2/bdHCytum43wo9ZiIrNFFzQ++2jdK4ftQSDYxyax7VbASv1YjRWH9DZWNOQ+Bo01PDLllQbtizyp1JoSs+g5EZGvetcYyhiDiLGRVvkTFDaRh8VaQh5MQ+SoOrXcNMr43otGtDiKyjiKTM4+lKaUhJ+TPkOPd44PcM7arqjlxXRZRbRWHPvq4GRtWAXQ4WU9Aa5VGElqBqaJKcxd3nF+pbyeNGNZlkQj+jmS5y696ooNzweS4SDhYZaynoLdFNKMupBWUwcmu9WWXQgBYmzySXOUG1D05OkKBqQ9daGsNYQ+VbGt9SVDKYRZv3wdnAUtg2dK2lQqU51ipBg1pKv96FKeL6awZjFW48rxBMX9YdzaKbVlBD7xRaI7i+ZPCJlhz3N2xpfAO5AO4MQ6AeC1koZ5VOVZaPQsEV1fNzEb+GBD3qihrP07i0I205jiFiKU504xVy1Gj1b8iqG40hyaGW0HnPmjMQleVAYzUH0A26zmxbMt+JU7M/VlHOMmOHJES/v4G4I4ARTSGPkYkGCJM2EF38AmnGJRmQI/KMppkkMWBwzCGKkAoUWZH0w7+0jO2Li4JDjiml0HOJRvIaUEpBzqPiw2+UPJvT6MPvAmMr1cZOfbRU47YlyqFMWqoVlmBKKzFmJPvlIVkdkAkpcfeV5RE4pBiJibbWPSuE5fbVW5p77XTr4qhYIsNfMKa0oc4RdFSGBK1jBM6i/aCxaEJ5NqcmCVT4croy0aSBtgpUL2UM66ONF+g52hsCheaF/ubY9t3DDyyOQVRBCW3OiWYVkSJuMRE2cE+5zOA7Bjy2grlYS32LEw2MA2M7MExioqLHE+9oiO2wak8wEmEzMo0TudD1ApFRqNu82nILYbSSQjXIuQlb8K652x3oBicupNg2rNpPCu/gvvCuS2iDbMP9lb9DvNaJ16T76rQynlEVMh/RdCq3V6REnWNgWFks3jdvrYQmObh9TrqjW6HiLphEkUJuKsQKh/mDcPqv+1jgfxwpXKCol+lVSChuSj2SMmG5QKxTWtrsUNeZp7hYaUKWBXeIzYyV0KRuDHbsPeaFJsgTGirJC40lM8Zw0ZbM7q1B7dyF9LU8JjBc2uCLZUdW84JlEbjc1siFRfrKFgRt7L633sT/vd6CwbbagkpnI/8upZ09ktKC/1hjoZQcqGg0Akr/HQ9uU8n/dNVFWIsaUe3YS4nVAs2JAS1imNlNBZDDDHI8kDL68GjW0XUnmdRV7poWnQpu1VtH98FwK7itp9gXWKTZSZdM6Y0su1/unx+Qv5I51iLVE0nsoBs4OHBp+Nxl4X9c+f90aVhs5Vuw5dHH861hoNG8pf+8qpkryVdmvQ2UG2jWAMskZx/HK6uXq+GwUx5UoQxHDrGBOxdt1CckXqEALELCF7N3kOfkS66/JphEDonp9d1jcN1QJrdQBljIdqj9ltoVDZFhZmouWzoqeXwl3csfUIjTxif2bffgfp5xSu7wje+Y2FWPbvmHnfPn+wgtSsYZzVebZ71PehSQfAE/Pr+4/SBw5W+hioHxj9T3ameO6QZkKWLmMh+S/1hRd7LVFt4jdwQYuRPA6FMXycOHgXrhxm8NSBZXgfYdbEF7NWNiV2xaO1kY+s/KTrdOFsMHA22d2IKNseFOuHeHh23IP7/wsBv27SsVzDnVpQoWS/urfYPMgblU2a8xwmC9fb+yeXgwy3xmWHYPhLtx1KW+aKA02b2JdofkDZT63Ze/FlJ//RzUglFXFAP+OE7QOaTyCXEEaOKI5SHZPzruYRI96Q0Prq9vUYDGed7G5g8qbtbvcx/1coKpS/oGftoq6N1FPtrXrP04YW+w/eorxc47CYPOzF6MNRdUEPxvHZJWfyET0lxkPhxEnHMD8fcgq6vR+558znZAGBZay/asGWrxGphgeH7bZWiPDGTL1oMx3InWYFjtHDOEyPi96nxqbL8SHVc3EEkSugt1x+IU9FsTTd5d+dazD8ng4HqvGcUDJBb9nQGB54FBp98NJtYhrvd+ljJ9Id4dDQ+J+Y/wd72p0H733t5+Dqu+xT7d+zdQSwMEFAAAAAgAVgcfXUXM3l0aAAAAGAAAABYAAABnZW9nZWJyYV9qYXZhc2NyaXB0LmpzSyvNSy7JzM9TSE9P8s/zzMss0dBUqK7lAgBQSwECFAMUAAAACABWBx9d13L7YosHAAAuHgAADAAAAAAAAAAAAAAAgAEAAAAAZ2VvZ2VicmEueG1sUEsBAhQDFAAAAAgAVgcfXUXM3l0aAAAAGAAAABYAAAAAAAAAAAAAAIABtQcAAGdlb2dlYnJhX2phdmFzY3JpcHQuanNQSwUGAAAAAAIAAgB+AAAAAwgAAAAA";
 const toast = m => { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(window.__tt); window.__tt = setTimeout(() => t.classList.remove('show'), 2400); };
 let api = null;
-function inject() {
+let persp = 'AG';
+function etiqueta() { const b = document.getElementById('btnAlg'); b.textContent = persp === 'G' ? 'Mostrar la Vista Algebraica' : 'Ocultar la Vista Algebraica'; b.setAttribute('aria-pressed', String(persp !== 'G')); }
+function inject(b64) {
   const host = document.getElementById('ggbApplet');
-  const params = {appName:'classic', ggbBase64:GGB64, width:host.clientWidth, height:host.clientHeight, language:'es', showToolBar:true, showAlgebraInput:true,
-    showMenuBar:false, showResetIcon:true, enableShiftDragZoom:true, enableRightClick:true, errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
+  host.innerHTML = '<div id="ggbInner"></div>';
+  const params = {appName:'classic', ggbBase64:b64, width:host.clientWidth, height:host.clientHeight, language:'es', perspective:persp, showToolBar:true, showAlgebraInput:true,
+    showMenuBar:false, showResetIcon:false, showKeyboardOnFocus:false, enableShiftDragZoom:true, enableRightClick:true, errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
     appletOnLoad:a => { api = a; document.getElementById('ggbMsg').hidden = true; }};
-  new GGBApplet(params, true).inject('ggbApplet');
+  new GGBApplet(params, true).inject('ggbInner'); etiqueta();
 }
 const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js';
-s.onload = inject;
+s.onload = () => inject(GGB64);
 s.onerror = () => { document.getElementById('ggbMsg').innerHTML = '<p><b>No se pudo cargar GeoGebra.</b></p><p class="small">Revise la conexión. Puede descargar el archivo .ggb y abrirlo en GeoGebra Classic.</p>'; };
 document.head.appendChild(s);
-document.getElementById('btnReset').addEventListener('click', () => { if (api) { api.reset(); toast('Construcción en su estado inicial'); } });
+document.getElementById('btnReset').addEventListener('click', () => { if (window.GGBApplet) { api = null; inject(GGB64); toast('Construcción en su estado inicial'); } });
+document.getElementById('btnAlg').addEventListener('click', () => {
+  if (!window.GGBApplet) return;
+  const estado = api ? api.getBase64() : GGB64;
+  persp = persp === 'G' ? 'AG' : 'G'; api = null; inject(estado);
+});
 document.getElementById('btnCopy').addEventListener('click', async () => {
   const txt = document.getElementById('listado').textContent;
   try { await navigator.clipboard.writeText(txt); toast('Listado copiado'); } catch (e) { toast('Seleccione el texto y cópielo'); }

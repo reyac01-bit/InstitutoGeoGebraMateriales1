@@ -189,6 +189,7 @@ pre.listado{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:14px;fon
     <a class="btn" href="../ggb/ejemplo5-regresion.ggb" download>Descargar el archivo .ggb</a>
     <a class="btn sec" href="../recursos-interactivos/cap09-ejemplos.html#ej5">Verla construirse paso a paso</a>
     <button class="btn ghost" type="button" id="btnReset">Volver al estado inicial</button>
+    <button class="btn ghost" type="button" id="btnAlg" aria-pressed="false">Mostrar la Vista Algebraica</button>
   </div>
   <div class="applet-wrap"><div id="ggbApplet"></div><div class="ggb-msg" id="ggbMsg" style="position:relative;min-height:200px"><p><b>Cargando GeoGebra…</b></p><p class="small">Requiere conexión a internet.</p></div></div>
   <div class="grid g2" style="margin-top:18px">
@@ -224,18 +225,26 @@ txtAjuste = Texto(&quot;y = &quot; + FórmulaTexto(fr) + &quot;\quad R^2 = &quot
 const GGB64 = "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";
 const toast = m => { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(window.__tt); window.__tt = setTimeout(() => t.classList.remove('show'), 2400); };
 let api = null;
-function inject() {
+let persp = 'AG';
+function etiqueta() { const b = document.getElementById('btnAlg'); b.textContent = persp === 'G' ? 'Mostrar la Vista Algebraica' : 'Ocultar la Vista Algebraica'; b.setAttribute('aria-pressed', String(persp !== 'G')); }
+function inject(b64) {
   const host = document.getElementById('ggbApplet');
-  const params = {appName:'classic', ggbBase64:GGB64, width:host.clientWidth, height:host.clientHeight, language:'es', showToolBar:true, showAlgebraInput:true,
-    showMenuBar:false, showResetIcon:true, enableShiftDragZoom:true, enableRightClick:true, errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
+  host.innerHTML = '<div id="ggbInner"></div>';
+  const params = {appName:'classic', ggbBase64:b64, width:host.clientWidth, height:host.clientHeight, language:'es', perspective:persp, showToolBar:true, showAlgebraInput:true,
+    showMenuBar:false, showResetIcon:false, showKeyboardOnFocus:false, enableShiftDragZoom:true, enableRightClick:true, errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
     appletOnLoad:a => { api = a; document.getElementById('ggbMsg').hidden = true; }};
-  new GGBApplet(params, true).inject('ggbApplet');
+  new GGBApplet(params, true).inject('ggbInner'); etiqueta();
 }
 const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js';
-s.onload = inject;
+s.onload = () => inject(GGB64);
 s.onerror = () => { document.getElementById('ggbMsg').innerHTML = '<p><b>No se pudo cargar GeoGebra.</b></p><p class="small">Revise la conexión. Puede descargar el archivo .ggb y abrirlo en GeoGebra Classic.</p>'; };
 document.head.appendChild(s);
-document.getElementById('btnReset').addEventListener('click', () => { if (api) { api.reset(); toast('Construcción en su estado inicial'); } });
+document.getElementById('btnReset').addEventListener('click', () => { if (window.GGBApplet) { api = null; inject(GGB64); toast('Construcción en su estado inicial'); } });
+document.getElementById('btnAlg').addEventListener('click', () => {
+  if (!window.GGBApplet) return;
+  const estado = api ? api.getBase64() : GGB64;
+  persp = persp === 'G' ? 'AG' : 'G'; api = null; inject(estado);
+});
 document.getElementById('btnCopy').addEventListener('click', async () => {
   const txt = document.getElementById('listado').textContent;
   try { await navigator.clipboard.writeText(txt); toast('Listado copiado'); } catch (e) { toast('Seleccione el texto y cópielo'); }

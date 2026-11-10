@@ -189,6 +189,7 @@ pre.listado{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:14px;fon
     <a class="btn" href="../ggb/ejemplo3-angulo-inscrito.ggb" download>Descargar el archivo .ggb</a>
     <a class="btn sec" href="../recursos-interactivos/cap09-ejemplos.html#ej3">Verla construirse paso a paso</a>
     <button class="btn ghost" type="button" id="btnReset">Volver al estado inicial</button>
+    <button class="btn ghost" type="button" id="btnAlg" aria-pressed="false">Mostrar la Vista Algebraica</button>
   </div>
   <div class="applet-wrap"><div id="ggbApplet"></div><div class="ggb-msg" id="ggbMsg" style="position:relative;min-height:200px"><p><b>Cargando GeoGebra…</b></p><p class="small">Requiere conexión a internet.</p></div></div>
   <div class="grid g2" style="margin-top:18px">
@@ -240,18 +241,26 @@ txtArco = Si(enArco, Texto(&quot;C está en el arco que abarca el ángulo centra
 const GGB64 = "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";
 const toast = m => { const t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(window.__tt); window.__tt = setTimeout(() => t.classList.remove('show'), 2400); };
 let api = null;
-function inject() {
+let persp = 'AG';
+function etiqueta() { const b = document.getElementById('btnAlg'); b.textContent = persp === 'G' ? 'Mostrar la Vista Algebraica' : 'Ocultar la Vista Algebraica'; b.setAttribute('aria-pressed', String(persp !== 'G')); }
+function inject(b64) {
   const host = document.getElementById('ggbApplet');
-  const params = {appName:'classic', ggbBase64:GGB64, width:host.clientWidth, height:host.clientHeight, language:'es', showToolBar:true, showAlgebraInput:true,
-    showMenuBar:false, showResetIcon:true, enableShiftDragZoom:true, enableRightClick:true, errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
+  host.innerHTML = '<div id="ggbInner"></div>';
+  const params = {appName:'classic', ggbBase64:b64, width:host.clientWidth, height:host.clientHeight, language:'es', perspective:persp, showToolBar:true, showAlgebraInput:true,
+    showMenuBar:false, showResetIcon:false, showKeyboardOnFocus:false, enableShiftDragZoom:true, enableRightClick:true, errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
     appletOnLoad:a => { api = a; document.getElementById('ggbMsg').hidden = true; }};
-  new GGBApplet(params, true).inject('ggbApplet');
+  new GGBApplet(params, true).inject('ggbInner'); etiqueta();
 }
 const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js';
-s.onload = inject;
+s.onload = () => inject(GGB64);
 s.onerror = () => { document.getElementById('ggbMsg').innerHTML = '<p><b>No se pudo cargar GeoGebra.</b></p><p class="small">Revise la conexión. Puede descargar el archivo .ggb y abrirlo en GeoGebra Classic.</p>'; };
 document.head.appendChild(s);
-document.getElementById('btnReset').addEventListener('click', () => { if (api) { api.reset(); toast('Construcción en su estado inicial'); } });
+document.getElementById('btnReset').addEventListener('click', () => { if (window.GGBApplet) { api = null; inject(GGB64); toast('Construcción en su estado inicial'); } });
+document.getElementById('btnAlg').addEventListener('click', () => {
+  if (!window.GGBApplet) return;
+  const estado = api ? api.getBase64() : GGB64;
+  persp = persp === 'G' ? 'AG' : 'G'; api = null; inject(estado);
+});
 document.getElementById('btnCopy').addEventListener('click', async () => {
   const txt = document.getElementById('listado').textContent;
   try { await navigator.clipboard.writeText(txt); toast('Listado copiado'); } catch (e) { toast('Seleccione el texto y cópielo'); }
