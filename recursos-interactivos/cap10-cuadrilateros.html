@@ -1,0 +1,990 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuadriláteros: de la apariencia a la propiedad · Recurso interactivo del capítulo 10</title>
+<meta name="description" content="Recurso interactivo del capítulo 10 del libro Construir, enseñar e investigar con GeoGebra: laboratorio dibujo frente a construcción, cinco cápsulas guiadas dentro de GeoGebra Classic 6 y práctica con retroalimentación.">
+<style>
+:root{
+  --bg:#F4F6F9; --ink:#002855; --text:#26313F; --muted:#5B6675; --accent:#EF3340; --accent-r:#B3202C;
+  --mid:#3D5A8A; --card:#FFFFFF; --soft:#EEF2F7; --line:#D5DCE6;
+  --ok:#2E7D32; --ok-bg:#E8F3E9; --no:#B3202C; --no-bg:#FCECEE; --amber:#B26A00;
+  --serif:'Palatino Linotype',Palatino,'Book Antiqua','TeX Gyre Pagella',Georgia,serif;
+  --sans:'Helvetica Neue',Helvetica,Arial,'TeX Gyre Heros',sans-serif;
+  --mono:'DejaVu Sans Mono',Consolas,Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 var(--serif);overflow-x:hidden}
+a{color:var(--mid);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--sans);color:var(--ink);margin:0;line-height:1.2}
+p{margin:0 0 14px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 18px}
+.read{max-width:760px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-60px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;z-index:60}
+.skip:focus{top:12px}
+.small{font-size:15px}.muted{color:var(--muted)}.mono{font-family:var(--mono);font-size:.92em}
+
+.topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:#fff}
+.topbar .wrap{display:flex;align-items:center;gap:16px;min-height:58px}
+.brand{font:700 16px var(--sans);color:#fff;text-decoration:none;white-space:nowrap}
+.brand span{color:#FF8D95}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:#fff;font:600 14.5px var(--sans);padding:10px 12px;border-radius:8px;min-height:44px;display:flex;align-items:center}
+.nav a:hover{background:rgba(255,255,255,.14)}
+
+.hero{background:var(--ink);color:#fff;padding:34px 0 40px;border-bottom:6px solid var(--accent)}
+.hero h1{color:#fff;font-size:clamp(28px,4.6vw,44px);margin:6px 0 10px}
+.hero .lead{font-size:19px;max-width:780px;color:#E6ECF5}
+.kicker{font:700 13px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--accent-r);display:block;margin-bottom:8px}
+.hero .kicker{color:#FF8D95}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 12px;font:600 14px var(--sans);color:var(--ink)}
+.chip.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hero .chip{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+
+section.block{padding:42px 0 6px}
+.sec-title{font-size:clamp(24px,3.2vw,32px);margin-bottom:12px}
+.sub-title{font-size:20px;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,28px)}
+.stack>*+*{margin-top:22px}
+.grid{display:grid;gap:16px}
+@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:0;border-radius:10px;padding:10px 20px;background:var(--accent-r);color:#fff;font:700 16px/1.2 var(--sans);cursor:pointer;text-decoration:none}
+.btn:active{transform:scale(.98)}
+.btn.sec{background:var(--ink)}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.sm{min-height:42px;padding:8px 14px;font-size:15px}
+.btn[disabled],.icon-btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.icon-btn{width:46px;height:46px;border-radius:10px;border:0;background:var(--ink);color:#fff;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+
+.note{display:flex;gap:12px;background:var(--soft);border-left:5px solid var(--mid);border-radius:8px;padding:12px 14px;font-size:16px}
+.note .ic{flex:none;font:700 13px var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--mid);padding-top:3px;min-width:92px}
+.note.ok{background:var(--ok-bg);border-left-color:var(--ok)}.note.ok .ic{color:var(--ok)}
+.note.warn{background:#FFF6E5;border-left-color:var(--amber)}.note.warn .ic{color:var(--amber)}
+@media(max-width:600px){.note{flex-direction:column;gap:2px}}
+
+/* Laboratorio */
+.lab-grid{display:grid;gap:16px}
+@media(min-width:760px){.lab-grid{grid-template-columns:1fr 1fr}}
+.lab-panel{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px}
+.lab-panel h4{font-size:17px;margin-bottom:2px}
+.lab-panel svg{display:block;width:100%;height:auto;touch-action:none;border-radius:8px;background:#FCFDFE}
+.handle{cursor:grab}.handle:focus{outline:none}
+.handle:focus-visible circle.ring{stroke:var(--accent);stroke-width:3}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 12px;font:14.5px var(--mono);margin-top:10px}
+.verdict{margin-top:8px;font:700 16px var(--sans)}
+.verdict.ok{color:var(--ok)}.verdict.no{color:var(--no)}
+
+/* Cápsulas */
+.vt{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:14px}
+.vt>*{min-width:0}
+@media(min-width:960px){.vt{grid-template-columns:270px minmax(0,1fr)}}
+.vt-list{display:flex;flex-direction:column;gap:8px}
+@media(max-width:959px){.vt-list{flex-direction:row;overflow-x:auto;padding-bottom:6px}.vt-list button{min-width:230px}}
+.vt-list button{display:flex;gap:12px;align-items:center;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;font:500 15px/1.3 var(--sans);color:var(--ink);min-height:56px}
+.vt-list button[aria-selected="true"]{border-color:var(--ink);background:var(--soft)}
+.vt-list .vnum{flex:none;width:38px;height:38px;border-radius:8px;background:var(--ink);color:#fff;font:700 18px var(--sans);display:flex;align-items:center;justify-content:center}
+.vt-list button[aria-selected="true"] .vnum{background:var(--accent-r)}
+.vt-list b{display:block}.vt-list small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.pane-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.vg-now{background:var(--ink);color:#E6ECF5;border-radius:12px 12px 0 0;padding:14px 18px;min-height:128px;font-family:var(--sans)}
+.vg-now .vg-k{font:700 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:#FF8D95}
+.vg-now .vg-tool{font-size:19px;color:#fff;margin-top:4px}
+.vg-now .vg-tool b{color:#FFD08A}
+.vg-now .vg-where{margin:2px 0 6px;font-size:14.5px;color:#C9D4E4}
+.vg-now .vg-say{margin:0;font-size:17px;color:#fff}
+.vg-host{position:relative;height:540px;border:2px solid var(--ink);border-top:0;border-radius:0 0 12px 12px;overflow:hidden;background:#fff}
+@media(max-width:600px){.vg-host{height:430px}}
+#vgBox{position:absolute;inset:0}
+.ggb-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;background:var(--soft);font-family:var(--sans)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;font-family:var(--sans)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--sans);cursor:pointer;min-height:44px}
+.toggle input{width:20px;height:20px;accent-color:var(--accent-r)}
+.rate-sel{min-height:40px;border:2px solid var(--line);border-radius:8px;padding:4px 8px;font:600 14.5px var(--sans);background:#fff;color:var(--ink)}
+.vg-watch{margin-top:12px;font-family:var(--sans)}
+.vg-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.vg-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font:400 15.5px/1.4 var(--sans);color:var(--text)}
+.vg-list .st{flex:none;width:30px;height:30px;border-radius:8px;background:var(--soft);color:var(--ink);font-weight:800;display:flex;align-items:center;justify-content:center}
+.vg-list b{display:block;color:var(--ink)}.vg-list small{display:block;font-size:14.5px}
+.vg-list li.done .st{background:var(--ok-bg);color:var(--ok)}
+.vg-list li.now button{border-color:var(--accent-r)}
+.vg-list li.now .st{background:var(--accent-r);color:#fff}
+.code{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:12px 6px;font:14.5px/1.5 var(--mono);overflow-x:auto}
+.code button.line{display:block;width:100%;text-align:left;background:transparent;border:0;color:inherit;font:inherit;padding:2px 10px;border-radius:6px;cursor:copy;white-space:pre}
+.code button.line:hover,.code button.line:focus-visible{background:#234468}
+.code .cm{color:#9FB3CC;padding:2px 10px;white-space:pre-wrap}
+details.lib{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:16px}
+details.lib summary{cursor:pointer;font:700 16px var(--sans);color:var(--ink);min-height:44px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Práctica */
+.level-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.score{font:600 15px var(--mono);background:var(--soft);border-radius:999px;padding:5px 14px;border:1px solid var(--line)}
+.qitem+.qitem{margin-top:22px;padding-top:22px;border-top:2px dashed var(--line)}
+.bubble{background:var(--soft);border-radius:12px 12px 12px 4px;padding:12px 16px;margin:6px 0 10px;color:var(--ink);font-size:18px}
+.bubble .who{display:block;font:700 12.5px var(--sans);color:var(--accent-r);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.answers{display:grid;gap:8px}
+.answers button{text-align:left;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;font:500 16px/1.45 var(--sans);color:var(--ink);cursor:pointer}
+.answers button:hover{border-color:var(--ink)}
+.answers button.sel-ok{border-color:var(--ok);background:var(--ok-bg)}
+.answers button.sel-no{border-color:var(--no);background:var(--no-bg)}
+.fb{margin-top:10px;border-radius:10px;padding:12px 14px;font-size:16px}
+.fb.ok{background:var(--ok-bg);color:#17421A}.fb.no{background:var(--no-bg);color:#6E1620}
+.fb b{display:block;font-family:var(--sans)}
+
+/* Panel GeoGebra */
+.ggb-fab{position:fixed;right:16px;bottom:16px;z-index:40;box-shadow:0 6px 18px rgba(0,40,85,.3)}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(640px,100vw);background:#fff;z-index:50;transform:translateX(105%);transition:transform 350ms var(--ease);display:flex;flex-direction:column;border-left:3px solid var(--ink)}
+.drawer.open{transform:none}
+.drawer-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-bottom:2px solid var(--line)}
+.drawer-head h2{font-size:19px;margin-right:auto}
+.ggb-host{flex:1;position:relative;min-height:0;background:#fff}
+#ggbBox{position:absolute;inset:0}
+.ggb-log{font:13.5px var(--mono);padding:8px 12px;border-top:2px solid var(--line);max-height:130px;overflow:auto;background:var(--soft)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font:600 15px var(--sans);z-index:70;opacity:0;pointer-events:none;transition:opacity 180ms,transform 180ms;max-width:min(560px,92vw);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%)}
+footer{padding:44px 0 110px;font-size:15px}
+footer li{margin-bottom:8px;overflow-wrap:anywhere}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+@media print{.topbar,.ggb-fab,.drawer,.toast{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#inicio">Cap. 10 <span>·</span> Cuadriláteros</a>
+    <nav class="nav" aria-label="Secciones del recurso"><a href="../index.html">Todos los materiales</a>
+      <a href="#lab">Laboratorio</a>
+      <a href="#capsulas">Cápsulas guiadas</a>
+      <a href="#practica">Práctica</a>
+      <a href="#creditos">Créditos</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <span class="kicker">Recurso interactivo · Capítulo 10</span>
+    <h1>Cuadriláteros: de la apariencia a la propiedad</h1>
+    <p class="lead">Acompaña al libro <i>Construir, enseñar e investigar con GeoGebra</i>. Aquí se manipula lo que el capítulo describe: un laboratorio para distinguir dibujo de construcción, cinco cápsulas que arman cada actividad dentro de GeoGebra Classic 6 y una práctica con retroalimentación.</p>
+    <div class="chips">
+      <span class="chip">Sección 10.5 · Actividades 1 a 5</span>
+      <span class="chip">GeoGebra Classic 6 en español</span>
+      <span class="chip">Requiere internet para GeoGebra</span>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="padding-top:26px">
+  <div class="wrap stack">
+    <div class="note"><span class="ic">Cómo usarlo</span><span>Lea primero la actividad en el libro. Cada cápsula muestra la construcción paso a paso; después repítala usted en el mismo applet, con las herramientas, y resuelva el reto. El libro se entiende sin este recurso: aquí solo se gana la manipulación.</span></div>
+    <div class="note warn"><span class="ic">Qué es y qué no</span><span>La cápsula activa cada herramienta en la barra de GeoGebra y ejecuta el <b>comando equivalente</b> por la API; no simula los clics. Las cinco actividades son propuestas de diseño: no han sido aplicadas con estudiantes.</span></div>
+  </div>
+</section>
+
+<!-- ===================== LABORATORIO ===================== -->
+<section class="block" id="lab">
+  <div class="wrap">
+    <span class="kicker">Laboratorio · Actividad 1 del libro</span>
+    <h2 class="sec-title">Parece un rectángulo, ¿lo es?</h2>
+    <p class="read">Las dos figuras se ven iguales al inicio. Arrastre los puntos azules con el ratón, el dedo o el teclado (Tab para elegir un punto y flechas para moverlo). Antes de arrastrar, anticipe: ¿cuál de las dos seguirá siendo rectángulo?</p>
+    <div class="lab-grid">
+      <div class="lab-panel">
+        <h4>Dibujo: cuatro puntos libres</h4>
+        <p class="small muted" style="margin:0 0 8px">A, B, C y D se colocaron «a ojo» en posición de rectángulo.</p>
+        <svg id="labDrawn" viewBox="0 0 300 260" aria-label="Rectángulo dibujado con cuatro vértices libres"></svg>
+        <div class="readout" id="roDrawn"></div>
+        <div class="verdict" id="vdDrawn" aria-live="polite"></div>
+      </div>
+      <div class="lab-panel">
+        <h4>Construcción: dependencias</h4>
+        <p class="small muted" style="margin:0 0 8px">E y F son libres; G solo se desliza sobre la perpendicular por F; H se calcula.</p>
+        <svg id="labBuilt" viewBox="0 0 300 260" aria-label="Rectángulo construido por dependencias"></svg>
+        <div class="readout" id="roBuilt"></div>
+        <div class="verdict" id="vdBuilt" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="btn-row" style="margin-top:14px">
+      <button class="btn ghost sm" type="button" id="labReset">Volver a la posición inicial</button>
+      <button class="btn sec sm" type="button" data-goto-cap="0">Ver la construcción en GeoGebra</button>
+    </div>
+    <div class="note" style="margin-top:16px"><span class="ic">Para discutir</span><span>En el dibujo, los ángulos rectos eran una coincidencia de la posición inicial. En la construcción son <b>consecuencia</b> de cómo se obtuvieron G y H. Que la figura resista el arrastre es evidencia de que la propiedad se construyó; no es todavía una demostración de por qué se cumple.</span></div>
+  </div>
+</section>
+
+<!-- ===================== CÁPSULAS ===================== -->
+<section class="block" id="capsulas">
+  <div class="wrap">
+    <span class="kicker">Cápsulas guiadas · Dentro de GeoGebra Classic 6</span>
+    <h2 class="sec-title">Las cinco actividades, paso a paso</h2>
+    <p class="read">Elija una actividad y pulse Reproducir. En cada paso la cápsula indica la herramienta, dónde está en la barra y qué hacer con ella. Puede pausar, avanzar de a un paso o tocar cualquier paso de la lista.</p>
+    <div class="vt">
+      <div class="vt-list" role="tablist" aria-label="Actividades" id="vtList"></div>
+      <div id="vtPanel" role="tabpanel">
+        <div class="pane-title"><h3 id="vtTitle" style="font-size:21px"></h3><div class="chips" id="vtMeta"></div></div>
+        <p class="small" id="vgTools" style="margin:-4px 0 10px;font-family:var(--sans)"></p>
+        <div id="vgUso" style="margin-bottom:12px"></div>
+        <div class="vg-now" id="vgNow" aria-live="polite"></div>
+        <div class="vg-host" id="vgHost"><div id="vgBox"></div><div class="ggb-msg" id="vgMsg"><p><b>GeoGebra se carga al pulsar Reproducir.</b></p><p class="small">La cápsula construye la figura dentro de GeoGebra Classic 6, con su barra de herramientas y su Vista Algebraica.</p><button class="btn" type="button" data-vgplay>&#9654; Reproducir en GeoGebra</button></div></div>
+        <div class="controls" aria-label="Controles de la cápsula">
+          <button class="icon-btn" type="button" id="vgRestart" aria-label="Empezar de nuevo" title="Empezar de nuevo">&#8634;</button>
+          <button class="icon-btn" type="button" id="vgPrev" aria-label="Paso anterior" title="Paso anterior">&#9664;</button>
+          <button class="btn" type="button" id="vgPlay" aria-pressed="false">&#9654; Reproducir en GeoGebra</button>
+          <button class="icon-btn" type="button" id="vgNext" aria-label="Hacer solo el paso siguiente" title="Paso siguiente">&#9654;</button>
+          <label class="toggle"><input type="checkbox" id="vgVoice" checked> Narración con voz</label>
+          <label class="toggle" for="vgRate">Velocidad <select class="rate-sel" id="vgRate"><option value="0.7">0.7 (muy lenta)</option><option value="0.8">0.8 (lenta)</option><option value="0.9">0.9 (pausada)</option><option value="1">1.0 (normal)</option><option value="1.2">1.2</option><option value="1.4">1.4 (rápida)</option></select></label>
+        </div>
+        <div class="vg-watch" id="vgWatch" aria-live="polite"></div>
+        <ol class="vg-list" id="vgList" aria-label="Pasos de la construcción"></ol>
+        <details class="lib" id="vtCmdBox">
+          <summary><span class="chip dark">Listado</span>Comandos de la actividad, como aparecen en el libro</summary>
+          <p class="small muted" style="font-family:var(--sans)">Es el archivo de entrada que acompaña al libro. Toque una línea para copiarla. Las líneas con # son ajustes que se hacen a mano en la Configuración del objeto. Los comandos se muestran en español, como se escriben en la Barra de Entrada; al enviarlos por la API el recurso los traduce al inglés, porque <span class="mono">evalCommand</span> solo acepta los nombres en inglés (capítulo 7 del libro).</p>
+          <div class="btn-row" style="margin-bottom:10px"><button class="btn ghost sm" type="button" id="cmdCopy">Copiar los comandos</button><button class="btn sec sm" type="button" id="cmdRun">Probar en el panel</button></div>
+          <div class="code" id="vtCmd"></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRÁCTICA ===================== -->
+<section class="block" id="practica">
+  <div class="wrap">
+    <span class="kicker">Práctica graduada · Tres niveles</span>
+    <h2 class="sec-title">¿Se sostiene la afirmación?</h2>
+    <p class="read">Cada afirmación es del tipo que aparece en el aula. Decida si se sostiene. La retroalimentación explica la idea que suele estar detrás de cada respuesta.</p>
+    <div class="stack" id="quiz"></div>
+  </div>
+</section>
+</main>
+
+<footer id="creditos">
+  <div class="wrap">
+    <h2 class="sub-title">Créditos y fuentes</h2>
+    <ul style="padding-left:1.2em">
+      <li>Recurso acompañante de: Acuña-Chacón, R., y Gutiérrez-Montenegro, M. (2026). <i>Construir, enseñar e investigar con GeoGebra</i> (versión de trabajo). Instituto GeoGebra de Costa Rica, Escuela de Matemática, Instituto Tecnológico de Costa Rica. Capítulo 10.</li>
+      <li>El motor de cápsulas guiadas y el laboratorio de arrastre se adaptaron del taller «GeoGebra + IA para enseñar geometría» (Acuña Chacón y Gutiérrez Montenegro, 2026).</li>
+      <li>Los fundamentos (fenómeno del prototipo, clasificación jerárquica, modalidades de arrastre) y sus referencias están en las secciones 10.1 a 10.3 del libro.</li>
+      <li>Manual de comandos de GeoGebra en español: <a href="https://geogebra.github.io/docs/manual/es/" target="_blank" rel="noopener">geogebra.github.io/docs/manual/es</a></li>
+    </ul>
+    <p class="small muted" style="margin-top:18px">GeoGebra® es una marca registrada de GeoGebra GmbH. Este recurso se elabora desde el Instituto GeoGebra de Costa Rica con fines educativos no comerciales; no es un producto de GeoGebra GmbH. Las cápsulas se ejecutan con GeoGebra (Made with GeoGebra®).</p>
+  </div>
+</footer>
+
+<button class="btn sec ggb-fab" type="button" data-open-ggb aria-controls="drawer">GeoGebra</button>
+<aside class="drawer" id="drawer" aria-label="Panel de GeoGebra" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>GeoGebra Classic 6</h2>
+    <button class="btn ghost sm" type="button" id="ggbNew">Lienzo nuevo</button>
+    <button class="icon-btn" type="button" id="ggbClose" aria-label="Cerrar el panel de GeoGebra">&#10005;</button>
+  </div>
+  <div class="ggb-host" id="ggbHost"><div id="ggbBox"></div><div class="ggb-msg" id="ggbMsg"><p>GeoGebra se carga al abrir este panel.</p></div></div>
+  <div class="ggb-log" id="ggbLog" aria-live="polite">Listo para recibir comandos.</div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   Utilidades
+   ============================================================ */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+let toastTimer;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
+async function copyText(text, label = 'Copiado') {
+  try {
+    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
+    else { const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); if (!ok) throw new Error('copy'); }
+    toast(label + ' al portapapeles'); return true;
+  } catch (e) { toast('No se pudo copiar: seleccione el texto y cópielo.'); return false; }
+}
+const store = { get(k) { try { return localStorage.getItem('ggbcap10_' + k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem('ggbcap10_' + k, v); } catch (e) {} } };
+const VOZ = { rate: (() => { const r = parseFloat(store.get('vozRate')); return r >= 0.6 && r <= 1.6 ? r : 0.9; })(), set(r) { this.rate = r; store.set('vozRate', r); } };
+
+/* ============================================================
+   Listados del libro (archivos ejemplo7a..7e-entrada.txt)
+   ============================================================ */
+const MANUAL = {
+a: {view:[-1, 12, -3, 5], lines:[
+  '# Figura izquierda: dibujo (cuatro puntos libres)',
+  'A = (0, 0)', 'B = (4, 0)', 'C = (4, 2.5)', 'D = (0, 2.5)', 'dib = Polígono(A, B, C, D)',
+  '# Figura derecha: construcción (dependencias)',
+  'E = (6, 0)', 'F = (10, 0)', 'rEF = Recta(E, F)', 'pE = Perpendicular(E, rEF)', 'pF = Perpendicular(F, rEF)',
+  'G = Punto(pF)', 'rG = Recta(G, rEF)', 'H = Interseca(rG, pE)', 'con = Polígono(E, F, G, H)',
+  '# Ocultar rEF, pE, pF, rG. Mover G sobre pF, por ejemplo a (10, 2.5).',
+  '# Estado y medidas condicionadas',
+  'est_medir = false',
+  '# Casilla de control vinculada a est_medir, leyenda "Mostrar medidas".',
+  'angDib = ÁngulosInteriores(dib)', 'angCon = ÁngulosInteriores(con)', 'esq1 = Esquina(1)',
+  'txtDib = Si(est_medir, Texto("Izquierda: ¿siguen siendo rectos?", esq1 + (0.4, 0.6)))',
+  '# GeoGebra nombra los ángulos angDib_1 … angDib_4 y angCon_1 … angCon_4.',
+  '# Condición para mostrar el objeto (Avanzado) de esos ocho ángulos:  est_medir',
+  'rectDib = SonPerpendiculares(Recta(A, B), Recta(B, C)) && SonPerpendiculares(Recta(B, C), Recta(C, D)) && SonPerpendiculares(Recta(C, D), Recta(D, A))',
+  '# Color dinámico de dib (relleno): Rojo Si(rectDib, 0.1, 0.8)   Verde Si(rectDib, 0.6, 0.2)   Azul 0.2'
+]},
+b: {view:[-1, 13, -7.5, 4], lines:[
+  '# 1. Por paralelas',
+  'A = (0, 0)', 'B = (4, 0)', 'C = (5, 2.5)', 'r1 = Recta(C, Recta(A, B))', 'r2 = Recta(A, Recta(B, C))', 'D = Interseca(r1, r2)', 'p1 = Polígono(A, B, C, D)',
+  '# 2. Por traslación',
+  'E = (7, 0)', 'F = (11, 0)', 'G = (12, 2.5)', 'H = Traslada(G, Vector(F, E))', 'p2 = Polígono(E, F, G, H)',
+  '# 3. Por diagonales que se bisecan',
+  'I = (0, -5)', 'K = (5, -3)', 'M = PuntoMedio(I, K)', 'J = (1, -6.5)', 'L = M + Vector(J, M)', 'p3 = Polígono(I, J, K, L)',
+  '# Comprobaciones numéricas (auxiliares; visibles con est_medir)',
+  'est_medir = false',
+  'par1 = SonParalelas(Recta(A, B), Recta(D, C))', 'par2 = SonParalelas(Recta(E, H), Recta(F, G))', 'par3 = SonParalelas(Recta(I, J), Recta(L, K))',
+  'ladoAB = Distancia(A, B)', 'ladoDC = Distancia(D, C)', 'angA = Ángulo(B, A, D)', 'angC = Ángulo(D, C, B)'
+]},
+c: {view:[-2, 9, -2, 6], lines:[
+  'A = (0, 0)', 'B = (4, 0)', 'C = (5.5, 2.5)', 'rAB = Recta(A, B)', 'rBC = Recta(B, C)', 'r1 = Recta(C, rAB)', 'r2 = Recta(A, rBC)',
+  'D = Interseca(r1, r2)', 'cuad = Polígono(A, B, C, D)', 'rAD = Recta(A, D)', 'rDC = Recta(D, C)',
+  '# Ocultar rAB, rBC, r1, r2, rAD, rDC (auxiliares).',
+  '# Pruebas numéricas (auxiliares)',
+  'esPar = SonParalelas(rAB, rDC) && SonParalelas(rAD, rBC)',
+  'esRect = esPar && SonPerpendiculares(rAB, rBC)',
+  'esRombo = esPar && abs(Distancia(A, B) - Distancia(B, C)) < 0.01',
+  'esCuad = esRect && esRombo',
+  'esTrap = SonParalelas(rAB, rDC) || SonParalelas(rAD, rBC)',
+  '# Estado',
+  'est_clasificar = false', 'est_rect = false', 'est_rombo = false', 'est_cuad = false',
+  '# Guion "Al actualizar" de esRect:   Valor(est_rect, est_rect || esRect)',
+  '# Guion "Al actualizar" de esRombo:  Valor(est_rombo, est_rombo || esRombo)',
+  '# Guion "Al actualizar" de esCuad:   Valor(est_cuad, est_cuad || esCuad)',
+  'esq1 = Esquina(1)', 'esq4 = Esquina(4)',
+  'txtClas = Si(est_clasificar, Texto(Si(esCuad, "Cuadrado: es rectángulo y rombo a la vez; por tanto, paralelogramo y trapecio (def. inclusiva).", Si(esRect, "Rectángulo: paralelogramo con un ángulo recto.", Si(esRombo, "Rombo: paralelogramo con dos lados consecutivos congruentes.", Si(esPar, "Paralelogramo. Con la definición inclusiva, también trapecio.", "Cuadrilátero sin dos pares de lados paralelos.")))), esq4 + (0.4, -0.6)))',
+  'txtReg = Texto("Logradas: " + Si(est_rect, "rectángulo ", "") + Si(est_rombo, "rombo ", "") + Si(est_cuad, "cuadrado", ""), esq1 + (0.4, 0.6))'
+]},
+d: {view:[-11, 5, -5.5, 5], lines:[
+  '# Diagonal AC fija (marcar A y C como "Objeto fijo")',
+  'A = (-3, 0)', 'C = (3, 0)', 'dAC = Segmento(A, C)',
+  '# Deslizadores: mín, máx, incremento, velocidad, ancho, es ángulo, horizontal, animado, aleatorio',
+  'sc = Deslizador(0.15, 0.85, 0.05, 1, 160, false, true, false, false)',
+  'tc = Deslizador(0.15, 0.85, 0.05, 1, 160, false, true, false, false)',
+  'thc = Deslizador(20°, 160°, 1°, 1, 160, true, true, false, false)',
+  'kc = Deslizador(0.4, 1.4, 0.05, 1, 160, false, true, false, false)',
+  '# Casillas de control (booleanos libres)',
+  'bisA = false', 'bisB = false', 'perp = false', 'cong = false', 'mismaRazon = false',
+  '# Dependencias',
+  's = Si(bisA, 0.5, sc)', 't = Si(bisB, 0.5, Si(mismaRazon, s, tc))', 'ang = Si(perp, 90°, thc)', 'L = Si(cong, 1, kc) * Distancia(A, C)',
+  'P = A + s (C - A)', 'u = Vector((cos(ang), sin(ang)))', 'B = P - t L u', 'D = P + (1 - t) L u', 'dBD = Segmento(B, D)', 'cuad = Polígono(A, B, C, D)',
+  '# Clasificación (auxiliares; tolerancias explícitas)',
+  'esPar = abs(s - 0.5) < 0.001 && abs(t - 0.5) < 0.001', 'esPerp = abs(ang - 90°) < 0.001', 'esCong = abs(L - Distancia(A, C)) < 0.001', 'esTrap = abs(s - t) < 0.001',
+  'esRomb = esPar && esPerp', 'esRect = esPar && esCong', 'esCuad = esRomb && esCong',
+  'esCometa = esPerp && (abs(s - 0.5) < 0.001 || abs(t - 0.5) < 0.001)', 'esTrapIso = esTrap && esCong',
+  'est_comprobar = false', 'esq1 = Esquina(1)',
+  'txtClas = Si(est_comprobar, Texto(Si(esCuad, "Cuadrado.", Si(esRect, "Rectángulo: paralelogramo con diagonales congruentes.", Si(esRomb, "Rombo: paralelogramo con diagonales perpendiculares.", Si(esPar, "Paralelogramo: las diagonales se bisecan.", Si(esCometa, "Cometa: una diagonal es mediatriz de la otra.", Si(esTrapIso, "Trapecio isósceles: AB paralelo a DC y diagonales congruentes.", Si(esTrap, "Trapecio: AB es paralelo a DC.", "Cuadrilátero convexo sin más propiedades que las que usted impuso."))))))), esq1 + (0.4, 0.6)))'
+]},
+e: {view:[-2, 9, -2, 6], lines:[
+  'A = (0, 0)', 'B = (5, 0.5)', 'C = (6, 4)', 'D = (1, 3)', 'cuad = Polígono(A, B, C, D)',
+  'M_1 = PuntoMedio(A, B)', 'M_2 = PuntoMedio(B, C)', 'M_3 = PuntoMedio(C, D)', 'M_4 = PuntoMedio(D, A)', 'var = Polígono(M_1, M_2, M_3, M_4)',
+  '# Fases de la justificación, gobernadas por un entero',
+  'est_fase = 0', 'dAC = Segmento(A, C)', 'dBD = Segmento(B, D)',
+  '# Condición para mostrar (Avanzado) de dAC:  est_fase >= 1',
+  '# Condición para mostrar (Avanzado) de dBD:  est_fase >= 2',
+  'esq1 = Esquina(1)',
+  'txtPista = Si(est_fase == 1, Texto("Mire los triángulos ABC y ACD. ¿Qué dice el teorema del segmento medio?", esq1 + (0.4, 0.6)), Si(est_fase == 2, Texto("Ahora los triángulos ABD y BCD. Combine.", esq1 + (0.4, 0.6))))',
+  '# Botón "Pista 1", Al hacer clic:   Valor(est_fase, 1)',
+  '# Botón "Pista 2", Al hacer clic:   Valor(est_fase, 2)',
+  'parVar = SonParalelas(Recta(M_1, M_2), Recta(M_4, M_3)) && SonParalelas(Recta(M_2, M_3), Recta(M_1, M_4))'
+]}
+};
+/* La API de GeoGebra (evalCommand) solo acepta los nombres de comando en inglés, aunque el applet
+   esté en español. El recurso muestra los comandos en español, como en el libro, y los traduce al enviarlos. */
+const CMD_EN = {'Polígono':'Polygon', 'Recta':'Line', 'Perpendicular':'PerpendicularLine', 'Punto':'Point', 'Interseca':'Intersect', 'ÁngulosInteriores':'InteriorAngles',
+  'Esquina':'Corner', 'Si':'If', 'Texto':'Text', 'Traslada':'Translate', 'PuntoMedio':'Midpoint', 'SonParalelas':'AreParallel', 'SonPerpendiculares':'ArePerpendicular',
+  'Distancia':'Distance', 'Ángulo':'Angle', 'Deslizador':'Slider', 'Segmento':'Segment', 'Refleja':'Reflect', 'Circunferencia':'Circle', 'Vector':'Vector'};
+const toEN = c => c.split('"').map((p, i) => i % 2 ? p : p.replace(/([A-Za-zÁÉÍÓÚáéíóúñÑ]+)\s*\(/g, (m, w) => (CMD_EN[w] || w) + '(')).join('"');
+const manualText = k => MANUAL[k].lines.filter(l => !l.startsWith('#')).join('\n');
+function renderCode(box, lines) {
+  box.innerHTML = lines.map(l => l.startsWith('#') ? `<div class="cm">${esc(l)}</div>` : `<button class="line" type="button" title="Copiar esta línea">${esc(l)}</button>`).join('');
+}
+
+/* ============================================================
+   Cápsulas guiadas dentro de GeoGebra Classic
+   (identificadores de herramienta según EuclidianConstants)
+   ============================================================ */
+const VG = (() => {
+  const GT = {
+    0:{n:'Mueve', g:1}, 1:{n:'Punto', g:2}, 501:{n:'Punto en objeto', g:2}, 5:{n:'Intersección', g:2}, 19:{n:'Medio o Centro', g:2},
+    2:{n:'Recta', g:3}, 15:{n:'Segmento', g:3}, 7:{n:'Vector', g:3},
+    4:{n:'Perpendicular', g:4}, 3:{n:'Paralela', g:4},
+    16:{n:'Polígono', g:5}, 36:{n:'Ángulo', g:8}, 38:{n:'Distancia o Longitud', g:8},
+    29:{n:'Simetría central', g:9}, 31:{n:'Traslación', g:9},
+    25:{n:'Deslizador', g:10}, 52:{n:'Casilla de control', g:10}
+  };
+  const GROUPS = ['', 'Mueve', 'Punto', 'Recta', 'Perpendicular', 'Polígono', 'Circunferencia', 'Cónicas', 'Ángulo', 'Simetría axial', 'Deslizador', 'Desplaza vista'];
+  const FIRST = new Set([0, 1, 2, 4, 16, 36, 25]);
+  const toolName = m => m === -1 ? 'Barra de Entrada' : GT[m].n;
+  function toolHow(m) {
+    if (m === -1) return 'Escriba en la Barra de Entrada, debajo de la Vista Algebraica, y pulse Enter.';
+    const t = GT[m];
+    return FIRST.has(m) ? `Botón ${t.g} de la barra de herramientas (grupo ${GROUPS[t.g]}).` : `Botón ${t.g} de la barra (grupo ${GROUPS[t.g]}): despliegue el botón y elija «${t.n}».`;
+  }
+  const names = s => s.split(' ');
+  const yes = (api, n) => { try { return api.exists(n) && api.getValue(n) === 1; } catch (e) { return false; } };
+
+  /* En cada paso, "do" mezcla: [x, y] = toque en esa posición; texto = comando; función = acción propia. */
+  const CAPS = [
+  {key:'a', n:1, title:'El rectángulo que se desarma', ref:'Actividad 1', view:[-1, 12, -3, 5],
+   uso:'Poner a la par un dibujo y una construcción que se ven iguales, y dejar que el arrastre los distinga.',
+   reto:'Antes de arrastrar, escriba cuál de las dos figuras seguirá siendo rectángulo y por qué. Después arrastre C, G y F, y compare con su anticipación.',
+   steps:[
+    {m:16, say:'A la izquierda, el dibujo. Con Polígono marque cuatro puntos en posición de rectángulo y cierre tocando otra vez el primero. Los cuatro son libres.',
+     do:[[0, 0], 'A = (0, 0)', [4, 0], 'B = (4, 0)', [4, 2.5], 'C = (4, 2.5)', [0, 2.5], 'D = (0, 2.5)', [0, 0], 'dib = Polígono(A, B, C, D)']},
+    {m:2, say:'A la derecha, la construcción. Con Recta, toque dos puntos: E y F. Serán los únicos puntos libres de esta figura.',
+     do:[[6, 0], 'E = (6, 0)', [10, 0], 'F = (10, 0)', 'rEF = Recta(E, F)']},
+    {m:4, say:'Con Perpendicular, toque E y la recta; luego F y la recta. Los ángulos en E y en F quedan rectos por construcción.',
+     do:[[6, 0], [8, 0], 'pE = Perpendicular(E, rEF)', [10, 0], [8, 0], 'pF = Perpendicular(F, rEF)']},
+    {m:501, say:'Con Punto en objeto, toque la perpendicular que pasa por F. Ese punto, G, solo puede subir y bajar sobre ella.',
+     do:[[10, 2.5], 'G = Punto(pF)', g => g.xy('G', 10, 2.5)]},
+    {m:3, say:'Con Paralela, toque G y la recta E F. Luego, con Intersección, toque esa paralela y la perpendicular por E: aparece H.',
+     do:[[10, 2.5], [8, 0], 'rG = Recta(G, rEF)', g => g.mode(5), [6, 2.5], 'H = Interseca(rG, pE)']},
+    {m:16, say:'Con Polígono, una E, F, G y H. Las rectas auxiliares quedan en gris: son las dependencias que sostienen la figura.',
+     do:[[6, 0], [10, 0], [10, 2.5], [6, 2.5], [6, 0], 'con = Polígono(E, F, G, H)', g => g.aux(names('rEF pE pF rG'))]},
+    {m:36, say:'Con Ángulo, toque el interior de cada polígono. GeoGebra mide los cuatro ángulos de cada uno: todos marcan noventa grados.',
+     do:[[2, 1.2], 'angDib = ÁngulosInteriores(dib)', [8, 1.2], 'angCon = ÁngulosInteriores(con)']},
+    {m:0, say:'Ahora, la prueba del arrastre. Con Mueve, arrastre C en el dibujo: los ángulos dejan de ser rectos.',
+     do:[[4, 2.5], g => g.drag('C', [[4, 2.5], [4.9, 3.3], [3.2, 2.9, 900]], 3600)]},
+    {m:0, say:'Arrastre G y luego F en la construcción. Cambia de tamaño y de posición, pero sus ángulos siguen en noventa grados.',
+     do:[[10, 2.5], g => g.drag('G', [[10, 2.5], [10, 3.8], [10, 1.4], [10, 2.5]], 3400), [10, 0], g => g.drag('F', [[10, 0], [9.6, 1.1], [10.4, -0.8], [10, 0]], 3600)]}
+   ]},
+  {key:'b', n:2, title:'Un paralelogramo de tres maneras', ref:'Actividad 2', view:[-1, 13, -7.5, 4],
+   uso:'Construir la misma figura a partir de tres propiedades distintas: lados paralelos, traslación de un lado y diagonales que se bisecan.',
+   reto:'Para cada construcción, diga qué propiedad se usó para definirla y cuáles aparecen como consecuencia. ¿Las tres producen siempre un paralelogramo?',
+   steps:[
+    {m:15, say:'Primera manera: por paralelas. Con Segmento, trace A B y B C.',
+     do:[[0, 0], 'A = (0, 0)', [4, 0], 'B = (4, 0)', 'f = Segmento(A, B)', [4, 0], [5, 2.5], 'C = (5, 2.5)', 'g = Segmento(B, C)']},
+    {m:3, say:'Con Paralela, toque C y el segmento A B; luego A y el segmento B C. Con Intersección, toque las dos rectas: aparece D.',
+     do:[[5, 2.5], [2, 0], 'r1 = Recta(C, f)', [0, 0], [4.5, 1.25], 'r2 = Recta(A, g)', g => g.mode(5), [1, 2.5], 'D = Interseca(r1, r2)', 'p1 = Polígono(A, B, C, D)', g => g.aux(names('r1 r2'))]},
+    {m:7, say:'Segunda manera: por traslación. Marque E, F y G. Con Vector, toque F y luego E: indica cuánto y hacia dónde trasladar.',
+     do:[g => g.mode(1), [7, 0], 'E = (7, 0)', [11, 0], 'F = (11, 0)', [12, 2.5], 'G = (12, 2.5)', g => g.mode(7), [11, 0], [7, 0], 'v = Vector(F, E)']},
+    {m:31, say:'Con Traslación, toque G y luego el vector: aparece H. El lado G H es una copia trasladada del lado F E.',
+     do:[[12, 2.5], [9, 0], 'H = Traslada(G, v)', 'p2 = Polígono(E, F, G, H)']},
+    {m:19, say:'Tercera manera: por diagonales. Marque I y K, y con Medio o centro tóquelos: M es el punto medio de la diagonal I K.',
+     do:[g => g.mode(1), [0, -5], 'I = (0, -5)', [5, -3], 'K = (5, -3)', g => g.mode(19), [0, -5], [5, -3], 'M = PuntoMedio(I, K)', 'd1 = Segmento(I, K)']},
+    {m:29, say:'Marque un punto J. Con Simetría central, toque J y luego M: aparece L, y M queda también en el medio de J L.',
+     do:[g => g.mode(1), [1, -6.5], 'J = (1, -6.5)', g => g.mode(29), [1, -6.5], [2.5, -4], 'L = Refleja(J, M)', 'd2 = Segmento(J, L)', 'p3 = Polígono(I, J, K, L)']},
+    {m:0, say:'Con Mueve, arrastre C, luego G y por último J. Las tres figuras cambian, y las tres siguen siendo paralelogramos.',
+     do:[[5, 2.5], g => g.drag('C', [[5, 2.5], [5.8, 3.3], [4.2, 1.8], [5, 2.5]], 3200), [12, 2.5], g => g.drag('G', [[12, 2.5], [11.2, 3.4], [12, 2.5]], 2600), [1, -6.5], g => g.drag('J', [[1, -6.5], [2.6, -6.9], [0.4, -5.9], [1, -6.5]], 3200)]}
+   ]},
+  {key:'c', n:3, title:'Clasificar arrastrando', ref:'Actividad 3', view:[-2, 9, -2, 6],
+   uso:'Recorrer la familia de los paralelogramos con un solo punto y ver que rectángulo, rombo y cuadrado son casos particulares, no figuras aparte.',
+   reto:'Lleve C a posiciones donde la figura sea rectángulo, rombo y cuadrado. Cuando sea cuadrado, ¿dejó de ser rectángulo? ¿Dejó de ser rombo?',
+   watch(api, mem) {
+     if (!api.exists('esPar')) return '';
+     const r = yes(api, 'esRect'), o = yes(api, 'esRombo'), c = yes(api, 'esCuad');
+     if (r) mem.rect = true; if (o) mem.rombo = true; if (c) mem.cuad = true;
+     const ahora = c ? 'cuadrado: rectángulo y rombo a la vez' : r ? 'rectángulo' : o ? 'rombo' : 'paralelogramo sin más propiedades';
+     const chip = (on, t) => `<span class="chip${on ? ' dark' : ''}">${on ? '✓ ' : ''}${t}</span>`;
+     return `<div class="note ok"><span class="ic">Ahora es</span><span>${ahora}.</span></div><div class="chips" style="margin-top:8px"><span class="small muted">Logradas:</span>${chip(mem.rect, 'rectángulo')}${chip(mem.rombo, 'rombo')}${chip(mem.cuad, 'cuadrado')}</div>`;
+   },
+   steps:[
+    {m:2, say:'Con Recta, trace la recta por A y B, y la recta por B y C. A, B y C son los puntos libres.',
+     do:[[0, 0], 'A = (0, 0)', [4, 0], 'B = (4, 0)', 'rAB = Recta(A, B)', [4, 0], [5.5, 2.5], 'C = (5.5, 2.5)', 'rBC = Recta(B, C)']},
+    {m:3, say:'Con Paralela, toque C y la recta A B; luego A y la recta B C. Con Intersección obtenga D y, con Polígono, el paralelogramo.',
+     do:[[5.5, 2.5], [2, 0], 'r1 = Recta(C, rAB)', [0, 0], [4.75, 1.25], 'r2 = Recta(A, rBC)', g => g.mode(5), [1.5, 2.5], 'D = Interseca(r1, r2)', 'cuad = Polígono(A, B, C, D)', 'rAD = Recta(A, D)', 'rDC = Recta(D, C)', g => g.aux(names('rAB rBC r1 r2 rAD rDC'))]},
+    {m:-1, say:'En la Barra de Entrada se definen las pruebas: es paralelogramo, es rectángulo, es rombo y es cuadrado. Son valores lógicos que GeoGebra recalcula en cada arrastre.',
+     do:['esPar = SonParalelas(rAB, rDC) && SonParalelas(rAD, rBC)', 'esRect = esPar && SonPerpendiculares(rAB, rBC)', 'esRombo = esPar && abs(Distancia(A, B) - Distancia(B, C)) < 0.01', 'esCuad = esRect && esRombo', g => g.wait(900)]},
+    {m:0, say:'Con Mueve, lleve C justo encima de B: el ángulo en B es recto. Es un rectángulo.',
+     do:[[5.5, 2.5], g => g.drag('C', [[5.5, 2.5], [4, 3, 1500]], 3200)]},
+    {m:0, say:'Lleve C hasta que B C mida lo mismo que A B. Los lados son iguales, pero el ángulo no es recto: es un rombo.',
+     do:[g => g.drag('C', [[4, 3], [6.4, 3.2, 1500]], 3200)]},
+    {m:0, say:'Por último, C encima de B y a distancia cuatro. Ángulo recto y lados iguales: es un cuadrado, que sigue siendo rectángulo y sigue siendo rombo.',
+     do:[g => g.drag('C', [[6.4, 3.2], [4, 4, 1800]], 3400)]}
+   ]},
+  {key:'d', n:4, title:'Las diagonales deciden', ref:'Actividad 4', view:[-11, 5, -5.5, 5],
+   uso:'Imponer condiciones a las diagonales y ver qué cuadrilátero resulta: una clasificación que parte de las diagonales y no de los lados.',
+   reto:'Antes de activar cada casilla, anticipe qué figura saldrá. ¿Qué condiciones mínimas sobre las diagonales garantizan un rombo? ¿Y un rectángulo?',
+   watch(api) {
+     if (!api.exists('esPar')) return '';
+     const y = n => yes(api, n);
+     const t = y('esCuad') ? 'Cuadrado.' : y('esRect') ? 'Rectángulo: paralelogramo con diagonales congruentes.' : y('esRomb') ? 'Rombo: paralelogramo con diagonales perpendiculares.'
+       : y('esPar') ? 'Paralelogramo: las diagonales se bisecan.' : y('esCometa') ? 'Cometa: una diagonal es mediatriz de la otra.'
+       : y('esTrapIso') ? 'Trapecio isósceles: AB paralelo a DC y diagonales congruentes.' : y('esTrap') ? 'Trapecio: AB es paralelo a DC.' : 'Cuadrilátero convexo sin más propiedades que las impuestas.';
+     return `<div class="note ok"><span class="ic">Resultado</span><span>${t}</span></div>`;
+   },
+   steps:[
+    {m:15, say:'Con Segmento, trace la diagonal A C. En esta actividad A y C quedan fijos: lo que varía es la otra diagonal.',
+     do:[[-3, 0], 'A = (-3, 0)', [3, 0], 'C = (3, 0)', 'dAC = Segmento(A, C)', g => g.fix(['A', 'C'])]},
+    {m:25, say:'Con Deslizador se crean cuatro controles: dónde se cruzan las diagonales sobre A C, dónde sobre B D, el ángulo entre ellas y la razón entre sus longitudes.',
+     do:['sc = Deslizador(0.15, 0.85, 0.05, 1, 160, false, true, false, false)', 'tc = Deslizador(0.15, 0.85, 0.05, 1, 160, false, true, false, false)', 'thc = Deslizador(20°, 160°, 1°, 1, 160, true, true, false, false)', 'kc = Deslizador(0.4, 1.4, 0.05, 1, 160, false, true, false, false)',
+       g => { g.value('sc', 0.4); g.value('tc', 0.6); g.value('thc', Math.PI / 3); g.value('kc', 0.8); }, g => g.wait(900)]},
+    {m:52, say:'Con Casilla de control se crean cinco condiciones: bisecar A C, bisecar B D, perpendiculares, congruentes y cortarse en la misma razón.',
+     do:['bisA = false', 'bisB = false', 'perp = false', 'cong = false', 'mismaRazon = false',
+       g => { g.caption('bisA', 'BD corta a AC en su punto medio', 0); g.caption('bisB', 'AC corta a BD en su punto medio', 1); g.caption('perp', 'Diagonales perpendiculares', 2); g.caption('cong', 'Diagonales congruentes', 3); g.caption('mismaRazon', 'Se cortan en la misma razón', 4); }, g => g.wait(900)]},
+    {m:-1, say:'En la Barra de Entrada, las dependencias: el punto de cruce P, la dirección de la segunda diagonal y los vértices B y D. Cada casilla sustituye un deslizador por un valor exacto.',
+     do:['s = Si(bisA, 0.5, sc)', 't = Si(bisB, 0.5, Si(mismaRazon, s, tc))', 'ang = Si(perp, 90°, thc)', 'L = Si(cong, 1, kc) * Distancia(A, C)', 'P = A + s (C - A)', 'u = Vector((cos(ang), sin(ang)))', 'B = P - t L u', 'D = P + (1 - t) L u', 'dBD = Segmento(B, D)', 'cuad = Polígono(A, B, C, D)',
+       g => g.hide(['u']),
+       'esPar = abs(s - 0.5) < 0.001 && abs(t - 0.5) < 0.001', 'esPerp = abs(ang - 90°) < 0.001', 'esCong = abs(L - Distancia(A, C)) < 0.001', 'esTrap = abs(s - t) < 0.001', 'esRomb = esPar && esPerp', 'esRect = esPar && esCong', 'esCuad = esRomb && esCong', 'esCometa = esPerp && (abs(s - 0.5) < 0.001 || abs(t - 0.5) < 0.001)', 'esTrapIso = esTrap && esCong', g => g.wait(1200)]},
+    {m:0, say:'Active las dos primeras casillas: las diagonales se bisecan. El cuadrilátero es un paralelogramo, para cualquier ángulo y cualquier razón.',
+     do:[g => g.check('bisA', true), g => g.wait(900), g => g.check('bisB', true), g => g.wait(900), g => g.slide('thc', [60, 110, 75], 1, true)]},
+    {m:0, say:'Añada diagonales perpendiculares: ahora es un rombo. Añada además congruentes: es un cuadrado.',
+     do:[g => g.check('perp', true), g => g.wait(2200), g => g.check('cong', true), g => g.wait(1800)]},
+    {m:0, say:'Quite perpendiculares y deje congruentes: rectángulo. Vuelva a perpendiculares y quite una de las bisecciones: una diagonal es mediatriz de la otra, y resulta una cometa.',
+     do:[g => g.check('perp', false), g => g.wait(2600), g => g.check('perp', true), g => g.check('cong', false), g => g.check('bisB', false), g => g.wait(2600)]},
+    {m:0, say:'Por último, desactive todo y marque solo la misma razón: los lados A B y D C quedan paralelos. Es un trapecio.',
+     do:[g => g.check('bisA', false), g => g.check('perp', false), g => g.check('mismaRazon', true), g => g.wait(2600)]}
+   ]},
+  {key:'e', n:5, title:'Del arrastre a la justificación (Varignon)', ref:'Actividad 5', view:[-2, 9, -2, 6],
+   uso:'Encontrar una regularidad con el arrastre y pasar de «siempre ocurre» a «por qué ocurre», con las diagonales como pista.',
+   reto:'Formule la conjetura por escrito. Busque un contraejemplo con cuadriláteros cóncavos y cruzados. Luego use las diagonales para justificarla con el teorema del segmento medio.',
+   steps:[
+    {m:16, say:'Con Polígono, trace un cuadrilátero cualquiera, sin ninguna propiedad especial.',
+     do:[[0, 0], 'A = (0, 0)', [5, 0.5], 'B = (5, 0.5)', [6, 4], 'C = (6, 4)', [1, 3], 'D = (1, 3)', [0, 0], 'cuad = Polígono(A, B, C, D)']},
+    {m:19, say:'Con Medio o Centro, toque cada lado: aparecen los cuatro puntos medios.',
+     do:[[2.5, 0.25], 'M_1 = PuntoMedio(A, B)', [5.5, 2.25], 'M_2 = PuntoMedio(B, C)', [3.5, 3.5], 'M_3 = PuntoMedio(C, D)', [0.5, 1.5], 'M_4 = PuntoMedio(D, A)']},
+    {m:16, say:'Con Polígono, una los cuatro puntos medios. ¿Qué figura parece?',
+     do:[[2.5, 0.25], [5.5, 2.25], [3.5, 3.5], [0.5, 1.5], [2.5, 0.25], 'var = Polígono(M_1, M_2, M_3, M_4)', g => g.color('var', 239, 51, 64)]},
+    {m:0, say:'Arrastre los vértices. Pruebe con un cuadrilátero cóncavo, llevando C hacia adentro. El cuadrilátero interior sigue pareciendo un paralelogramo.',
+     do:[[6, 4], g => g.drag('C', [[6, 4], [7, 2, 700], [2.6, 1.6, 1400], [6, 4]], 6200), [1, 3], g => g.drag('D', [[1, 3], [2.5, 5], [1, 3]], 2600)]},
+    {m:15, say:'Primera pista. Con Segmento, trace la diagonal A C. Mire los triángulos A B C y A C D: ¿qué dice el teorema del segmento medio sobre los lados del cuadrilátero interior?',
+     do:[[0, 0], [6, 4], 'dAC = Segmento(A, C)', g => g.dash('dAC'), g => g.wait(1500)]},
+    {m:15, say:'Segunda pista. Trace la diagonal B D y haga lo mismo con los triángulos A B D y B C D. Combine las dos conclusiones.',
+     do:[[5, 0.5], [1, 3], 'dBD = Segmento(B, D)', g => g.dash('dBD'), g => g.wait(1500)]}
+   ]}
+  ];
+
+  /* estado */
+  const CANCEL = {cancel:true};
+  let api = null, loading = null, ci = 0, idx = 0, token = 0, playing = false, voice = true, busy = false, mem = {};
+  const fails = [];
+  const host = $('#vgHost');
+  const sleep = (ms, my) => new Promise((res, rej) => setTimeout(() => my === token ? res() : rej(CANCEL), ms));
+  function makeG(anim, my) {
+    const ok = c => { let r = false; try { r = api.evalCommand(toEN(c)); } catch (e) {} if (!r) { console.warn('GeoGebra no aceptó:', c); if (!fails.includes(c)) fails.push(c); } return r; };
+    const chk = () => { if (my !== token) throw CANCEL; };
+    const each = (list, fn) => list.forEach(n => { try { fn(n); } catch (e) {} });
+    return {
+      mode(m) { chk(); try { api.setMode(m); } catch (e) {} },
+      cmd(c) { chk(); return ok(c); },
+      cmdAny(list) { chk(); for (const c of list) { let r = false; try { r = api.evalCommand(toEN(c)); } catch (e) {} if (r) return true; } fails.push(list.join(' | ')); return false; },
+      xy(n, x, y) { chk(); try { api.setCoords(n, x, y); } catch (e) {} },
+      color(n, r, g, b) { try { api.setColor(n, r, g, b); } catch (e) {} },
+      aux(list) { each(list, n => { api.setColor(n, 150, 160, 175); api.setLineStyle(n, 1); api.setLineThickness(n, 2); api.setLabelVisible(n, false); }); },
+      hide(list) { each(list, n => api.setVisible(n, false)); },
+      fix(list) { each(list, n => api.setFixed(n, true, false)); },
+      dash(n) { try { api.setLineStyle(n, 1); api.setColor(n, 61, 90, 138); } catch (e) {} },
+      caption(n, t, row = 0) { try { api.evalXML(`<element type="boolean" label="${n}"><labelOffset x="30" y="${215 + row * 32}"/></element>`); api.setVisible(n, true); api.setCaption(n, t); api.setLabelStyle(n, 3); api.setLabelVisible(n, true); } catch (e) {} },
+      value(n, v) { chk(); try { api.setValue(n, v); } catch (e) {} },
+      check(n, on) { chk(); try { api.setValue(n, on ? 1 : 0); } catch (e) {} },
+      async wait(ms) { if (anim) await sleep(ms, my); },
+      async tap(x, y) {
+        if (!anim) return; chk();
+        let made = false; try { made = api.evalCommand(`toque = Circunferencia((${x}, ${y}), 0.28)`); } catch (e) {}
+        if (made) { try { api.setColor('toque', 239, 51, 64); api.setLineThickness('toque', 9); api.setLabelVisible('toque', false); api.setAuxiliary('toque', true); api.setFixed('toque', true, false); } catch (e) {} }
+        try { await sleep(380, my); } finally { try { api.deleteObject('toque'); } catch (e) {} }
+        await sleep(280, my);
+      },
+      async drag(name, path, ms) {
+        chk(); const last = path[path.length - 1];
+        if (!anim) { api.setCoords(name, last[0], last[1]); return; }
+        const holds = path.reduce((s, p) => s + (p[2] || 0), 0), seg = Math.max(300, (ms - holds) / (path.length - 1));
+        for (let i = 0; i < path.length - 1; i++) {
+          const [x0, y0] = path[i], [x1, y1] = path[i + 1], t0 = performance.now();
+          for (;;) { const s = Math.min(1, (performance.now() - t0) / seg), e = s * s * (3 - 2 * s); api.setCoords(name, x0 + (x1 - x0) * e, y0 + (y1 - y0) * e); if (s >= 1) break; await sleep(30, my); }
+          if (path[i + 1][2]) await sleep(path[i + 1][2], my);
+        }
+      },
+      async slide(name, vals, stepV = 1, deg = false) {
+        chk(); const k = deg ? Math.PI / 180 : 1, inc = deg ? 3 : stepV;
+        if (!anim) { api.setValue(name, vals[vals.length - 1] * k); return; }
+        let v = vals[0]; api.setValue(name, v * k);
+        for (const T of vals.slice(1)) { while (Math.abs(v - T) > 1e-9) { v += Math.sign(T - v) * Math.min(inc, Math.abs(T - v)); api.setValue(name, v * k); await sleep(deg ? 70 : 240, my); } await sleep(600, my); }
+      }
+    };
+  }
+  async function runStep(step, g) {
+    g.mode(step.m >= 0 ? step.m : 0);
+    for (const it of step.do) { if (typeof it === 'string') g.cmd(it); else if (Array.isArray(it)) await g.tap(it[0], it[1]); else await it(g); }
+  }
+  function setup(c) {
+    api.newConstruction(); mem = {};
+    try { api.setGridVisible(true); api.setAxesVisible(true, true); api.setCoordSystem(...c.view); api.setMode(0); } catch (e) {}
+  }
+  async function rebuild(n, my) { setup(CAPS[ci]); for (let k = 0; k < n; k++) await runStep(CAPS[ci].steps[k], makeG(false, my)); try { api.setMode(0); } catch (e) {} }
+
+  function pickVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    const vs = speechSynthesis.getVoices();
+    return ['es-CR', 'es-MX', 'es-US', 'es-419', 'es-CO', 'es-AR', 'es-CL', 'es-PE'].map(l => vs.find(v => v.lang.replace('_', '-') === l)).find(Boolean) || vs.find(v => /^es/i.test(v.lang)) || null;
+  }
+  function speakP(text, my) {
+    const read = Math.max(1800, text.length * 55 / VOZ.rate);
+    if (!voice || !('speechSynthesis' in window)) return sleep(read, my);
+    return new Promise((res, rej) => {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text), v = pickVoice();
+      if (v) u.voice = v; u.lang = v ? v.lang : 'es-MX'; u.rate = VOZ.rate;
+      let done = false; const fin = () => { if (done) return; done = true; my === token ? res() : rej(CANCEL); };
+      u.onend = fin; u.onerror = fin; setTimeout(fin, text.length * 95 / VOZ.rate + 4000);
+      speechSynthesis.speak(u);
+    });
+  }
+
+  function msg(html) { const m = $('#vgMsg'); if (html === null) { m.hidden = true; return; } m.hidden = false; m.innerHTML = html; }
+  function renderSteps() {
+    const c = CAPS[ci];
+    $('#vgList').innerHTML = c.steps.map((s, k) => {
+      const st = k < idx ? 'done' : (k === idx ? 'now' : '');
+      return `<li class="${st}" ${k === idx ? 'aria-current="step"' : ''}><button type="button" data-vgstep="${k}"><span class="st">${k < idx ? '✓' : k + 1}</span><span><b>${esc(toolName(s.m))}</b><small>${esc(s.say)}</small></span></button></li>`;
+    }).join('');
+    const k = Math.min(idx, c.steps.length - 1), s = c.steps[k], done = idx >= c.steps.length;
+    $('#vgNow').innerHTML = done
+      ? `<span class="vg-k">Construcción completa</span><p class="vg-say">Ahora es su turno. ${esc(c.reto)}</p>`
+      : `<span class="vg-k">Paso ${k + 1} de ${c.steps.length}</span><div class="vg-tool">Herramienta: <b>${esc(toolName(s.m))}</b></div><p class="vg-where">${esc(toolHow(s.m))}</p><p class="vg-say">${esc(s.say)}</p>`;
+    $('#vgPlay').innerHTML = playing ? '&#10074;&#10074; Pausar' : (idx >= c.steps.length ? '&#8634; Ver de nuevo' : (idx > 0 ? '&#9654; Continuar' : '&#9654; Reproducir en GeoGebra'));
+    $('#vgPlay').setAttribute('aria-pressed', String(playing));
+    $('#vgPrev').disabled = idx === 0 && !playing; $('#vgNext').disabled = idx >= c.steps.length;
+  }
+  function inFrame() { try { return window.self !== window.top; } catch (e) { return true; } }
+  function failMsg() {
+    return `<p><b>No se pudo cargar GeoGebra aquí.</b></p><p class="small">${inFrame() ? 'El recurso parece abierto dentro de una vista previa que bloquea programas externos. Descargue el archivo y ábralo con doble clic en Chrome, Edge o Firefox.' : 'Revise la conexión a internet y vuelva a pulsar Reproducir.'}</p><p class="small">Mientras tanto puede leer los pasos de la lista y copiar el listado de comandos.</p>`;
+  }
+  function ensure() {
+    if (api) return Promise.resolve(api);
+    if (loading) return loading;
+    msg('<p><b>Cargando GeoGebra…</b></p><p class="small">La primera vez puede tardar unos segundos.</p>');
+    loading = loadDeploy().then(() => new Promise((res, rej) => {
+      $('#vgBox').innerHTML = '<div id="vgAppletHost"></div>';
+      const params = {id:'ggbCap', appName:'classic', width:Math.max(320, host.clientWidth), height:host.clientHeight || 520, language:'es', perspective:'AG',
+        showToolBar:true, showToolBarHelp:true, showAlgebraInput:true, showMenuBar:true, showResetIcon:false, enableShiftDragZoom:true, enableRightClick:true,
+        errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF', appletOnLoad:a => { api = a; msg(null); res(a); }};
+      try { new GGBApplet(params, true).inject('vgAppletHost'); } catch (e) { rej(e); }
+      setTimeout(() => { if (!api) rej(new Error('timeout')); }, 40000);
+    })).catch(e => { loading = null; msg(failMsg()); throw e; });
+    return loading;
+  }
+  async function play() {
+    if (busy) return;
+    const c = CAPS[ci]; if (idx >= c.steps.length) idx = 0;
+    try { await ensure(); } catch (e) { return; }
+    const my = ++token; playing = true; renderSteps();
+    try {
+      busy = true; await rebuild(idx, my); busy = false;
+      while (idx < c.steps.length) {
+        renderSteps();
+        const voz = speakP(c.steps[idx].say, my);
+        await sleep(350, my); await runStep(c.steps[idx], makeG(true, my)); await voz;
+        try { api.setMode(0); } catch (e) {}
+        idx++; renderSteps(); await sleep(500, my);
+      }
+      playing = false; renderSteps();
+    } catch (e) { busy = false; if (e !== CANCEL) console.error(e); }
+  }
+  async function stopAndSync() {
+    const my = ++token; playing = false;
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    renderSteps();
+    if (api) { busy = true; try { await rebuild(idx, my); } catch (e) {} busy = false; }
+  }
+  async function single(k) {
+    if (busy) return;
+    try { await ensure(); } catch (e) { return; }
+    const my = ++token; playing = false; idx = k; renderSteps();
+    try {
+      busy = true; await rebuild(idx, my); busy = false;
+      const voz = speakP(CAPS[ci].steps[idx].say, my);
+      await sleep(350, my); await runStep(CAPS[ci].steps[idx], makeG(true, my)); await voz; try { api.setMode(0); } catch (e) {}
+      idx++; renderSteps();
+    } catch (e) { busy = false; if (e !== CANCEL) console.error(e); }
+  }
+  function load(i) {
+    token++; playing = false; if ('speechSynthesis' in window) speechSynthesis.cancel();
+    ci = i; idx = 0; mem = {}; const c = CAPS[i];
+    $$('#vtList [role=tab]').forEach((b, k) => { b.setAttribute('aria-selected', String(k === i)); b.tabIndex = k === i ? 0 : -1; });
+    $('#vtTitle').textContent = c.title;
+    const tools = [...new Set(c.steps.map(s => toolName(s.m)))].join(' · ');
+    const CONS = {"a": "cap10-actividad1", "b": "cap10-actividad2", "c": "cap10-actividad3", "d": "cap10-actividad4", "e": "cap10-actividad5"};
+    $('#vtMeta').innerHTML = `<a class="chip" href="../construcciones/${CONS[c.key]}.html">Construcción terminada</a><span class="chip dark">Libro: sección 10.5, ${esc(c.ref.toLowerCase())}</span><span class="chip">${c.steps.length} pasos</span>`;
+    $('#vgTools').innerHTML = `<b>Herramientas:</b> ${esc(tools)}`;
+    $('#vgUso').innerHTML = `<div class="note ok"><span class="ic">Propósito</span><span>${esc(c.uso)}</span></div><div class="note" style="margin-top:8px"><span class="ic">Reto</span><span>${esc(c.reto)}</span></div>`;
+    renderCode($('#vtCmd'), MANUAL[c.key].lines); $('#vgWatch').innerHTML = '';
+    renderSteps();
+    if (api) { const my = token; rebuild(0, my).catch(() => {}); }
+  }
+  /* estado en vivo de la construcción (actividades 3 y 4) */
+  setInterval(() => { const c = CAPS[ci]; if (!api || !c.watch) return; let h = ''; try { h = c.watch(api, mem); } catch (e) {} const box = $('#vgWatch'); if (box.innerHTML !== h) box.innerHTML = h; }, 400);
+
+  $('#vtList').innerHTML = CAPS.map((c, i) => `<button type="button" role="tab" aria-controls="vtPanel" data-clip="${i}"><span class="vnum">${c.n}</span><span><b>${esc(c.title)}</b><small>${esc(c.ref)} · ${c.steps.length} pasos</small></span></button>`).join('');
+  $('#vtList').addEventListener('click', e => { const b = e.target.closest('[data-clip]'); if (b) load(+b.dataset.clip); });
+  $('#vtList').addEventListener('keydown', e => {
+    const tabs = $$('#vtList [role=tab]'), i = tabs.indexOf(document.activeElement); if (i < 0) return;
+    const j = ['ArrowDown', 'ArrowRight'].includes(e.key) ? (i + 1) % tabs.length : ['ArrowUp', 'ArrowLeft'].includes(e.key) ? (i + tabs.length - 1) % tabs.length : -1;
+    if (j >= 0) { e.preventDefault(); tabs[j].focus(); load(j); }
+  });
+  $('#vgPlay').addEventListener('click', () => { if (playing) stopAndSync(); else play(); });
+  document.addEventListener('click', e => { if (e.target.closest('[data-vgplay]')) play(); });
+  $('#vgRestart').addEventListener('click', async () => { await stopAndSync(); idx = 0; play(); });
+  $('#vgNext').addEventListener('click', async () => { if (playing) await stopAndSync(); if (idx < CAPS[ci].steps.length) single(idx); });
+  $('#vgPrev').addEventListener('click', async () => { if (playing) await stopAndSync(); idx = Math.max(0, idx - 1); renderSteps(); if (api) { const my = ++token; busy = true; try { await rebuild(idx, my); } catch (e) {} busy = false; } });
+  $('#vgList').addEventListener('click', async e => { const b = e.target.closest('[data-vgstep]'); if (!b) return; if (playing) await stopAndSync(); single(+b.dataset.vgstep); });
+  $('#vgVoice').addEventListener('change', e => {
+    voice = e.target.checked;
+    if (voice && !('speechSynthesis' in window)) { toast('Este navegador no tiene narración por voz; el texto sigue disponible.'); e.target.checked = false; voice = false; }
+    if (!voice && 'speechSynthesis' in window) speechSynthesis.cancel();
+  });
+  if (!('speechSynthesis' in window)) { voice = false; $('#vgVoice').checked = false; } else speechSynthesis.getVoices();
+  $('#vgRate').value = String(VOZ.rate);
+  $('#vgRate').addEventListener('change', e => { VOZ.set(parseFloat(e.target.value)); toast('Velocidad de la voz: ' + e.target.value); });
+  window.addEventListener('resize', () => { if (api) try { api.setSize(host.clientWidth, host.clientHeight); } catch (e) {} });
+  $('#cmdCopy').addEventListener('click', () => copyText(manualText(CAPS[ci].key), 'Comandos copiados'));
+  $('#cmdRun').addEventListener('click', () => runManual(CAPS[ci].key));
+  $('#vtCmd').addEventListener('click', e => { const l = e.target.closest('button.line'); if (l) copyText(l.textContent, 'Línea copiada'); });
+  load(0);
+  /* Prueba silenciosa: ejecuta todos los pasos de todas las cápsulas sin animación y devuelve los comandos rechazados. */
+  async function selfTest() {
+    await ensure(); const out = {};
+    for (let i = 0; i < CAPS.length; i++) { fails.length = 0; ci = i; const my = ++token; await rebuild(CAPS[i].steps.length, my); out[CAPS[i].key] = {rechazados:[...fails], objetos:api.getAllObjectNames().length}; }
+    load(0); return out;
+  }
+  return {CAPS, load, play, selfTest, fails, get api() { return api; }, get ci() { return ci; }};
+})();
+
+/* enlaces directos: #act1 … #act5 abren la cápsula correspondiente */
+function fromHash() {
+  const m = /^#act([1-5])$/.exec(location.hash); if (!m) return;
+  VG.load(+m[1] - 1); $('#capsulas').scrollIntoView({behavior:'auto', block:'start'});
+}
+window.addEventListener('hashchange', fromHash); fromHash();
+document.addEventListener('click', e => { const b = e.target.closest('[data-goto-cap]'); if (!b) return; VG.load(+b.dataset.gotoCap); $('#capsulas').scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block:'start'}); });
+
+/* ============================================================
+   Laboratorio: dibujo frente a construcción (rectángulo)
+   ============================================================ */
+const LAB = (() => {
+  const MINX = 14, MAXX = 286, MINY = 14, MAXY = 246;
+  const init = {drawn:[{x:60, y:200}, {x:240, y:200}, {x:240, y:90}, {x:60, y:90}], built:{E:{x:60, y:200}, F:{x:240, y:200}, h:110}};
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const st = clone(init);
+  const NM = {drawn:['A', 'B', 'C', 'D'], built:['E', 'F', 'G', 'H']};
+  function builtPts(b = st.built) {
+    const v = {x:b.F.x - b.E.x, y:b.F.y - b.E.y}, L = Math.hypot(v.x, v.y) || 1, n = {x:v.y / L, y:-v.x / L};
+    return [b.E, b.F, {x:b.F.x + n.x * b.h, y:b.F.y + n.y * b.h}, {x:b.E.x + n.x * b.h, y:b.E.y + n.y * b.h}];
+  }
+  const inside = p => p.x >= MINX && p.x <= MAXX && p.y >= MINY && p.y <= MAXY;
+  const pts = kind => kind === 'drawn' ? st.drawn : builtPts();
+  function tryMove(kind, i, x, y) {
+    if (kind === 'drawn') { st.drawn[i] = {x:Math.max(MINX, Math.min(MAXX, x)), y:Math.max(MINY, Math.min(MAXY, y))}; return; }
+    const b = clone(st.built);
+    if (i === 0) b.E = {x, y}; else if (i === 1) b.F = {x, y};
+    else { const v = {x:b.F.x - b.E.x, y:b.F.y - b.E.y}, L = Math.hypot(v.x, v.y) || 1, n = {x:v.y / L, y:-v.x / L}; b.h = (x - b.F.x) * n.x + (y - b.F.y) * n.y; }
+    const ps = builtPts(b);
+    if (ps.every(inside) && Math.hypot(b.F.x - b.E.x, b.F.y - b.E.y) > 40 && Math.abs(b.h) > 20) st.built = b;
+  }
+  function setup(id, kind) {
+    const svg = $('#' + id);
+    const grid = svgEl('g', {stroke:'#E6EBF2', 'stroke-width':1}, svg);
+    for (let k = 20; k <= 280; k += 20) svgEl('line', {x1:k, y1:10, x2:k, y2:250}, grid);
+    for (let k = 20; k <= 240; k += 20) svgEl('line', {x1:10, y1:k, x2:290, y2:k}, grid);
+    const guide = kind === 'built' ? svgEl('line', {stroke:'#8A97AA', 'stroke-width':1.5, 'stroke-dasharray':'5 5'}, svg) : null;
+    const poly = svgEl('polygon', {fill:'#3D5A8A', 'fill-opacity':.16, stroke:'#002855', 'stroke-width':3, 'stroke-linejoin':'round'}, svg);
+    const labels = NM[kind].map(n => { const t = svgEl('text', {'font-family':'Helvetica,Arial', 'font-size':15, 'font-weight':700, fill:'#002855', 'text-anchor':'middle', 'dominant-baseline':'central'}, svg); t.textContent = n; return t; });
+    const handles = [], nFree = kind === 'drawn' ? 4 : 3;
+    for (let i = 0; i < 4; i++) {
+      const free = i < nFree, semi = kind === 'built' && i === 2;
+      const h = svgEl('g', free ? {class:'handle', tabindex:0, role:'button', 'aria-label':`Punto ${NM[kind][i]}${semi ? ', se desliza sobre la perpendicular' : ''}. Arrástrelo o use las flechas.`} : {}, svg);
+      if (free) svgEl('circle', {class:'ring', r:16, fill:'transparent', stroke:'transparent'}, h);
+      svgEl('circle', {r: free ? 8.5 : 6.5, fill: semi ? '#7FA0D0' : free ? '#002855' : '#8A97AA', stroke:'#fff', 'stroke-width':2}, h);
+      handles.push(h); if (free) attach(svg, h, kind, i);
+    }
+    return {svg, poly, labels, handles, guide};
+  }
+  function attach(svg, h, kind, i) {
+    const toSvg = e => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); };
+    h.addEventListener('pointerdown', e => { e.preventDefault(); h.setPointerCapture(e.pointerId); h.dataset.drag = '1'; h.style.cursor = 'grabbing'; });
+    h.addEventListener('pointermove', e => { if (h.dataset.drag !== '1') return; const p = toSvg(e); tryMove(kind, i, p.x, p.y); draw(kind); });
+    const end = () => { h.dataset.drag = ''; h.style.cursor = ''; };
+    h.addEventListener('pointerup', end); h.addEventListener('pointercancel', end);
+    h.addEventListener('keydown', e => {
+      const d = e.shiftKey ? 1 : 6, m = {ArrowLeft:[-d, 0], ArrowRight:[d, 0], ArrowUp:[0, -d], ArrowDown:[0, d]}[e.key];
+      if (!m) return; e.preventDefault(); const cur = pts(kind)[i]; tryMove(kind, i, cur.x + m[0], cur.y + m[1]); draw(kind);
+    });
+  }
+  function angle(prev, v, next) {
+    const a = {x:prev.x - v.x, y:prev.y - v.y}, b = {x:next.x - v.x, y:next.y - v.y};
+    const c = (a.x * b.x + a.y * b.y) / ((Math.hypot(a.x, a.y) * Math.hypot(b.x, b.y)) || 1);
+    return Math.acos(Math.max(-1, Math.min(1, c))) * 180 / Math.PI;
+  }
+  const P = {};
+  function draw(kind) {
+    const o = P[kind], ps = pts(kind), nm = NM[kind];
+    o.poly.setAttribute('points', ps.map(p => `${p.x},${p.y}`).join(' '));
+    if (o.guide) { const F = ps[1], G = ps[2], d = {x:G.x - F.x, y:G.y - F.y}, m = Math.hypot(d.x, d.y) || 1; o.guide.setAttribute('x1', F.x - d.x / m * 400); o.guide.setAttribute('y1', F.y - d.y / m * 400); o.guide.setAttribute('x2', F.x + d.x / m * 400); o.guide.setAttribute('y2', F.y + d.y / m * 400); }
+    const cen = {x:ps.reduce((s, p) => s + p.x, 0) / 4, y:ps.reduce((s, p) => s + p.y, 0) / 4};
+    ps.forEach((p, i) => {
+      o.handles[i].setAttribute('transform', `translate(${p.x},${p.y})`);
+      const d = {x:p.x - cen.x, y:p.y - cen.y}, m = Math.hypot(d.x, d.y) || 1;
+      o.labels[i].setAttribute('x', Math.max(10, Math.min(290, p.x + d.x / m * 18))); o.labels[i].setAttribute('y', Math.max(10, Math.min(250, p.y + d.y / m * 18)));
+    });
+    const ang = [0, 1, 2, 3].map(i => angle(ps[(i + 3) % 4], ps[i], ps[(i + 1) % 4]));
+    $(kind === 'drawn' ? '#roDrawn' : '#roBuilt').innerHTML = nm.map((n, i) => `<span>∠${n} = ${ang[i].toFixed(1)}°</span>`).join('');
+    const rect = ang.every(a => Math.abs(a - 90) < 0.5);
+    const vd = $(kind === 'drawn' ? '#vdDrawn' : '#vdBuilt');
+    vd.className = 'verdict ' + (rect ? 'ok' : 'no');
+    vd.textContent = rect ? '✓ Sigue siendo rectángulo' : '✗ Ya no es rectángulo';
+  }
+  P.drawn = setup('labDrawn', 'drawn'); P.built = setup('labBuilt', 'built');
+  draw('drawn'); draw('built');
+  $('#labReset').addEventListener('click', () => { st.drawn = clone(init.drawn); st.built = clone(init.built); draw('drawn'); draw('built'); toast('Laboratorio en la posición inicial'); });
+  return {st, builtPts, tryMove, draw};
+})();
+
+/* ============================================================
+   Práctica graduada
+   ============================================================ */
+const QUIZ = [
+  {lvl:'Nivel 1 · Definiciones e inclusiones', items:[
+    {say:'Un cuadrado no es un rectángulo, porque el rectángulo tiene dos lados largos y dos cortos.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Esa idea viene de la imagen típica del rectángulo «alargado», no de su definición. Es el fenómeno del prototipo que describe la sección 10.1 del libro.'},
+      {t:'No se sostiene: el rectángulo se define por sus cuatro ángulos rectos, y el cuadrado los tiene.', ok:true, fb:'Correcto. La definición no dice nada sobre lados desiguales; el cuadrado es un rectángulo con una propiedad más. En la actividad 3, cuando la figura llega a cuadrado, la prueba «es rectángulo» sigue siendo verdadera.'}]},
+    {say:'Todo rombo es un paralelogramo.', opts:[
+      {t:'Se sostiene.', ok:true, fb:'Correcto. Cuatro lados congruentes obligan a que los lados opuestos sean paralelos. El recíproco no vale: hay paralelogramos que no son rombos.'},
+      {t:'No se sostiene: el rombo es otra figura.', ok:false, fb:'Pensar las figuras como casillas separadas es una clasificación por partición. En la clasificación jerárquica que adopta el libro, el rombo es un paralelogramo con lados consecutivos congruentes.'}]},
+    {say:'Un paralelogramo es un trapecio.', opts:[
+      {t:'Depende de la definición de trapecio que se haya declarado.', ok:true, fb:'Correcto. Con la definición inclusiva (al menos un par de lados paralelos), que es la del libro, sí lo es. Con la exclusiva (exactamente un par), no. Por eso la convención debe declararse antes de clasificar.'},
+      {t:'Nunca: el trapecio tiene solo un par de lados paralelos.', ok:false, fb:'Eso es cierto solo bajo la definición exclusiva. La sección 10.2 del libro declara la inclusiva y explica por qué; ninguna de las dos es «la verdadera», pero hay que decir cuál se usa.'},
+      {t:'Siempre, sin importar la definición.', ok:false, fb:'Con la definición exclusiva no lo sería. La respuesta depende de la convención declarada.'}]}
+  ]},
+  {lvl:'Nivel 2 · Construcción y propiedades', items:[
+    {say:'Puse cuatro puntos en (0, 0), (4, 0), (4, 2.5) y (0, 2.5) y los uní con Polígono: construí un rectángulo.', opts:[
+      {t:'Se sostiene: las coordenadas lo garantizan.', ok:false, fb:'Las coordenadas garantizan la posición inicial, no la relación entre los lados. Arrastre un vértice en el laboratorio: deja de ser rectángulo.'},
+      {t:'No se sostiene: es un dibujo. Hoy parece rectángulo, pero ninguna dependencia obliga a que lo siga siendo.', ok:true, fb:'Correcto. Es la diferencia entre «parece cumplir» y «preserva por dependencias» de la actividad 1.'}]},
+    {say:'Si las diagonales de un cuadrilátero son perpendiculares, es un rombo.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Hay un contraejemplo: la cometa tiene diagonales perpendiculares y no es rombo. En la actividad 4, marque solo «perpendiculares» y mire el resultado.'},
+      {t:'No se sostiene: falta que las diagonales se bisequen.', ok:true, fb:'Correcto. Perpendiculares y que se bisecan mutuamente: rombo. Solo perpendiculares no alcanza; un contraejemplo basta para descartar la afirmación.'}]},
+    {say:'Si las diagonales de un cuadrilátero se bisecan, es un paralelogramo.', opts:[
+      {t:'Se sostiene.', ok:true, fb:'Correcto, y es la tercera construcción de la actividad 2. Además vale el recíproco: en todo paralelogramo las diagonales se bisecan. Por eso sirve como caracterización.'},
+      {t:'No se sostiene: también deben ser congruentes.', ok:false, fb:'Diagonales que se bisecan y además son congruentes dan un rectángulo, que es un caso particular. Para paralelogramo basta con que se bisequen.'}]}
+  ]},
+  {lvl:'Nivel 3 · Evidencia y justificación', items:[
+    {say:'Arrastré los vértices a muchísimas posiciones y los puntos medios siempre formaron un paralelogramo. Entonces ya está demostrado.', opts:[
+      {t:'Se sostiene: con tantas posiciones no puede fallar.', ok:false, fb:'El arrastre da evidencia fuerte y sirve para buscar contraejemplos, pero recorre casos, no todos, y no dice por qué ocurre. Es comprobación experimental.'},
+      {t:'No se sostiene: es una conjetura bien apoyada; la demostración sale del teorema del segmento medio aplicado con cada diagonal.', ok:true, fb:'Correcto. Ese paso, de «siempre ocurre» a «por qué ocurre», es el propósito de la actividad 5.'}]},
+    {say:'SonParalelas devolvió true, así que esos lados son paralelos en cualquier posición.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'El comando informa sobre la posición actual, con aritmética de la máquina. Si los lados fueron dibujados y no construidos, al arrastrar puede pasar a false.'},
+      {t:'No se sostiene: es una comprobación numérica en esta posición; lo que garantiza el paralelismo es la dependencia con que se construyó.', ok:true, fb:'Correcto. El libro distingue tres cosas: comprobación numérica, comprobación por arrastre y demostración. Cada una responde una pregunta distinta.'}]},
+    {say:'La figura pasó la prueba del arrastre; por lo tanto, sus propiedades están demostradas.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Resistir el arrastre muestra que la propiedad fue construida, no por qué se deduce de la definición. Son dos afirmaciones distintas.'},
+      {t:'No se sostiene: la prueba del arrastre valida la construcción; la demostración explica por qué la propiedad se sigue de lo construido.', ok:true, fb:'Correcto. En la actividad 1, la construcción garantiza tres ángulos rectos por perpendiculares y paralelas; que el cuarto también lo sea es algo que se puede, y conviene, argumentar.'}]}
+  ]}
+];
+(function quiz() {
+  const root = $('#quiz');
+  root.innerHTML = QUIZ.map((L, li) => `
+    <div class="card" data-level="${li}">
+      <div class="level-head"><h3 class="sub-title" style="margin:0">${L.lvl}</h3><div class="btn-row" style="align-items:center"><span class="score" id="score${li}">0 de ${L.items.length}</span><button class="btn ghost sm" type="button" data-reset-level="${li}">Reiniciar nivel</button></div></div>
+      ${L.items.map((it, qi) => `
+        <div class="qitem">
+          <div class="bubble"><span class="who">Afirmación</span>${esc(it.say)}</div>
+          <div class="answers">${it.opts.map((o, oi) => `<button type="button" data-ans="${li}-${qi}-${oi}">${String.fromCharCode(97 + oi)}) ${esc(o.t)}</button>`).join('')}</div>
+          <div class="fb" hidden aria-live="polite"></div>
+        </div>`).join('')}
+    </div>`).join('');
+  const answered = QUIZ.map(L => L.items.map(() => null));
+  const upd = li => { $('#score' + li).textContent = `${answered[li].filter(x => x === true).length} de ${QUIZ[li].items.length}`; };
+  root.addEventListener('click', e => {
+    const b = e.target.closest('[data-ans]');
+    if (b) {
+      const [li, qi, oi] = b.dataset.ans.split('-').map(Number), o = QUIZ[li].items[qi].opts[oi], box = b.closest('.qitem');
+      $$('.answers button', box).forEach(x => { x.classList.remove('sel-ok', 'sel-no'); x.removeAttribute('aria-pressed'); });
+      b.classList.add(o.ok ? 'sel-ok' : 'sel-no'); b.setAttribute('aria-pressed', 'true');
+      const fb = $('.fb', box); fb.hidden = false; fb.className = 'fb ' + (o.ok ? 'ok' : 'no');
+      fb.innerHTML = `<b>${o.ok ? '✓ Correcto' : '✗ Revisemos'}</b>${esc(o.fb)}`;
+      if (answered[li][qi] !== true) answered[li][qi] = o.ok; upd(li); return;
+    }
+    const r = e.target.closest('[data-reset-level]');
+    if (r) {
+      const li = +r.dataset.resetLevel; answered[li] = answered[li].map(() => null);
+      $$(`[data-level="${li}"] .answers button`).forEach(x => { x.classList.remove('sel-ok', 'sel-no'); x.removeAttribute('aria-pressed'); });
+      $$(`[data-level="${li}"] .fb`).forEach(x => { x.hidden = true; x.innerHTML = ''; }); upd(li);
+    }
+  });
+})();
+
+/* ============================================================
+   Panel de GeoGebra: ejecuta el listado del libro
+   ============================================================ */
+const drawer = $('#drawer');
+let ggbApi = null, ggbLoading = null, lastFocus = null;
+function log(msg) { $('#ggbLog').textContent = msg; }
+function ggbMsg(html) { const m = $('#ggbMsg'); if (html === null) { m.hidden = true; return; } m.hidden = false; m.innerHTML = html; }
+function fallbackHtml() {
+  let framed = true; try { framed = window.self !== window.top; } catch (e) {}
+  return `<p><b>No se pudo cargar GeoGebra aquí.</b></p><p class="small">${framed ? 'El recurso parece abierto dentro de una vista previa que bloquea programas externos: descargue el archivo y ábralo con doble clic.' : 'Revise la conexión a internet.'} También puede abrir GeoGebra en otra pestaña y pegar los comandos copiados.</p><a class="btn sm" href="https://www.geogebra.org/classic" target="_blank" rel="noopener">Abrir GeoGebra Classic 6</a>`;
+}
+function loadDeploy() {
+  if (window.GGBApplet) return Promise.resolve();
+  return new Promise((res, rej) => {
+    const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js';
+    s.onload = () => res(); s.onerror = () => rej(new Error('deployggb'));
+    document.head.appendChild(s); setTimeout(() => rej(new Error('timeout')), 20000);
+  });
+}
+function inject() {
+  ggbApi = null;
+  const host = $('#ggbHost'); $('#ggbBox').innerHTML = '<div id="ggbPanelHost"></div>';
+  ggbMsg('<p>Cargando GeoGebra Classic 6…</p>');
+  ggbLoading = new Promise((res, rej) => {
+    const params = {id:'ggbPanel', appName:'classic', perspective:'AG', width:Math.max(300, host.clientWidth), height:Math.max(300, host.clientHeight), language:'es',
+      showToolBar:true, showToolBarHelp:true, showAlgebraInput:true, showMenuBar:true, showResetIcon:false, enableShiftDragZoom:true, enableRightClick:true,
+      errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
+      appletOnLoad:api => { ggbApi = api; ggbMsg(null); log('GeoGebra listo. Puede construir o recibir comandos.'); res(api); }};
+    try { new GGBApplet(params, true).inject('ggbPanelHost'); } catch (e) { rej(e); }
+    setTimeout(() => { if (!ggbApi) rej(new Error('timeout applet')); }, 40000);
+  });
+  ggbLoading.catch(() => { ggbMsg(fallbackHtml()); log('GeoGebra no cargó.'); });
+  return ggbLoading;
+}
+function ensureGgb() {
+  if (ggbApi) return Promise.resolve(ggbApi);
+  if (ggbLoading) return ggbLoading;
+  ggbMsg('<p>Cargando GeoGebra…</p>');
+  return loadDeploy().then(inject).catch(e => { ggbMsg(fallbackHtml()); log('GeoGebra no cargó.'); ggbLoading = null; throw e; });
+}
+function openDrawer() {
+  lastFocus = document.activeElement; drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false');
+  setTimeout(() => $('#ggbClose').focus(), 50);
+  return new Promise(r => setTimeout(r, 380)).then(ensureGgb).catch(() => null);
+}
+function closeDrawer() { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+$('#ggbClose').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer(); });
+document.addEventListener('click', e => { if (e.target.closest('[data-open-ggb]')) openDrawer(); });
+$('#ggbNew').addEventListener('click', () => { if (ggbApi) { ggbApi.newConstruction(); log('Lienzo nuevo.'); } else toast('GeoGebra todavía no está listo.'); });
+window.addEventListener('resize', () => { if (ggbApi && drawer.classList.contains('open')) { const h = $('#ggbHost'); try { ggbApi.setSize(h.clientWidth, h.clientHeight); } catch (e) {} } });
+
+function evalManual(a, key) {
+  const sc = MANUAL[key], cmds = sc.lines.filter(l => !l.startsWith('#')), fails = [];
+  a.newConstruction();
+  try { a.setGridVisible(true); a.setAxesVisible(true, true); } catch (e) {}
+  cmds.forEach(l => { let ok = false; try { ok = a.evalCommand(toEN(l)); } catch (e) { ok = false; } if (!ok) fails.push(l); });
+  try { a.setCoordSystem(...sc.view); } catch (e) {}
+  return {total:cmds.length, fails};
+}
+async function runManual(key) {
+  const a = await openDrawer();
+  if (!a) { copyText(manualText(key), 'GeoGebra no cargó; comandos copiados'); return null; }
+  const r = evalManual(a, key);
+  log(r.fails.length ? `Se ejecutaron ${r.total - r.fails.length} de ${r.total} comandos. Revise: ${r.fails.join(' · ')}` : `✓ Se ejecutaron los ${r.total} comandos. Faltan los ajustes marcados con # en el listado. Arrastre los puntos libres.`);
+  return r;
+}
+/* Prueba silenciosa de los cinco listados del libro en el panel. */
+async function testManual() { const a = await openDrawer(); const out = {}; for (const k of Object.keys(MANUAL)) out[k] = evalManual(a, k); return out; }
+</script>
+</body>
+</html>

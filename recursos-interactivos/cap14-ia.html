@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoGebra con IA generativa · Recurso interactivo del capítulo 14</title>
+<meta name="description" content="Recurso interactivo del capítulo 14 del libro Construir, enseñar e investigar con GeoGebra: constructor de prompts para los doce productos, práctica para detectar errores del modelo y lista de verificación.">
+<style>
+:root{
+  --bg:#F4F6F9; --ink:#002855; --text:#26313F; --muted:#5B6675; --accent:#EF3340; --accent-r:#B3202C;
+  --mid:#3D5A8A; --card:#FFFFFF; --soft:#EEF2F7; --line:#D5DCE6;
+  --ok:#2E7D32; --ok-bg:#E8F3E9; --no:#B3202C; --no-bg:#FCECEE; --amber:#B26A00;
+  --serif:'Palatino Linotype',Palatino,'Book Antiqua','TeX Gyre Pagella',Georgia,serif;
+  --sans:'Helvetica Neue',Helvetica,Arial,'TeX Gyre Heros',sans-serif;
+  --mono:'DejaVu Sans Mono',Consolas,Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 var(--serif);overflow-x:hidden}
+a{color:var(--mid);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--sans);color:var(--ink);margin:0;line-height:1.2}
+p{margin:0 0 14px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 18px}
+.read{max-width:760px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-60px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;z-index:60}
+.skip:focus{top:12px}
+.small{font-size:15px}.muted{color:var(--muted)}.mono{font-family:var(--mono);font-size:.92em}
+
+.topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:#fff}
+.topbar .wrap{display:flex;align-items:center;gap:16px;min-height:58px}
+.brand{font:700 16px var(--sans);color:#fff;text-decoration:none;white-space:nowrap}
+.brand span{color:#FF8D95}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:#fff;font:600 14.5px var(--sans);padding:10px 12px;border-radius:8px;min-height:44px;display:flex;align-items:center}
+.nav a:hover{background:rgba(255,255,255,.14)}
+
+.hero{background:var(--ink);color:#fff;padding:34px 0 40px;border-bottom:6px solid var(--accent)}
+.hero h1{color:#fff;font-size:clamp(28px,4.6vw,44px);margin:6px 0 10px}
+.hero .lead{font-size:19px;max-width:780px;color:#E6ECF5}
+.kicker{font:700 13px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--accent-r);display:block;margin-bottom:8px}
+.hero .kicker{color:#FF8D95}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 12px;font:600 14px var(--sans);color:var(--ink)}
+.chip.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hero .chip{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+
+section.block{padding:42px 0 6px}
+.sec-title{font-size:clamp(24px,3.2vw,32px);margin-bottom:12px}
+.sub-title{font-size:20px;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,28px)}
+.stack>*+*{margin-top:22px}
+.grid{display:grid;gap:16px}
+@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:0;border-radius:10px;padding:10px 20px;background:var(--accent-r);color:#fff;font:700 16px/1.2 var(--sans);cursor:pointer;text-decoration:none}
+.btn:active{transform:scale(.98)}
+.btn.sec{background:var(--ink)}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.sm{min-height:42px;padding:8px 14px;font-size:15px}
+.btn[disabled],.icon-btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.icon-btn{width:46px;height:46px;border-radius:10px;border:0;background:var(--ink);color:#fff;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+
+.note{display:flex;gap:12px;background:var(--soft);border-left:5px solid var(--mid);border-radius:8px;padding:12px 14px;font-size:16px}
+.note .ic{flex:none;font:700 13px var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--mid);padding-top:3px;min-width:92px}
+.note.ok{background:var(--ok-bg);border-left-color:var(--ok)}.note.ok .ic{color:var(--ok)}
+.note.warn{background:#FFF6E5;border-left-color:var(--amber)}.note.warn .ic{color:var(--amber)}
+@media(max-width:600px){.note{flex-direction:column;gap:2px}}
+
+/* Laboratorio */
+.lab-grid{display:grid;gap:16px}
+@media(min-width:760px){.lab-grid{grid-template-columns:1fr 1fr}}
+.lab-panel{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px}
+.lab-panel h4{font-size:17px;margin-bottom:2px}
+.lab-panel svg{display:block;width:100%;height:auto;touch-action:none;border-radius:8px;background:#FCFDFE}
+.handle{cursor:grab}.handle:focus{outline:none}
+.handle:focus-visible circle.ring{stroke:var(--accent);stroke-width:3}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 12px;font:14.5px var(--mono);margin-top:10px}
+.verdict{margin-top:8px;font:700 16px var(--sans)}
+.verdict.ok{color:var(--ok)}.verdict.no{color:var(--no)}
+
+/* Cápsulas */
+.vt{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:14px}
+.vt>*{min-width:0}
+@media(min-width:960px){.vt{grid-template-columns:270px minmax(0,1fr)}}
+.vt-list{display:flex;flex-direction:column;gap:8px}
+@media(max-width:959px){.vt-list{flex-direction:row;overflow-x:auto;padding-bottom:6px}.vt-list button{min-width:230px}}
+.vt-list button{display:flex;gap:12px;align-items:center;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;font:500 15px/1.3 var(--sans);color:var(--ink);min-height:56px}
+.vt-list button[aria-selected="true"]{border-color:var(--ink);background:var(--soft)}
+.vt-list .vnum{flex:none;width:38px;height:38px;border-radius:8px;background:var(--ink);color:#fff;font:700 18px var(--sans);display:flex;align-items:center;justify-content:center}
+.vt-list button[aria-selected="true"] .vnum{background:var(--accent-r)}
+.vt-list b{display:block}.vt-list small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.pane-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.vg-now{background:var(--ink);color:#E6ECF5;border-radius:12px 12px 0 0;padding:14px 18px;min-height:128px;font-family:var(--sans)}
+.vg-now .vg-k{font:700 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:#FF8D95}
+.vg-now .vg-tool{font-size:19px;color:#fff;margin-top:4px}
+.vg-now .vg-tool b{color:#FFD08A}
+.vg-now .vg-where{margin:2px 0 6px;font-size:14.5px;color:#C9D4E4}
+.vg-now .vg-say{margin:0;font-size:17px;color:#fff}
+.vg-host{position:relative;height:540px;border:2px solid var(--ink);border-top:0;border-radius:0 0 12px 12px;overflow:hidden;background:#fff}
+@media(max-width:600px){.vg-host{height:430px}}
+#vgBox{position:absolute;inset:0}
+.ggb-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;background:var(--soft);font-family:var(--sans)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;font-family:var(--sans)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--sans);cursor:pointer;min-height:44px}
+.toggle input{width:20px;height:20px;accent-color:var(--accent-r)}
+.rate-sel{min-height:40px;border:2px solid var(--line);border-radius:8px;padding:4px 8px;font:600 14.5px var(--sans);background:#fff;color:var(--ink)}
+.vg-watch{margin-top:12px;font-family:var(--sans)}
+.vg-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.vg-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font:400 15.5px/1.4 var(--sans);color:var(--text)}
+.vg-list .st{flex:none;width:30px;height:30px;border-radius:8px;background:var(--soft);color:var(--ink);font-weight:800;display:flex;align-items:center;justify-content:center}
+.vg-list b{display:block;color:var(--ink)}.vg-list small{display:block;font-size:14.5px}
+.vg-list li.done .st{background:var(--ok-bg);color:var(--ok)}
+.vg-list li.now button{border-color:var(--accent-r)}
+.vg-list li.now .st{background:var(--accent-r);color:#fff}
+.code{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:12px 6px;font:14.5px/1.5 var(--mono);overflow-x:auto}
+.code button.line{display:block;width:100%;text-align:left;background:transparent;border:0;color:inherit;font:inherit;padding:2px 10px;border-radius:6px;cursor:copy;white-space:pre}
+.code button.line:hover,.code button.line:focus-visible{background:#234468}
+.code .cm{color:#9FB3CC;padding:2px 10px;white-space:pre-wrap}
+details.lib{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:16px}
+details.lib summary{cursor:pointer;font:700 16px var(--sans);color:var(--ink);min-height:44px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Práctica */
+.level-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.score{font:600 15px var(--mono);background:var(--soft);border-radius:999px;padding:5px 14px;border:1px solid var(--line)}
+.qitem+.qitem{margin-top:22px;padding-top:22px;border-top:2px dashed var(--line)}
+.bubble{background:var(--soft);border-radius:12px 12px 12px 4px;padding:12px 16px;margin:6px 0 10px;color:var(--ink);font-size:18px}
+.bubble .who{display:block;font:700 12.5px var(--sans);color:var(--accent-r);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.answers{display:grid;gap:8px}
+.answers button{text-align:left;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;font:500 16px/1.45 var(--sans);color:var(--ink);cursor:pointer}
+.answers button:hover{border-color:var(--ink)}
+.answers button.sel-ok{border-color:var(--ok);background:var(--ok-bg)}
+.answers button.sel-no{border-color:var(--no);background:var(--no-bg)}
+.fb{margin-top:10px;border-radius:10px;padding:12px 14px;font-size:16px}
+.fb.ok{background:var(--ok-bg);color:#17421A}.fb.no{background:var(--no-bg);color:#6E1620}
+.fb b{display:block;font-family:var(--sans)}
+
+/* Panel GeoGebra */
+.ggb-fab{position:fixed;right:16px;bottom:16px;z-index:40;box-shadow:0 6px 18px rgba(0,40,85,.3)}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(640px,100vw);background:#fff;z-index:50;transform:translateX(105%);transition:transform 350ms var(--ease);display:flex;flex-direction:column;border-left:3px solid var(--ink)}
+.drawer.open{transform:none}
+.drawer-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-bottom:2px solid var(--line)}
+.drawer-head h2{font-size:19px;margin-right:auto}
+.ggb-host{flex:1;position:relative;min-height:0;background:#fff}
+#ggbBox{position:absolute;inset:0}
+.ggb-log{font:13.5px var(--mono);padding:8px 12px;border-top:2px solid var(--line);max-height:130px;overflow:auto;background:var(--soft)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font:600 15px var(--sans);z-index:70;opacity:0;pointer-events:none;transition:opacity 180ms,transform 180ms;max-width:min(560px,92vw);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%)}
+footer{padding:44px 0 110px;font-size:15px}
+footer li{margin-bottom:8px;overflow-wrap:anywhere}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+@media print{.topbar,.ggb-fab,.drawer,.toast{display:none}body{background:#fff}}
+
+select,input[type=text],textarea{font:400 16px/1.5 var(--sans);color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:10px;padding:9px 12px;min-height:46px;width:100%}
+textarea{min-height:110px;resize:vertical}
+.lbl{display:block;font:700 15px var(--sans);color:var(--ink);margin-bottom:5px}
+.prompt{font:14.5px/1.6 var(--mono);border-left:6px solid var(--accent-r);min-height:380px;white-space:pre-wrap}
+.check{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:16.5px}
+.check input{width:22px;height:22px;margin-top:3px;flex:none;accent-color:var(--accent-r)}
+.bar{height:10px;background:var(--line);border-radius:999px;overflow:hidden;margin:8px 0 4px}
+.bar span{display:block;height:100%;background:var(--accent-r);width:0;transition:width 350ms var(--ease)}
+.bubble pre{margin:8px 0 0;font:14.5px var(--mono);white-space:pre-wrap}
+.two{display:grid;gap:22px}@media(min-width:960px){.two{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="#inicio">Cap. 14 <span>·</span> GeoGebra con IA</a>
+  <nav class="nav" aria-label="Secciones del recurso"><a href="../index.html">Todos los materiales</a><a href="#constructor">Constructor de prompts</a><a href="#practica">Práctica</a><a href="#lista">Lista de verificación</a><a href="#creditos">Créditos</a></nav>
+</div></header>
+<main id="main">
+<section class="hero" id="inicio"><div class="wrap">
+  <span class="kicker">Recurso interactivo · Capítulo 14</span>
+  <h1>La IA genera con fluidez y no verifica</h1>
+  <p class="lead">Acompaña al libro <i>Construir, enseñar e investigar con GeoGebra</i>. Arma el prompt para cualquiera de los doce productos del capítulo, entrena el ojo con errores reales del modelo y deja una lista para revisar lo que la IA entregó antes de llevarlo al aula.</p>
+  <div class="chips"><span class="chip">Secciones 14.2 a 14.5</span><span class="chip">Funciona sin conexión, salvo el panel de GeoGebra</span></div>
+</div></section>
+
+<section class="block" style="padding-top:26px"><div class="wrap">
+  <div class="grid g3">
+    <div class="note"><span class="ic">Regla 1</span><span>Pida siempre las líneas para la Barra de Entrada, no el archivo.</span></div>
+    <div class="note"><span class="ic">Regla 2</span><span>Todo nombre de comando se confirma con el autocompletado.</span></div>
+    <div class="note"><span class="ic">Regla 3</span><span>Cuando la IA diga que probó algo, no lo hizo.</span></div>
+  </div>
+</div></section>
+
+<section class="block" id="constructor"><div class="wrap">
+  <span class="kicker">Constructor de prompts · Sección 14.4 del libro</span>
+  <h2 class="sec-title">El prompt maestro y los doce productos</h2>
+  <p class="read">Elija qué quiere pedir y describa su contexto. El constructor une el prompt maestro del libro con el del producto. Cópielo, péguelo en el asistente que use y revise la respuesta con lo que indica «Qué verificar».</p>
+  <div class="two">
+    <div class="card stack">
+      <div><label class="lbl" for="bProd">Producto</label><select id="bProd"></select><p class="small muted" id="bQue" style="margin:8px 0 0;font-family:var(--sans)"></p></div>
+      <div><label class="lbl" for="bNivel">Nivel del estudiantado</label><input type="text" id="bNivel" placeholder="Ej.: décimo año; MA0101; adultos de educación abierta"></div>
+      <div class="grid g2">
+        <div><label class="lbl" for="bDisp">Dispositivo principal</label><select id="bDisp"><option>computadora</option><option>celular</option><option>tableta</option><option>un solo equipo con proyector</option></select></div>
+        <div><label class="lbl" for="bCon">Conexión</label><select id="bCon"><option>estable</option><option>intermitente</option><option>sin conexión</option></select></div>
+      </div>
+      <div><label class="lbl" for="bTema">Tema o lo que debe ver y hacer el estudiante</label><textarea id="bTema" placeholder="Ej.: que mueva un punto sobre una circunferencia y compare el ángulo inscrito con el central"></textarea></div>
+      <div><label class="lbl" for="bMat">Su construcción, guion o ejercicio (si el producto parte de algo que ya tiene)</label><textarea id="bMat" placeholder="Pegue aquí las líneas, el guion o el enunciado. Déjelo vacío si no aplica."></textarea></div>
+      <label class="toggle"><input type="checkbox" id="bMaestro" checked> Incluir el prompt maestro (primer mensaje de la conversación)</label>
+    </div>
+    <div>
+      <div class="pane-title"><h3 style="font-size:18px">Su prompt</h3><div class="btn-row"><button class="btn sm" type="button" id="bCopy">Copiar prompt</button><button class="btn ghost sm" type="button" id="bReset">Restablecer</button></div></div>
+      <textarea id="bOut" class="prompt" aria-label="Prompt generado; se puede editar"></textarea>
+      <div class="note warn" style="margin-top:14px"><span class="ic">Qué verificar</span><span id="bVer"></span></div>
+      <div class="btn-row" style="margin-top:14px"><button class="btn sec sm" type="button" data-open-ggb>Abrir GeoGebra para pegar las líneas</button></div>
+      <p class="small muted" style="margin-top:8px;font-family:var(--sans)">En el panel, escriba o pegue cada línea en la Barra de Entrada, una por una. Ahí los comandos van en español.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="block" id="practica"><div class="wrap">
+  <span class="kicker">Práctica graduada · Tres niveles</span>
+  <h2 class="sec-title">¿La IA tiene razón?</h2>
+  <p class="read">Cada respuesta es del tipo que produce un modelo de lenguaje, y varias son errores que este libro tuvo de verdad. Decida si se puede usar. La retroalimentación dice cómo se detecta cada uno.</p>
+  <div class="stack" id="quiz"></div>
+</div></section>
+
+<section class="block" id="lista"><div class="wrap">
+  <span class="kicker">Antes de usarlo con un grupo</span>
+  <h2 class="sec-title">Lista de verificación de lo que entregó la IA</h2>
+  <div class="card read">
+    <div class="bar" aria-hidden="true"><span id="chkBar"></span></div>
+    <p class="small muted" id="chkTxt" aria-live="polite" style="font-family:var(--sans)"></p>
+    <div id="chkList"></div>
+    <div class="btn-row" style="margin-top:14px"><button class="btn ghost sm" type="button" id="chkClear">Desmarcar todo</button></div>
+    <p class="small muted" style="margin:10px 0 0;font-family:var(--sans)">Las marcas se guardan solo en este navegador.</p>
+  </div>
+</div></section>
+</main>
+
+<footer id="creditos"><div class="wrap">
+  <h2 class="sub-title">Créditos y fuentes</h2>
+  <ul style="padding-left:1.2em">
+    <li>Recurso acompañante de: Acuña-Chacón, R., y Gutiérrez-Montenegro, M. (2026). <i>Construir, enseñar e investigar con GeoGebra</i> (versión de trabajo). Instituto GeoGebra de Costa Rica, Escuela de Matemática, Instituto Tecnológico de Costa Rica. Capítulo 14.</li>
+    <li>El prompt maestro, los doce productos y lo que hay que verificar en cada uno se reproducen del capítulo. El constructor y la práctica se adaptaron del taller «GeoGebra + IA para enseñar geometría» (Acuña Chacón y Gutiérrez Montenegro, 2026).</li>
+    <li>Los errores del nivel 2 de la práctica se hallaron al ejecutar los listados del libro en GeoGebra el 10 de noviembre de 2026.</li>
+  </ul>
+  <p class="small muted" style="margin-top:18px">GeoGebra® es una marca registrada de GeoGebra GmbH. Este recurso se elabora desde el Instituto GeoGebra de Costa Rica con fines educativos no comerciales; no es un producto de GeoGebra GmbH.</p>
+</div></footer>
+
+<button class="btn sec ggb-fab" type="button" data-open-ggb aria-controls="drawer">GeoGebra</button>
+<aside class="drawer" id="drawer" aria-label="Panel de GeoGebra" aria-hidden="true">
+  <div class="drawer-head"><h2>GeoGebra Classic 6</h2><button class="btn ghost sm" type="button" id="ggbNew">Lienzo nuevo</button><button class="icon-btn" type="button" id="ggbClose" aria-label="Cerrar el panel de GeoGebra">&#10005;</button></div>
+  <div class="ggb-host" id="ggbHost"><div id="ggbBox"></div><div class="ggb-msg" id="ggbMsg"><p>GeoGebra se carga al abrir este panel.</p></div></div>
+  <div class="ggb-log" id="ggbLog" aria-live="polite">Pegue cada línea en la Barra de Entrada y pulse Enter.</div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+/* ============================================================
+   Utilidades
+   ============================================================ */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+let toastTimer;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
+async function copyText(text, label = 'Copiado') {
+  try {
+    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
+    else { const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); if (!ok) throw new Error('copy'); }
+    toast(label + ' al portapapeles'); return true;
+  } catch (e) { toast('No se pudo copiar: seleccione el texto y cópielo.'); return false; }
+}
+const store = { get(k) { try { return localStorage.getItem('ggbcap14_' + k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem('ggbcap14_' + k, v); } catch (e) {} } };
+const VOZ = { rate: (() => { const r = parseFloat(store.get('vozRate')); return r >= 0.6 && r <= 1.6 ? r : 0.9; })(), set(r) { this.rate = r; store.set('vozRate', r); } };
+
+
+const REGLAS = "Vas a ayudarme a construir un recurso en GeoGebra Classic 6, versión web, con la interfaz en español. Reglas:\n\n1. Escribe los comandos con su nombre en español tal como aparecen en el manual oficial de GeoGebra en español, y pon entre paréntesis el nombre en inglés la primera vez que uses cada uno. Si no estás seguro de que un comando exista con ese nombre, dilo explícitamente en vez de inventarlo.\n\n2. Entrégame la construcción como líneas para la barra de entrada, una por línea, en el orden en que deben crearse. Lo que no se pueda escribir en la barra (condición para mostrar el objeto, color dinámico, guiones de botones, casillas, rastro) ponlo como comentario después de la línea correspondiente, indicando en qué pestaña de Configuración se hace.\n\n3. Usa objetos auxiliares con prefijo est_ para todo el estado, y no escribas guiones sobre objetos dependientes.\n\n4. No anides Esquina dentro de otro comando: créalo primero como punto.\n\n5. No me digas que probaste nada. Al final, lista los puntos donde conviene que yo verifique.";
+const PRODUCTOS = [{"t": "1. Construcción a partir de una descripción", "que": "Las líneas de entrada de una construcción que usted describe en lenguaje corriente.", "prompt": "Quiero que el estudiante mueva un punto sobre una circunferencia y vea cómo cambia el ángulo inscrito respecto del central. Dame la construcción.", "ver": "Cada nombre de comando con el autocompletado. Que los objetos que deben ser arrastrables sean libres o estén sobre un recorrido."}, {"t": "2. Traducción de una construcción", "que": "Una construcción encontrada en inglés (o en un foro, o en un video) pasada a los nombres en español, o al revés para usarla en la API.", "prompt": "Traduce estas líneas al español de GeoGebra, comando por comando, y señálame cualquier comando cuyo nombre no puedas confirmar.", "ver": "Los comandos marcados como no confirmados. Que los separadores de argumentos coincidan con la configuración regional de su instalación."}, {"t": "3. Depuración de un guion", "que": "Explicación de por qué un guion no hace lo esperado y la versión corregida.", "prompt": "Este guion está en el botón Comprobar y no cambia el texto. Aquí está el guion, aquí la definición de los objetos que toca y aquí qué pasa al hacer clic: [...]", "ver": "Que el guion escriba solo sobre objetos libres. Que no haya ciclo entre guiones de actualización. Que los booleanos se escriban como true y false."}, {"t": "4. Condicionar un recurso existente", "que": "La capa de condiciones sobre una construcción que ya funciona: qué se muestra cuándo, con qué color, en qué fase.", "prompt": "Esta construcción funciona. Quiero que el vértice y las raíces aparezcan solo cuando el estudiante marque una casilla, que la parábola cambie de color según el signo de a y que haya un botón de reinicio. Dame solo lo que hay que agregar o cambiar.", "ver": "Que ninguna condición dependa del propio objeto. Que el reinicio devuelva también el estado y la ventana gráfica."}, {"t": "5. Consigna alineada", "que": "La actividad para el estudiante, con conjetura antes de verificación y alineada a una habilidad concreta del programa o del curso.", "prompt": "Escribe la consigna para esta construcción, nivel décimo año del programa de Matemáticas del MEP, área Relaciones y Álgebra. Cinco puntos como máximo. El estudiante debe escribir su predicción antes de poder verificar. Incluye un caso límite.", "ver": "Que la consigna no revele el resultado. Que el caso límite exista en la construcción con los rangos de los deslizadores dados."}, {"t": "6. Ejercicio de libro convertido en applet autoevaluable", "que": "Un ejercicio de respuesta cerrada convertido en construcción con campo de entrada, comprobación, contador de intentos y pista condicionada.", "prompt": "Convierte este ejercicio en una actividad autoevaluable en GeoGebra: [texto del ejercicio]. El estudiante escribe la respuesta, un botón la comprueba con tolerancia, y a partir del segundo intento fallido aparece una pista.", "ver": "Que la comprobación compare con tolerancia y no con igualdad exacta. Que el campo de entrada tenga texto de diagnóstico para entradas inválidas."}, {"t": "7. Página web con el applet incrustado", "que": "El HTML que incrusta la construcción y, si se pide, registra la interacción.", "prompt": "Dame una página HTML que incruste el archivo actividad.ggb con deployggb.js, sin barra de herramientas ni menú, con botón de reinicio, y que registre en un CSV descargable cada clic en el botón Comprobar y cada movimiento del punto P. Recuerda que en la API los comandos van en inglés.", "ver": "Que todo acceso a la API esté dentro de appletOnLoad. Que los comandos en evalCommand estén en inglés. Que el registro no guarde identificadores personales."}, {"t": "8. Revisión contra los principios", "que": "Una evaluación del recurso, principio por principio, con lo que cumple, lo que no y qué cambiar.", "prompt": "Aquí está la construcción completa y su consigna. Revísala contra estos diez principios [pegar el capítulo 11 o su resumen] y dime, para cada uno, si se cumple, no se cumple o no aplica, y qué cambio concreto haría falta.", "ver": "Que las observaciones se refieran a objetos concretos de su construcción y no sean generalidades. Descarte las que no entienda: la decisión es suya."}, {"t": "9. Adaptación a celular o a educación abierta", "que": "La misma construcción reconfigurada para pantalla pequeña, dedo y conexión intermitente.", "prompt": "Adapta esta construcción para estudiantes adultos que la van a usar en el celular, de noche, con conexión intermitente: controles grandes, sin arrastres de precisión, todo alcanzable con el dedo, y una versión descargable.", "ver": "Tamaño de puntos y anchos de deslizador. Que los textos quepan en 360 píxeles de ancho. Que exista el campo de entrada como alternativa al arrastre."}, {"t": "10. Accesibilidad", "que": "Rótulos legibles por lector de pantalla, descripción textual de la construcción y verificación de que ninguna información va solo en color.", "prompt": "Escribe la leyenda de cada control de esta construcción para un lector de pantalla, una descripción en prosa de lo que muestra la Vista Gráfica en su estado inicial, y dime qué información está codificada solo por color.", "ver": "Que las leyendas sean texto real y no nombres de objeto. Que la descripción sea fiel al estado inicial, no a lo que la construcción podría mostrar."}, {"t": "11. Protocolo de investigación a partir del recurso", "que": "El diseño diferencial del capítulo 12 aplicado a su construcción: dos versiones, variable, instrumento, análisis.", "prompt": "A partir de esta construcción, propón dos versiones que difieran en un solo rasgo de diseño y un protocolo de una página: pregunta, variable dependiente codificable, datos de proceso a registrar, control, tamaño, amenazas y consideraciones éticas.", "ver": "Que el rasgo que difiere sea uno solo. Que la variable dependiente sea observable con los datos que realmente va a recoger. Que el marco teórico esté declarado y no sean tres."}, {"t": "12. Documentación para publicar", "que": "Título, descripción, licencia y declaración de uso de IA para publicar el material en la plataforma o como anexo de un artículo.", "prompt": "Escribe la descripción de este material para publicarlo: título, resumen de cien palabras, nivel, habilidad, licencia recomendada, versión de GeoGebra y una declaración de uso de inteligencia artificial que diga exactamente qué hiciste tú y qué hice yo.", "ver": "Que la declaración sea específica y verdadera. Que la versión de GeoGebra sea la que usted realmente usó, no la que el modelo supone."}];
+const CHECKS = ["Pedí las líneas para la Barra de Entrada, no solo el archivo.", "Pegué las líneas una por una y todas fueron aceptadas.", "Confirmé con el autocompletado cada comando que no conocía.", "Ningún objeto usa un nombre reservado (beta, gamma) ni quedó renombrado con subíndice.", "Toda función definida con Si que luego se opera o se integra tiene su caso contrario.", "Los guiones escriben solo sobre objetos libres de estado (prefijo est_).", "Arrastré, moví los deslizadores hasta los extremos y probé el caso límite.", "El botón Reiniciar devuelve también el estado y la ventana gráfica.", "La consigna pide una predicción antes de verificar y no revela el resultado.", "Escribí la declaración de uso de IA: herramienta, tareas, verificación y responsable."];
+
+const QUIZ = [
+  {lvl:'Nivel 1 · Nombres de comandos', items:[
+    {say:'Para que el botón ponga a en 1, escribe en su guion:', code:'AsignaValor(a, 1)', opts:[
+      {t:'Se puede usar.', ok:false, fb:'AsignaValor no existe. Es uno de los nombres que el modelo inventó al producir este libro: suena bien y es falso. El comando es Valor(a, 1).'},
+      {t:'No: ese comando no existe; es Valor(a, 1).', ok:true, fb:'Correcto. La única forma de saberlo es el autocompletado: se escriben las primeras letras en GeoGebra y, si no aparece, no existe con ese nombre.'}]},
+    {say:'Para que el estudiante escriba su respuesta, crea el campo con:', code:'ce1 = CampoEntrada(respuesta)', opts:[
+      {t:'Se puede usar.', ok:false, fb:'El comando se llama CasillaEntrada. CampoEntrada es otro nombre plausible e inexistente que apareció durante la producción del libro.'},
+      {t:'No: el comando es CasillaEntrada(respuesta).', ok:true, fb:'Correcto. Pedirle al modelo el nombre en inglés al lado de cada comando (InputBox, en este caso) ayuda a buscarlo en el manual oficial.'}]},
+    {say:'En tu página web, crea la recta con la API así:', code:'api.evalCommand("Recta(A, B)");', opts:[
+      {t:'Se puede usar: el applet está en español.', ok:false, fb:'La API solo acepta los nombres en inglés, aunque el applet esté en español. En la prueba del 10 de noviembre de 2026, evalCommand("Recta(A, B)") devolvió false y no creó nada.'},
+      {t:'No: por la API el comando va en inglés, Line(A, B).', ok:true, fb:'Correcto. En la Barra de Entrada se escribe Recta; en evalCommand, Line. Es la única parte del libro donde los nombres van en inglés (capítulo 7).'}]}
+  ]},
+  {lvl:'Nivel 2 · Líneas que se aceptan y no hacen lo esperado', items:[
+    {say:'Define el ángulo central y luego úsalo:', code:'beta = Ángulo(A, O, B)\nenArco = gammaC < beta', opts:[
+      {t:'Se puede usar.', ok:false, fb:'beta y gamma están reservados para las funciones del mismo nombre. GeoGebra crea el ángulo como beta_1 y la segunda línea falla. Este libro tuvo ese error en el ejemplo 3 hasta que se ejecutó.'},
+      {t:'No: beta es un nombre reservado; hay que llamarlo de otra forma.', ok:true, fb:'Correcto. En el libro ahora se llama central. La primera línea no da error: el problema aparece en la siguiente.'}]},
+    {say:'Define el pulso y calcula el área:', code:'g(x) = Si(0 <= x <= 2, 1)\nA = Integral(f(x) g(t - x), 0, t)', opts:[
+      {t:'Se puede usar.', ok:false, fb:'Sin tercer argumento, g queda indefinida fuera de [0, 2], el producto también y la integral devuelve indefinido. Hay que escribir Si(0 <= x <= 2, 1, 0).'},
+      {t:'No: falta el valor de g fuera del intervalo; sin él la integral queda indefinida.', ok:true, fb:'Correcto. La gráfica de g se ve igual con o sin el cero; la diferencia solo aparece al operar con ella. Así fallaba el ejemplo 4.'}]},
+    {say:'Para integrar respecto de x dentro de la secuencia, usa cuatro argumentos:', code:'Integral(f(x) g(s - x), x, 0, s)', opts:[
+      {t:'Se puede usar.', ok:false, fb:'En la Vista Algebraica GeoGebra leyó esa x como una segunda función y calculó el área entre la curva y la recta y = x. No dio error; dio números equivocados, negativos a partir de s = 1,25.'},
+      {t:'No: en la Vista Algebraica van tres argumentos, Integral(f(x) g(s - x), 0, s).', ok:true, fb:'Correcto. La forma con variable explícita es de la Vista CAS. Es el error más difícil de ver de los tres, porque todo se ejecuta y el resultado parece una curva.'}]}
+  ]},
+  {lvl:'Nivel 3 · Lo que el modelo afirma', items:[
+    {say:'Probé la construcción en GeoGebra y funciona correctamente.', opts:[
+      {t:'Es una buena señal; se puede usar.', ok:false, fb:'Un modelo de lenguaje no ejecuta GeoGebra. La frase es falsa por construcción, por más natural que suene.'},
+      {t:'Se ignora: el modelo no ejecuta GeoGebra. La única prueba es la propia.', ok:true, fb:'Correcto. Es la tercera regla del capítulo. El prompt maestro pide, en cambio, la lista de puntos donde conviene verificar.'}]},
+    {say:'Te adjunto el archivo actividad.ggb listo para abrir.', opts:[
+      {t:'Mejor así: ahorra el trabajo de pegar líneas.', ok:false, fb:'Un .ggb generado es una caja negra: puede no abrir, y si abre no se ve qué línea falló. Los seis del capítulo 9 abrieron, pero dos traían errores que solo aparecieron al ejecutar los listados.'},
+      {t:'Se piden además las líneas para la Barra de Entrada: se pegan, se ven y se corrigen una por una.', ok:true, fb:'Correcto. Es la primera regla del capítulo.'}]},
+    {say:'Para el artículo puedes declarar: «Se utilizó inteligencia artificial como apoyo en la elaboración del recurso».', opts:[
+      {t:'Es suficiente.', ok:false, fb:'No dice qué herramienta, en qué tareas ni quién verificó. Las revistas del área piden una declaración específica.'},
+      {t:'No alcanza: debe decir qué herramienta, en qué tareas, con qué intervención humana y quién responde.', ok:true, fb:'Correcto. La página de créditos del libro es un modelo adaptable (sección 14.6).'}]}
+  ]}
+];
+
+/* Constructor de prompts */
+$('#bProd').innerHTML = PRODUCTOS.map((p, i) => `<option value="${i}">${esc(p.t)}</option>`).join('');
+function buildPrompt() {
+  const p = PRODUCTOS[+$('#bProd').value], v = id => $(id).value.trim();
+  $('#bQue').textContent = 'Entrega: ' + p.que; $('#bVer').textContent = p.ver;
+  const ctx = `Contexto: nivel ${v('#bNivel') || '[nivel]'}. Dispositivo principal: ${$('#bDisp').value}. Conexión: ${$('#bCon').value}. Tema: ${v('#bTema') || '[descripción]'}.`;
+  let out = $('#bMaestro').checked ? REGLAS + '\n\n' + ctx + '\n\n' : ctx + '\n\n';
+  out += 'Lo que te pido ahora (' + p.t.replace(/^\d+\. /, '').toLowerCase() + '):\n' + p.prompt;
+  if (v('#bMat')) out += '\n\nMaterial de partida:\n' + v('#bMat');
+  $('#bOut').value = out;
+}
+['#bProd', '#bDisp', '#bCon', '#bMaestro'].forEach(s => $(s).addEventListener('change', buildPrompt));
+['#bNivel', '#bTema', '#bMat'].forEach(s => $(s).addEventListener('input', buildPrompt));
+$('#bCopy').addEventListener('click', () => copyText($('#bOut').value, 'Prompt copiado'));
+$('#bReset').addEventListener('click', () => { ['#bNivel', '#bTema', '#bMat'].forEach(s => $(s).value = ''); buildPrompt(); toast('Prompt restablecido'); });
+(function fromHash() { const m = /^#p(\d{1,2})$/.exec(location.hash); if (m && +m[1] >= 1 && +m[1] <= PRODUCTOS.length) { $('#bProd').value = String(+m[1] - 1); setTimeout(() => $('#constructor').scrollIntoView(), 0); } })();
+buildPrompt();
+(function quiz() {
+  const root = $('#quiz');
+  root.innerHTML = QUIZ.map((L, li) => `
+    <div class="card" data-level="${li}">
+      <div class="level-head"><h3 class="sub-title" style="margin:0">${L.lvl}</h3><div class="btn-row" style="align-items:center"><span class="score" id="score${li}">0 de ${L.items.length}</span><button class="btn ghost sm" type="button" data-reset-level="${li}">Reiniciar nivel</button></div></div>
+      ${L.items.map((it, qi) => `
+        <div class="qitem">
+          <div class="bubble"><span class="who">La IA dice</span>${esc(it.say)}${it.code ? `<pre>${esc(it.code)}</pre>` : ''}</div>
+          <div class="answers">${it.opts.map((o, oi) => `<button type="button" data-ans="${li}-${qi}-${oi}">${String.fromCharCode(97 + oi)}) ${esc(o.t)}</button>`).join('')}</div>
+          <div class="fb" hidden aria-live="polite"></div>
+        </div>`).join('')}
+    </div>`).join('');
+  const answered = QUIZ.map(L => L.items.map(() => null));
+  const upd = li => { $('#score' + li).textContent = `${answered[li].filter(x => x === true).length} de ${QUIZ[li].items.length}`; };
+  root.addEventListener('click', e => {
+    const b = e.target.closest('[data-ans]');
+    if (b) {
+      const [li, qi, oi] = b.dataset.ans.split('-').map(Number), o = QUIZ[li].items[qi].opts[oi], box = b.closest('.qitem');
+      $$('.answers button', box).forEach(x => { x.classList.remove('sel-ok', 'sel-no'); x.removeAttribute('aria-pressed'); });
+      b.classList.add(o.ok ? 'sel-ok' : 'sel-no'); b.setAttribute('aria-pressed', 'true');
+      const fb = $('.fb', box); fb.hidden = false; fb.className = 'fb ' + (o.ok ? 'ok' : 'no');
+      fb.innerHTML = `<b>${o.ok ? '✓ Correcto' : '✗ Revisemos'}</b>${esc(o.fb)}`;
+      if (answered[li][qi] !== true) answered[li][qi] = o.ok; upd(li); return;
+    }
+    const r = e.target.closest('[data-reset-level]');
+    if (r) {
+      const li = +r.dataset.resetLevel; answered[li] = answered[li].map(() => null);
+      $$(`[data-level="${li}"] .answers button`).forEach(x => { x.classList.remove('sel-ok', 'sel-no'); x.removeAttribute('aria-pressed'); });
+      $$(`[data-level="${li}"] .fb`).forEach(x => { x.hidden = true; x.innerHTML = ''; }); upd(li);
+    }
+  });
+})();
+
+
+/* Lista de verificación */
+(function lista() {
+  let saved = []; try { saved = JSON.parse(store.get('chk') || '[]'); } catch (e) { saved = []; }
+  $('#chkList').innerHTML = CHECKS.map((c, i) => `<label class="check"><input type="checkbox" data-chk="${i}" ${saved[i] ? 'checked' : ''}><span>${esc(c)}</span></label>`).join('');
+  const upd = () => { const v = $$('[data-chk]').map(x => x.checked), n = v.filter(Boolean).length; $('#chkBar').style.width = (n / CHECKS.length * 100) + '%'; $('#chkTxt').textContent = n === CHECKS.length ? `✓ ${n} de ${CHECKS.length}: revisado.` : `${n} de ${CHECKS.length} puntos revisados.`; store.set('chk', JSON.stringify(v)); };
+  $('#chkList').addEventListener('change', upd); upd();
+  $('#chkClear').addEventListener('click', () => { $$('[data-chk]').forEach(x => x.checked = false); upd(); });
+})();
+/* Panel de GeoGebra */
+const drawer = $('#drawer');
+let ggbApi = null, ggbLoading = null, lastFocus = null;
+function log(msg) { $('#ggbLog').textContent = msg; }
+function ggbMsg(html) { const m = $('#ggbMsg'); if (html === null) { m.hidden = true; return; } m.hidden = false; m.innerHTML = html; }
+function fallbackHtml() {
+  let framed = true; try { framed = window.self !== window.top; } catch (e) {}
+  return `<p><b>No se pudo cargar GeoGebra aquí.</b></p><p class="small">${framed ? 'El recurso parece abierto dentro de una vista previa que bloquea programas externos: descargue el archivo y ábralo con doble clic.' : 'Revise la conexión a internet.'} También puede abrir GeoGebra en otra pestaña y pegar los comandos copiados.</p><a class="btn sm" href="https://www.geogebra.org/classic" target="_blank" rel="noopener">Abrir GeoGebra Classic 6</a>`;
+}
+function loadDeploy() {
+  if (window.GGBApplet) return Promise.resolve();
+  return new Promise((res, rej) => {
+    const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js';
+    s.onload = () => res(); s.onerror = () => rej(new Error('deployggb'));
+    document.head.appendChild(s); setTimeout(() => rej(new Error('timeout')), 20000);
+  });
+}
+function inject() {
+  ggbApi = null;
+  const host = $('#ggbHost'); $('#ggbBox').innerHTML = '<div id="ggbPanelHost"></div>';
+  ggbMsg('<p>Cargando GeoGebra Classic 6…</p>');
+  ggbLoading = new Promise((res, rej) => {
+    const params = {id:'ggbPanel', appName:'classic', perspective:'AG', width:Math.max(300, host.clientWidth), height:Math.max(300, host.clientHeight), language:'es',
+      showToolBar:true, showToolBarHelp:true, showAlgebraInput:true, showMenuBar:true, showResetIcon:false, enableShiftDragZoom:true, enableRightClick:true,
+      errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
+      appletOnLoad:api => { ggbApi = api; ggbMsg(null); log('GeoGebra listo. Puede construir o recibir comandos.'); res(api); }};
+    try { new GGBApplet(params, true).inject('ggbPanelHost'); } catch (e) { rej(e); }
+    setTimeout(() => { if (!ggbApi) rej(new Error('timeout applet')); }, 40000);
+  });
+  ggbLoading.catch(() => { ggbMsg(fallbackHtml()); log('GeoGebra no cargó.'); });
+  return ggbLoading;
+}
+function ensureGgb() {
+  if (ggbApi) return Promise.resolve(ggbApi);
+  if (ggbLoading) return ggbLoading;
+  ggbMsg('<p>Cargando GeoGebra…</p>');
+  return loadDeploy().then(inject).catch(e => { ggbMsg(fallbackHtml()); log('GeoGebra no cargó.'); ggbLoading = null; throw e; });
+}
+function openDrawer() {
+  lastFocus = document.activeElement; drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false');
+  setTimeout(() => $('#ggbClose').focus(), 50);
+  return new Promise(r => setTimeout(r, 380)).then(ensureGgb).catch(() => null);
+}
+function closeDrawer() { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+$('#ggbClose').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer(); });
+document.addEventListener('click', e => { if (e.target.closest('[data-open-ggb]')) openDrawer(); });
+$('#ggbNew').addEventListener('click', () => { if (ggbApi) { ggbApi.newConstruction(); log('Lienzo nuevo.'); } else toast('GeoGebra todavía no está listo.'); });
+window.addEventListener('resize', () => { if (ggbApi && drawer.classList.contains('open')) { const h = $('#ggbHost'); try { ggbApi.setSize(h.clientWidth, h.clientHeight); } catch (e) {} } });
+
+
+</script>
+</body>
+</html>

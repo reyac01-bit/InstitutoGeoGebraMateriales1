@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seis ejemplos completos · Recurso interactivo del capítulo 9</title>
+<meta name="description" content="Recurso interactivo del capítulo 9 del libro Construir, enseñar e investigar con GeoGebra: seis cápsulas guiadas que arman los ejemplos completos dentro de GeoGebra Classic 6, y una práctica con retroalimentación.">
+<style>
+:root{
+  --bg:#F4F6F9; --ink:#002855; --text:#26313F; --muted:#5B6675; --accent:#EF3340; --accent-r:#B3202C;
+  --mid:#3D5A8A; --card:#FFFFFF; --soft:#EEF2F7; --line:#D5DCE6;
+  --ok:#2E7D32; --ok-bg:#E8F3E9; --no:#B3202C; --no-bg:#FCECEE; --amber:#B26A00;
+  --serif:'Palatino Linotype',Palatino,'Book Antiqua','TeX Gyre Pagella',Georgia,serif;
+  --sans:'Helvetica Neue',Helvetica,Arial,'TeX Gyre Heros',sans-serif;
+  --mono:'DejaVu Sans Mono',Consolas,Menlo,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--text);font:17px/1.6 var(--serif);overflow-x:hidden}
+a{color:var(--mid);text-underline-offset:3px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--sans);color:var(--ink);margin:0;line-height:1.2}
+p{margin:0 0 14px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 18px}
+.read{max-width:760px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-60px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;z-index:60}
+.skip:focus{top:12px}
+.small{font-size:15px}.muted{color:var(--muted)}.mono{font-family:var(--mono);font-size:.92em}
+
+.topbar{position:sticky;top:0;z-index:30;background:var(--ink);color:#fff}
+.topbar .wrap{display:flex;align-items:center;gap:16px;min-height:58px}
+.brand{font:700 16px var(--sans);color:#fff;text-decoration:none;white-space:nowrap}
+.brand span{color:#FF8D95}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{white-space:nowrap;text-decoration:none;color:#fff;font:600 14.5px var(--sans);padding:10px 12px;border-radius:8px;min-height:44px;display:flex;align-items:center}
+.nav a:hover{background:rgba(255,255,255,.14)}
+
+.hero{background:var(--ink);color:#fff;padding:34px 0 40px;border-bottom:6px solid var(--accent)}
+.hero h1{color:#fff;font-size:clamp(28px,4.6vw,44px);margin:6px 0 10px}
+.hero .lead{font-size:19px;max-width:780px;color:#E6ECF5}
+.kicker{font:700 13px var(--sans);letter-spacing:.09em;text-transform:uppercase;color:var(--accent-r);display:block;margin-bottom:8px}
+.hero .kicker{color:#FF8D95}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 12px;font:600 14px var(--sans);color:var(--ink)}
+.chip.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.hero .chip{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+
+section.block{padding:42px 0 6px}
+.sec-title{font-size:clamp(24px,3.2vw,32px);margin-bottom:12px}
+.sub-title{font-size:20px;margin-bottom:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3vw,28px)}
+.stack>*+*{margin-top:22px}
+.grid{display:grid;gap:16px}
+@media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border:0;border-radius:10px;padding:10px 20px;background:var(--accent-r);color:#fff;font:700 16px/1.2 var(--sans);cursor:pointer;text-decoration:none}
+.btn:active{transform:scale(.98)}
+.btn.sec{background:var(--ink)}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.sm{min-height:42px;padding:8px 14px;font-size:15px}
+.btn[disabled],.icon-btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px}
+.icon-btn{width:46px;height:46px;border-radius:10px;border:0;background:var(--ink);color:#fff;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+
+.note{display:flex;gap:12px;background:var(--soft);border-left:5px solid var(--mid);border-radius:8px;padding:12px 14px;font-size:16px}
+.note .ic{flex:none;font:700 13px var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--mid);padding-top:3px;min-width:92px}
+.note.ok{background:var(--ok-bg);border-left-color:var(--ok)}.note.ok .ic{color:var(--ok)}
+.note.warn{background:#FFF6E5;border-left-color:var(--amber)}.note.warn .ic{color:var(--amber)}
+@media(max-width:600px){.note{flex-direction:column;gap:2px}}
+
+/* Laboratorio */
+.lab-grid{display:grid;gap:16px}
+@media(min-width:760px){.lab-grid{grid-template-columns:1fr 1fr}}
+.lab-panel{background:#fff;border:2px solid var(--line);border-radius:12px;padding:14px}
+.lab-panel h4{font-size:17px;margin-bottom:2px}
+.lab-panel svg{display:block;width:100%;height:auto;touch-action:none;border-radius:8px;background:#FCFDFE}
+.handle{cursor:grab}.handle:focus{outline:none}
+.handle:focus-visible circle.ring{stroke:var(--accent);stroke-width:3}
+.readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 12px;font:14.5px var(--mono);margin-top:10px}
+.verdict{margin-top:8px;font:700 16px var(--sans)}
+.verdict.ok{color:var(--ok)}.verdict.no{color:var(--no)}
+
+/* Cápsulas */
+.vt{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;margin-top:14px}
+.vt>*{min-width:0}
+@media(min-width:960px){.vt{grid-template-columns:270px minmax(0,1fr)}}
+.vt-list{display:flex;flex-direction:column;gap:8px}
+@media(max-width:959px){.vt-list{flex-direction:row;overflow-x:auto;padding-bottom:6px}.vt-list button{min-width:230px}}
+.vt-list button{display:flex;gap:12px;align-items:center;text-align:left;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;font:500 15px/1.3 var(--sans);color:var(--ink);min-height:56px}
+.vt-list button[aria-selected="true"]{border-color:var(--ink);background:var(--soft)}
+.vt-list .vnum{flex:none;width:38px;height:38px;border-radius:8px;background:var(--ink);color:#fff;font:700 18px var(--sans);display:flex;align-items:center;justify-content:center}
+.vt-list button[aria-selected="true"] .vnum{background:var(--accent-r)}
+.vt-list b{display:block}.vt-list small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px}
+.pane-title{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.vg-now{background:var(--ink);color:#E6ECF5;border-radius:12px 12px 0 0;padding:14px 18px;min-height:128px;font-family:var(--sans)}
+.vg-now .vg-k{font:700 13px var(--sans);letter-spacing:.07em;text-transform:uppercase;color:#FF8D95}
+.vg-now .vg-tool{font-size:19px;color:#fff;margin-top:4px}
+.vg-now .vg-tool b{color:#FFD08A}
+.vg-now .vg-where{margin:2px 0 6px;font-size:14.5px;color:#C9D4E4}
+.vg-now .vg-say{margin:0;font-size:17px;color:#fff}
+.vg-host{position:relative;height:540px;border:2px solid var(--ink);border-top:0;border-radius:0 0 12px 12px;overflow:hidden;background:#fff}
+@media(max-width:600px){.vg-host{height:430px}}
+#vgBox{position:absolute;inset:0}
+.ggb-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;background:var(--soft);font-family:var(--sans)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;font-family:var(--sans)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--sans);cursor:pointer;min-height:44px}
+.toggle input{width:20px;height:20px;accent-color:var(--accent-r)}
+.rate-sel{min-height:40px;border:2px solid var(--line);border-radius:8px;padding:4px 8px;font:600 14.5px var(--sans);background:#fff;color:var(--ink)}
+.vg-watch{margin-top:12px;font-family:var(--sans)}
+.vg-list{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:8px}
+.vg-list button{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;font:400 15.5px/1.4 var(--sans);color:var(--text)}
+.vg-list .st{flex:none;width:30px;height:30px;border-radius:8px;background:var(--soft);color:var(--ink);font-weight:800;display:flex;align-items:center;justify-content:center}
+.vg-list b{display:block;color:var(--ink)}.vg-list small{display:block;font-size:14.5px}
+.vg-list li.done .st{background:var(--ok-bg);color:var(--ok)}
+.vg-list li.now button{border-color:var(--accent-r)}
+.vg-list li.now .st{background:var(--accent-r);color:#fff}
+.code{background:#0F2742;color:#EAF0F8;border-radius:10px;padding:12px 6px;font:14.5px/1.5 var(--mono);overflow-x:auto}
+.code button.line{display:block;width:100%;text-align:left;background:transparent;border:0;color:inherit;font:inherit;padding:2px 10px;border-radius:6px;cursor:copy;white-space:pre}
+.code button.line:hover,.code button.line:focus-visible{background:#234468}
+.code .cm{color:#9FB3CC;padding:2px 10px;white-space:pre-wrap}
+details.lib{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:16px}
+details.lib summary{cursor:pointer;font:700 16px var(--sans);color:var(--ink);min-height:44px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* Práctica */
+.level-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.score{font:600 15px var(--mono);background:var(--soft);border-radius:999px;padding:5px 14px;border:1px solid var(--line)}
+.qitem+.qitem{margin-top:22px;padding-top:22px;border-top:2px dashed var(--line)}
+.bubble{background:var(--soft);border-radius:12px 12px 12px 4px;padding:12px 16px;margin:6px 0 10px;color:var(--ink);font-size:18px}
+.bubble .who{display:block;font:700 12.5px var(--sans);color:var(--accent-r);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.answers{display:grid;gap:8px}
+.answers button{text-align:left;min-height:46px;border:2px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;font:500 16px/1.45 var(--sans);color:var(--ink);cursor:pointer}
+.answers button:hover{border-color:var(--ink)}
+.answers button.sel-ok{border-color:var(--ok);background:var(--ok-bg)}
+.answers button.sel-no{border-color:var(--no);background:var(--no-bg)}
+.fb{margin-top:10px;border-radius:10px;padding:12px 14px;font-size:16px}
+.fb.ok{background:var(--ok-bg);color:#17421A}.fb.no{background:var(--no-bg);color:#6E1620}
+.fb b{display:block;font-family:var(--sans)}
+
+/* Panel GeoGebra */
+.ggb-fab{position:fixed;right:16px;bottom:16px;z-index:40;box-shadow:0 6px 18px rgba(0,40,85,.3)}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(640px,100vw);background:#fff;z-index:50;transform:translateX(105%);transition:transform 350ms var(--ease);display:flex;flex-direction:column;border-left:3px solid var(--ink)}
+.drawer.open{transform:none}
+.drawer-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;border-bottom:2px solid var(--line)}
+.drawer-head h2{font-size:19px;margin-right:auto}
+.ggb-host{flex:1;position:relative;min-height:0;background:#fff}
+#ggbBox{position:absolute;inset:0}
+.ggb-log{font:13.5px var(--mono);padding:8px 12px;border-top:2px solid var(--line);max-height:130px;overflow:auto;background:var(--soft)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;font:600 15px var(--sans);z-index:70;opacity:0;pointer-events:none;transition:opacity 180ms,transform 180ms;max-width:min(560px,92vw);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%)}
+footer{padding:44px 0 110px;font-size:15px}
+footer li{margin-bottom:8px;overflow-wrap:anywhere}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important}}
+@media print{.topbar,.ggb-fab,.drawer,.toast{display:none}body{background:#fff}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#inicio">Cap. 9 <span>·</span> Ejemplos completos</a>
+    <nav class="nav" aria-label="Secciones del recurso"><a href="../index.html">Todos los materiales</a>
+      <a href="#capsulas">Cápsulas guiadas</a>
+      <a href="#practica">Práctica</a>
+      <a href="#creditos">Créditos</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <span class="kicker">Recurso interactivo · Capítulo 9</span>
+    <h1>Seis ejemplos completos, paso a paso</h1>
+    <p class="lead">Acompaña al libro <i>Construir, enseñar e investigar con GeoGebra</i>. Cada cápsula arma uno de los seis ejemplos del capítulo dentro de GeoGebra Classic 6, en el orden en que conviene construirlo: primero la matemática, después la capa condicionada. Al final, una práctica sobre lo que se aprendió al ejecutarlos.</p>
+    <div class="chips">
+      <span class="chip">Secciones 9.1 a 9.6</span>
+      <span class="chip">GeoGebra Classic 6 en español</span>
+      <span class="chip">Requiere internet para GeoGebra</span>
+    </div>
+  </div>
+</section>
+
+<section class="block" style="padding-top:26px">
+  <div class="wrap stack">
+    <div class="note"><span class="ic">Cómo usarlo</span><span>Lea primero el ejemplo en el libro. Cada cápsula muestra la construcción paso a paso; después repítala usted en el mismo applet y resuelva el reto. Los botones y los colores dinámicos de cada ejemplo se configuran a mano: están en el listado, como comentarios. El libro se entiende sin este recurso: aquí solo se gana la manipulación.</span></div>
+    <div class="note warn"><span class="ic">Qué es y qué no</span><span>La cápsula activa cada herramienta en la barra de GeoGebra y ejecuta el <b>comando equivalente</b> por la API; no simula los clics ni la escritura en la Barra de Entrada. Los seis ejemplos son propuestas de diseño: no han sido aplicados con estudiantes.</span></div>
+  </div>
+</section>
+
+<!-- ===================== CÁPSULAS ===================== -->
+<section class="block" id="capsulas">
+  <div class="wrap">
+    <span class="kicker">Cápsulas guiadas · Dentro de GeoGebra Classic 6</span>
+    <h2 class="sec-title">Los seis ejemplos, paso a paso</h2>
+    <p class="read">Elija un ejemplo y pulse Reproducir. En cada paso la cápsula indica si se usa una herramienta o la Barra de Entrada, y qué se escribe. Puede pausar, avanzar de a un paso o tocar cualquier paso de la lista.</p>
+    <div class="vt">
+      <div class="vt-list" role="tablist" aria-label="Ejemplos" id="vtList"></div>
+      <div id="vtPanel" role="tabpanel">
+        <div class="pane-title"><h3 id="vtTitle" style="font-size:21px"></h3><div class="chips" id="vtMeta"></div></div>
+        <p class="small" id="vgTools" style="margin:-4px 0 10px;font-family:var(--sans)"></p>
+        <div id="vgUso" style="margin-bottom:12px"></div>
+        <div class="vg-now" id="vgNow" aria-live="polite"></div>
+        <div class="vg-host" id="vgHost"><div id="vgBox"></div><div class="ggb-msg" id="vgMsg"><p><b>GeoGebra se carga al pulsar Reproducir.</b></p><p class="small">La cápsula construye la figura dentro de GeoGebra Classic 6, con su barra de herramientas y su Vista Algebraica.</p><button class="btn" type="button" data-vgplay>&#9654; Reproducir en GeoGebra</button></div></div>
+        <div class="controls" aria-label="Controles de la cápsula">
+          <button class="icon-btn" type="button" id="vgRestart" aria-label="Empezar de nuevo" title="Empezar de nuevo">&#8634;</button>
+          <button class="icon-btn" type="button" id="vgPrev" aria-label="Paso anterior" title="Paso anterior">&#9664;</button>
+          <button class="btn" type="button" id="vgPlay" aria-pressed="false">&#9654; Reproducir en GeoGebra</button>
+          <button class="icon-btn" type="button" id="vgNext" aria-label="Hacer solo el paso siguiente" title="Paso siguiente">&#9654;</button>
+          <label class="toggle"><input type="checkbox" id="vgVoice" checked> Narración con voz</label>
+          <label class="toggle" for="vgRate">Velocidad <select class="rate-sel" id="vgRate"><option value="0.7">0.7 (muy lenta)</option><option value="0.8">0.8 (lenta)</option><option value="0.9">0.9 (pausada)</option><option value="1">1.0 (normal)</option><option value="1.2">1.2</option><option value="1.4">1.4 (rápida)</option></select></label>
+        </div>
+        <div class="vg-watch" id="vgWatch" aria-live="polite"></div>
+        <ol class="vg-list" id="vgList" aria-label="Pasos de la construcción"></ol>
+        <details class="lib" id="vtCmdBox">
+          <summary><span class="chip dark">Listado</span>Comandos del ejemplo, como aparecen en el libro</summary>
+          <p class="small muted" style="font-family:var(--sans)">Es el archivo de entrada que acompaña al libro. Toque una línea para copiarla. Las líneas con # son ajustes que se hacen a mano en la Configuración del objeto. Los comandos se muestran en español, como se escriben en la Barra de Entrada; al enviarlos por la API el recurso los traduce al inglés, porque <span class="mono">evalCommand</span> solo acepta los nombres en inglés (capítulo 7 del libro).</p>
+          <div class="btn-row" style="margin-bottom:10px"><button class="btn ghost sm" type="button" id="cmdCopy">Copiar los comandos</button><button class="btn sec sm" type="button" id="cmdRun">Probar en el panel</button></div>
+          <div class="code" id="vtCmd"></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PRÁCTICA ===================== -->
+<section class="block" id="practica">
+  <div class="wrap">
+    <span class="kicker">Práctica graduada · Tres niveles</span>
+    <h2 class="sec-title">¿Se sostiene la afirmación?</h2>
+    <p class="read">Cada afirmación es del tipo que aparece al diseñar un recurso. Decida si se sostiene. Las del segundo nivel salen de errores que este libro tuvo y que solo se vieron al ejecutar los ejemplos.</p>
+    <div class="stack" id="quiz"></div>
+  </div>
+</section>
+</main>
+
+<footer id="creditos">
+  <div class="wrap">
+    <h2 class="sub-title">Créditos y fuentes</h2>
+    <ul style="padding-left:1.2em">
+      <li>Recurso acompañante de: Acuña-Chacón, R., y Gutiérrez-Montenegro, M. (2026). <i>Construir, enseñar e investigar con GeoGebra</i> (versión de trabajo). Instituto GeoGebra de Costa Rica, Escuela de Matemática, Instituto Tecnológico de Costa Rica. Capítulo 9.</li>
+      <li>El motor de cápsulas guiadas y el laboratorio de arrastre se adaptaron del taller «GeoGebra + IA para enseñar geometría» (Acuña Chacón y Gutiérrez Montenegro, 2026).</li>
+      <li>Las técnicas (construcción condicionada, guiones, objetos de interacción, listas) están en los capítulos 3 a 6 del libro; los principios de diseño, en el capítulo 11.</li>
+      <li>Manual de comandos de GeoGebra en español: <a href="https://geogebra.github.io/docs/manual/es/" target="_blank" rel="noopener">geogebra.github.io/docs/manual/es</a></li>
+    </ul>
+    <p class="small muted" style="margin-top:18px">GeoGebra® es una marca registrada de GeoGebra GmbH. Este recurso se elabora desde el Instituto GeoGebra de Costa Rica con fines educativos no comerciales; no es un producto de GeoGebra GmbH. Las cápsulas se ejecutan con GeoGebra (Made with GeoGebra®).</p>
+  </div>
+</footer>
+
+<button class="btn sec ggb-fab" type="button" data-open-ggb aria-controls="drawer">GeoGebra</button>
+<aside class="drawer" id="drawer" aria-label="Panel de GeoGebra" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>GeoGebra Classic 6</h2>
+    <button class="btn ghost sm" type="button" id="ggbNew">Lienzo nuevo</button>
+    <button class="icon-btn" type="button" id="ggbClose" aria-label="Cerrar el panel de GeoGebra">&#10005;</button>
+  </div>
+  <div class="ggb-host" id="ggbHost"><div id="ggbBox"></div><div class="ggb-msg" id="ggbMsg"><p>GeoGebra se carga al abrir este panel.</p></div></div>
+  <div class="ggb-log" id="ggbLog" aria-live="polite">Listo para recibir comandos.</div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ============================================================
+   Utilidades
+   ============================================================ */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+let toastTimer;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2600); }
+async function copyText(text, label = 'Copiado') {
+  try {
+    if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
+    else { const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove(); if (!ok) throw new Error('copy'); }
+    toast(label + ' al portapapeles'); return true;
+  } catch (e) { toast('No se pudo copiar: seleccione el texto y cópielo.'); return false; }
+}
+const store = { get(k) { try { return localStorage.getItem('ggbcap09_' + k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem('ggbcap09_' + k, v); } catch (e) {} } };
+const VOZ = { rate: (() => { const r = parseFloat(store.get('vozRate')); return r >= 0.6 && r <= 1.6 ? r : 0.9; })(), set(r) { this.rate = r; store.set('vozRate', r); } };
+
+/* ============================================================
+   Listados del libro (archivos ejemplo1..6-entrada.txt)
+   ============================================================ */
+const MANUAL = { "e1": { "view": [ -6, 6, -5, 8 ], "lines": [ "# Ejemplo 1 - Cuadrática en forma canónica (líneas para la barra de entrada)", "a = Deslizador(-3, 3, 0.1, 1, 180, false, true, false, false)", "h = Deslizador(-5, 5, 0.5, 1, 180, false, true, false, false)", "k = Deslizador(-5, 5, 0.5, 1, 180, false, true, false, false)", "est_verificar = false          # convertir en casilla (Configuración) o: CasillaControl(\"Verificar\")", "est_intentos = 0               # marcar como auxiliar", "f(x) = a (x - h)^2 + k", "V = (h, k)", "eje: x = h", "raices = {Raíz(f)}", "txtF = Texto(\"f(x) = \" + FórmulaTexto(f), (-5.6, 7.2))", "txtConcav = Texto(Si(a > 0, \"Cóncava hacia arriba\", Si(a < 0, \"Cóncava hacia abajo\", \"a = 0: la parábola degenera en una recta\")), (-5.6, 6.4))", "txtV = Si(est_verificar, Texto(\"V = \" + FórmulaTexto(V), (x(V) + 0.3, y(V) + 0.8)))", "# Condición para mostrar (Configuración > Avanzado):", "#   V, eje: est_verificar        raices: est_verificar && a != 0", "# Color dinámico de f: Rojo Si(a<0,0.85,0.10)  Verde 0.25  Azul Si(a<0,0.10,0.75)", "# Botón \"Reiniciar\", guion Al hacer clic:", "#   Valor(a, 1)  Valor(h, 0)  Valor(k, 0)  Valor(est_verificar, false)", "#   Valor(est_intentos, est_intentos + 1)  ZoomAcerca(-6, -4, 6, 8)" ] }, "e2": { "view": [ -4, 6, -4, 6 ], "lines": [ "# Ejemplo 2 - Campo de direcciones y método de Euler", "g(x, y) = x - y", "campo = CampoDirecciones(g, 25, 0.8, -4, -4, 6, 6)", "P0 = (-3, 2)", "h = Deslizador(0.05, 1, 0.05, 1, 180, false, true, false, false)", "n = Deslizador(1, 60, 1, 1, 180, false, true, false, false)", "est_verSol = false", "euler = ListaIteración((x(A) + h, y(A) + h g(x(A), y(A))), A, {P0}, n)", "poli = Poligonal(euler)", "eulerFino = ListaIteración((x(A) + h / 8, y(A) + (h / 8) g(x(A), y(A))), A, {P0}, 8 n)", "sol = ResuelveEDO(g, P0)          # condición: est_verSol", "Pfin = Elemento(euler, n + 1)", "PfinFino = Elemento(eulerFino, 8 n + 1)", "err = abs(y(Pfin) - y(PfinFino))", "txtErr = Si(est_verSol, Texto(\"Desviación en el extremo: \" + err, (-3.8, 5.4)))", "ce1 = CasillaEntrada(g)", "# Color dinámico de poli: Rojo Si(err<0.5, err/0.5, 1)  Verde Si(err<0.5, 1-err/0.5, 0)  Azul 0", "# Botón Reiniciar: Valor(P0,(-3,2)) Valor(h,0.5) Valor(n,12) Valor(est_verSol,false) ZoomAcerca(-4,-4,6,6)" ] }, "e3": { "view": [ -7, 7, -5, 5 ], "lines": [ "# Ejemplo 3 - Ángulo inscrito con autoevaluación", "O = (0, 0)", "r = Deslizador(1, 4, 0.5, 1, 180, false, true, false, false)", "c = Circunferencia(O, r)", "A = Punto(c)", "B = Punto(c)", "C = Punto(c)", "alfa = Ángulo(A, C, B)", "central = Ángulo(A, O, B)", "est_intentos = 0", "est_correcto = false", "est_pista = false", "respuesta = 2", "esq1 = Esquina(1)", "esq4 = Esquina(4)", "ce1 = CasillaEntrada(respuesta)", "txtRes = Texto(Si(est_correcto, \"Correcto. Mueva C y compruebe de nuevo.\", Si(est_intentos == 0, \"Escriba su conjetura.\", \"Todavía no. Observe qué ocurre al mover C.\")), esq4 + (0.4, -0.5))", "txtPista = Si(est_pista, Texto(\"Pista: compare las medidas cuando C está lejos de A y de B.\", esq4 + (0.4, -1.2)))", "# alfa: en Configuración > Básico, marcar \"Ángulo entre 0° y 180°\" (mide el ángulo inscrito geométrico)", "# central: dejar \"Ángulo entre 0° y 360°\" (mide el arco de A a B en sentido antihorario)", "gammaC = Ángulo(A, O, C)", "enArco = gammaC < central", "txtArco = Si(enArco, Texto(\"C está en el arco que abarca el ángulo central: el ángulo inscrito en C abarca el otro arco.\", esq1 + (0.4, 0.5)))", "# gammaC y enArco: marcar como auxiliares y ocultar gammaC.", "# Corrección del 5-nov-2026: antes el indicador era \"beta < 180°\", que no depende de C.", "# Botón Comprobar, guion Al hacer clic:", "#   Valor(est_intentos, est_intentos + 1)", "#   Valor(est_correcto, abs(central - respuesta alfa) < 0.02)", "#   Valor(est_pista, est_intentos >= 2 && !est_correcto)", "# Color dinámico de txtRes: Rojo Si(est_correcto,0.1,0.8) Verde Si(est_correcto,0.5,0.2) Azul 0.1", "# Corrección del 10-nov-2026: el ángulo central se llamaba beta; GeoGebra reserva beta y gamma", "# (funciones) y renombraba el objeto a beta_1, con lo que las líneas siguientes fallaban." ] }, "e4": { "view": [ -1, 11, -0.4, 1.6 ], "lines": [ "# Ejemplo 4 - Convolución como área móvil", "f(x) = Si(x >= 0, exp(-x), 0)", "g(x) = Si(0 <= x <= 2, 1, 0)", "t = Deslizador(0, 10, 0.1, 1, 220, false, true, false, false)", "h(x) = f(x) g(t - x)", "A = Integral(h, 0, t)", "P = (t, A)                         # activar Rastro", "conv = Secuencia((s, Integral(f(x) g(s - x), 0, s)), s, 0, 10, 0.25)", "curva = Poligonal(conv)", "txtA = Texto(\"Área = \" + A, (6.5, 1.4))", "# Vista CAS (parte simbólica):", "#   F := Laplace(exp(-t), t)", "#   G := Laplace(Si(0 <= t <= 2, 1), t)", "#   Factoriza(F * G)", "#   LaplaceInversa(F * G, s)", "# Correcciones del 10-nov-2026: f y g llevan el caso contrario (0); sin él, Integral(h, 0, t)", "# quedaba indefinida. En la secuencia, Integral va con tres argumentos: con (expr, x, 0, s)", "# GeoGebra calculaba IntegralEntre(expr, x, 0, s), el área entre la curva y la recta y = x." ] }, "e5": { "view": [ -1, 12, -1, 12 ], "lines": [ "# Ejemplo 5 - Regresión lineal con residuos condicionados", "datos = {(1, 2.1), (2, 2.9), (3, 3.6), (4, 4.8), (5, 5.1), (6, 6.3), (7, 6.8), (8, 8.1), (9, 8.7), (10, 9.9)}", "Q = (8, 9)", "est_incluirQ = true               # casilla \"Incluir Q en el ajuste\"", "est_verCuadrados = false          # casilla \"Mostrar cuadrados\"", "conjunto = Si(est_incluirQ, Añade(datos, Q), datos)", "recta = AjusteLineal(conjunto)", "fr = AjustePolinómico(conjunto, 1)", "r2 = RCuadrado(conjunto, fr)", "resPos = Zip(Si(y(W) > fr(x(W)), Segmento(W, (x(W), fr(x(W))))), W, conjunto)", "resNeg = Zip(Si(y(W) <= fr(x(W)), Segmento(W, (x(W), fr(x(W))))), W, conjunto)", "cuadrados = Zip(Polígono((x(W), y(W)), (x(W), fr(x(W))), (x(W) + (y(W) - fr(x(W))), fr(x(W))), (x(W) + (y(W) - fr(x(W))), y(W))), W, conjunto)", "SCE = SumaErroresCuadrados(conjunto, fr)", "esq4 = Esquina(4)", "txtAjuste = Texto(\"y = \" + FórmulaTexto(fr) + \"\\quad R^2 = \" + r2 + \"\\quad SCE = \" + SCE, esq4 + (0.4, -1.4))", "# Condición para mostrar de cuadrados: est_verCuadrados" ] }, "e6": { "view": [ -3, 5, -2, 8 ], "lines": [ "# Ejemplo 6 - La derivada en cuatro fases", "est_fase = 1                      # auxiliar", "f(x) = x^2 / 2 + 1", "a = Deslizador(-2, 3, 0.1, 1, 180, false, true, false, false)", "hh = Deslizador(0.01, 3, 0.01, 1, 180, false, true, false, false)", "P = (a, f(a))", "Q = (a + hh, f(a + hh))", "sec = Recta(P, Q)                                  # condición: est_fase >= 1", "m_sec = (f(a + hh) - f(a)) / hh", "triangulo = Polígono(P, (a + hh, f(a)), Q)         # condición: est_fase >= 2", "esq4 = Esquina(4)", "txtCoc = Texto(\"m = \" + m_sec, esq4 + (0.4, -2.2))  # condición: est_fase >= 2", "tang = Recta(P, Vector((1, f'(a))))                # condición: est_fase >= 3", "R = (a, f'(a))                                     # condición: est_fase >= 3; activar Rastro", "df(x) = f'(x)                                      # condición: est_fase >= 4", "txtFase = Texto(\"Fase \" + est_fase + \" de 4\", esq4 + (0.4, -0.5))", "# Botón Siguiente (condición est_fase < 4): Valor(est_fase, Si(est_fase < 4, est_fase + 1, 4))", "# Botón Anterior  (condición est_fase > 1): Valor(est_fase, Si(est_fase > 1, est_fase - 1, 1))", "# Botón Reiniciar: Valor(est_fase,1) Valor(a,1) Valor(hh,1.5) ZoomAcerca(-3,-2,5,8)" ] } };
+/* La API de GeoGebra (evalCommand) solo acepta los nombres de comando en inglés, aunque el applet
+   esté en español. El recurso muestra los comandos en español, como en el libro, y los traduce al enviarlos. */
+const CMD_EN = {'Polígono':'Polygon', 'Recta':'Line', 'Punto':'Point', 'Esquina':'Corner', 'Si':'If', 'Texto':'Text', 'Ángulo':'Angle', 'Deslizador':'Slider', 'Segmento':'Segment',
+  'Circunferencia':'Circle', 'Vector':'Vector', 'Raíz':'Root', 'FórmulaTexto':'FormulaText', 'CampoDirecciones':'SlopeField', 'ListaIteración':'IterationList', 'Poligonal':'Polyline',
+  'ResuelveEDO':'SolveODE', 'Elemento':'Element', 'CasillaEntrada':'InputBox', 'Integral':'Integral', 'Secuencia':'Sequence', 'Añade':'Append', 'AjusteLineal':'FitLine',
+  'AjustePolinómico':'FitPoly', 'RCuadrado':'RSquare', 'Zip':'Zip', 'SumaErroresCuadrados':'SumSquaredErrors'};
+const toEN = c => c.split('"').map((p, i) => i % 2 ? p : p.replace(/([A-Za-zÁÉÍÓÚáéíóúñÑ]+)\s*\(/g, (m, w) => (CMD_EN[w] || w) + '(')).join('"');
+const soloCodigo = l => l.replace(/\s{2,}#.*$/, '');
+const manualText = k => MANUAL[k].lines.filter(l => !l.startsWith('#')).map(soloCodigo).join('\n');
+function renderCode(box, lines) {
+  box.innerHTML = lines.map(l => l.startsWith('#') ? `<div class="cm">${esc(l)}</div>` : `<button class="line" type="button" title="Copiar esta línea">${esc(l)}</button>`).join('');
+}
+
+/* ============================================================
+   Cápsulas guiadas dentro de GeoGebra Classic
+   (identificadores de herramienta según EuclidianConstants)
+   ============================================================ */
+const VG = (() => {
+  const GT = {
+    0:{n:'Mueve', g:1}, 1:{n:'Punto', g:2}, 501:{n:'Punto en objeto', g:2}, 5:{n:'Intersección', g:2}, 19:{n:'Medio o Centro', g:2},
+    2:{n:'Recta', g:3}, 15:{n:'Segmento', g:3}, 7:{n:'Vector', g:3},
+    4:{n:'Perpendicular', g:4}, 3:{n:'Paralela', g:4},
+    16:{n:'Polígono', g:5}, 10:{n:'Circunferencia (centro, punto)', g:6}, 36:{n:'Ángulo', g:8}, 38:{n:'Distancia o Longitud', g:8},
+    29:{n:'Simetría central', g:9}, 31:{n:'Traslación', g:9},
+    25:{n:'Deslizador', g:10}, 52:{n:'Casilla de control', g:10}
+  };
+  const GROUPS = ['', 'Mueve', 'Punto', 'Recta', 'Perpendicular', 'Polígono', 'Circunferencia', 'Cónicas', 'Ángulo', 'Simetría axial', 'Deslizador', 'Desplaza vista'];
+  const FIRST = new Set([0, 1, 2, 4, 16, 10, 36, 25]);
+  const toolName = m => m === -1 ? 'Barra de Entrada' : GT[m].n;
+  function toolHow(m) {
+    if (m === -1) return 'Escriba en la Barra de Entrada, debajo de la Vista Algebraica, y pulse Enter.';
+    const t = GT[m];
+    return FIRST.has(m) ? `Botón ${t.g} de la barra de herramientas (grupo ${GROUPS[t.g]}).` : `Botón ${t.g} de la barra (grupo ${GROUPS[t.g]}): despliegue el botón y elija «${t.n}».`;
+  }
+  const names = s => s.split(' ');
+  const yes = (api, n) => { try { return api.exists(n) && api.getValue(n) === 1; } catch (e) { return false; } };
+  const num = (api, n, d = 2) => { try { const v = api.getValue(n); return Number.isFinite(v) ? String(+v.toFixed(d)) : 'indefinido'; } catch (e) { return '?'; } };
+  const nota = (k, t) => `<div class="note ok"><span class="ic">${k}</span><span>${esc(t)}</span></div>`;
+
+  /* En cada paso, "do" mezcla: [x, y] = toque en esa posición; texto = comando; función = acción propia. */
+  const CAPS = [
+  {key:'e1', n:1, title:'La cuadrática en forma canónica', ref:'Ejemplo 1', view:[-6, 6, -5, 8],
+   uso:'Ver qué hace cada parámetro de f(x) = a(x − h)² + k y dejar el vértice, el eje y las raíces ocultos hasta que el estudiante decida verificar.',
+   reto:'Antes de marcar Verificar, prediga dónde está el vértice y cuántas raíces hay para a = −1, h = 2, k = 3. Luego busque valores para los que no haya raíces.',
+   watch(api) { if (!api.exists('f')) return ''; return nota('Ahora', `a = ${num(api, 'a')}, h = ${num(api, 'h')}, k = ${num(api, 'k')}` + (api.exists('est_verificar') ? ` · Verificar: ${yes(api, 'est_verificar') ? 'activado' : 'desactivado'}` : '')); },
+   steps:[
+    {m:25, say:'Con Deslizador se crean los tres parámetros: a, h y k.',
+     do:['a = Deslizador(-3, 3, 0.1, 1, 180, false, true, false, false)', 'h = Deslizador(-5, 5, 0.5, 1, 180, false, true, false, false)', 'k = Deslizador(-5, 5, 0.5, 1, 180, false, true, false, false)', g => { g.value('a', 1); g.value('h', 0); g.value('k', 0); }, g => g.wait(800)]},
+    {m:-1, say:'En la Barra de Entrada, la función en forma canónica y dos textos: la fórmula y la concavidad, que se escribe con un Si.',
+     do:['f(x) = a (x - h)^2 + k', 'txtF = Texto("f(x) = " + FórmulaTexto(f), (-5.6, 7.2))', 'txtConcav = Texto(Si(a > 0, "Cóncava hacia arriba", Si(a < 0, "Cóncava hacia abajo", "a = 0: la parábola degenera en una recta")), (-5.6, 6.4))', g => g.wait(1200)]},
+    {m:0, say:'Mueva a. El texto cambia con el signo y, en a igual a cero, avisa que la parábola degenera en una recta: el caso límite está previsto.',
+     do:[g => g.slide('a', [1, -2, 0], 0.1), g => g.wait(1500), g => g.slide('a', [0, 1], 0.1)]},
+    {m:0, say:'Mueva h y k: la gráfica se traslada sin cambiar de forma.',
+     do:[g => g.slide('h', [0, 2], 0.5), g => g.slide('k', [0, -3], 0.5)]},
+    {m:52, say:'Ahora la capa condicionada. Una casilla, est verificar, y tres objetos que solo se muestran si está marcada: el vértice, el eje y las raíces.',
+     do:['est_verificar = false', 'V = (h, k)', 'eje: x = h', 'raices = {Raíz(f)}', 'txtV = Si(est_verificar, Texto("V = " + FórmulaTexto(V), (x(V) + 0.3, y(V) + 0.8)))',
+       g => g.caption('est_verificar', 'Verificar', 0), g => g.cond(['V', 'eje'], 'est_verificar'), g => g.cond(['raices'], 'est_verificar && a != 0'), g => g.wait(1200)]},
+    {m:0, say:'Marque Verificar: aparecen el vértice, el eje y las raíces. Suba k por encima de cero: la lista de raíces queda vacía.',
+     do:[g => g.check('est_verificar', true), g => g.wait(1800), g => g.slide('k', [-3, 1], 0.5), g => g.wait(1200)]}
+   ]},
+  {key:'e2', n:2, title:'Campo de direcciones y método de Euler', ref:'Ejemplo 2', view:[-4, 6, -4, 6],
+   uso:'Construir la aproximación de Euler con una lista iterada y medir cuánto se desvía al cambiar el paso.',
+   reto:'Recorra el mismo tramo, de x = −3 a x = 0, con h = 1 (n = 3), h = 0.5 (n = 6) y h = 0.25 (n = 12). Anote la desviación en cada caso: ¿qué le pasa cuando el paso se reduce a la mitad?',
+   watch(api) { if (!api.exists('err')) return ''; return nota('Ahora', `paso h = ${num(api, 'h')}, n = ${num(api, 'n', 0)} pasos · desviación en el extremo = ${num(api, 'err', 3)}`); },
+   steps:[
+    {m:-1, say:'La ecuación diferencial se escribe como una función de dos variables, g de x e y. CampoDirecciones dibuja el campo.',
+     do:['g(x, y) = x - y', 'campo = CampoDirecciones(g, 25, 0.8, -4, -4, 6, 6)', g => g.wait(1200)]},
+    {m:1, say:'Con Punto, la condición inicial P cero. Con Deslizador, el paso h y el número de pasos n.',
+     do:[[-3, 2], 'P0 = (-3, 2)', 'h = Deslizador(0.05, 1, 0.05, 1, 180, false, true, false, false)', 'n = Deslizador(1, 60, 1, 1, 180, false, true, false, false)', g => { g.value('h', 0.5); g.value('n', 1); }, g => g.wait(800)]},
+    {m:-1, say:'ListaIteración aplica n veces la regla de Euler a partir de P cero. Poligonal une los puntos.',
+     do:['euler = ListaIteración((x(A) + h, y(A) + h g(x(A), y(A))), A, {P0}, n)', 'poli = Poligonal(euler)', g => g.wait(1000)]},
+    {m:0, say:'Aumente n: la poligonal avanza un paso cada vez, siguiendo el campo.',
+     do:[g => g.slide('n', [1, 6], 1)]},
+    {m:-1, say:'Para medir el error se calcula una segunda aproximación, ocho veces más fina, y se comparan los extremos.',
+     do:['eulerFino = ListaIteración((x(A) + h / 8, y(A) + (h / 8) g(x(A), y(A))), A, {P0}, 8 n)', 'Pfin = Elemento(euler, n + 1)', 'PfinFino = Elemento(eulerFino, 8 n + 1)', 'err = abs(y(Pfin) - y(PfinFino))', g => g.hide(['eulerFino']), g => g.wait(1500)]},
+    {m:0, say:'Ahora el mismo tramo, de menos tres a cero, con tres pasos distintos: uno, un medio y un cuarto. Para comparar hay que ajustar también n, de modo que el extremo sea el mismo. La desviación baja cada vez que el paso se reduce.',
+     do:[g => { g.value('h', 1); g.value('n', 3); }, g => g.wait(2600), g => { g.value('h', 0.5); g.value('n', 6); }, g => g.wait(2600), g => { g.value('h', 0.25); g.value('n', 12); }, g => g.wait(2600)]},
+    {m:0, say:'Arrastre P cero: toda la aproximación se recalcula para la nueva condición inicial.',
+     do:[[-3, 2], g => g.drag('P0', [[-3, 2], [-3, -1], [-2, 3], [-3, 2]], 4200)]}
+   ]},
+  {key:'e3', n:3, title:'Ángulo inscrito, con autoevaluación', ref:'Ejemplo 3', view:[-7, 7, -5, 5],
+   uso:'Comparar el ángulo inscrito con el central mientras C recorre la circunferencia, incluido el arco donde la relación «el doble» deja de leerse.',
+   reto:'Escriba su conjetura sobre la relación entre los dos ángulos. Después lleve C al arco entre A y B: ¿sigue valiendo? ¿Qué relación vale ahí?',
+   watch(api) {
+     if (!api.exists('central') || !api.exists('alfa')) return '';
+     const al = api.getValue('alfa') * 180 / Math.PI, ce = api.getValue('central') * 180 / Math.PI;
+     let t = `central = ${ce.toFixed(1)}°, inscrito = ${al.toFixed(1)}°, central ÷ inscrito = ${(ce / al).toFixed(2)}`;
+     if (api.exists('enArco')) t += yes(api, 'enArco') ? ' · C está en el arco de A a B: el inscrito abarca el otro arco' : ' · C está fuera del arco de A a B';
+     return nota('Ahora', t);
+   },
+   steps:[
+    {m:10, say:'Una circunferencia de centro O y radio r, con un deslizador para el radio.',
+     do:['O = (0, 0)', 'r = Deslizador(1, 4, 0.5, 1, 180, false, true, false, false)', g => g.value('r', 3), 'c = Circunferencia(O, r)']},
+    {m:501, say:'Con Punto en objeto, tres puntos sobre la circunferencia: A, B y C. Solo pueden moverse sobre ella.',
+     do:[[3, 0], 'A = Punto(c)', g => g.xy('A', 3, 0), [0, 3], 'B = Punto(c)', g => g.xy('B', 0, 3), [-3, 0], 'C = Punto(c)', g => g.xy('C', -3, 0)]},
+    {m:36, say:'Con Ángulo, el inscrito con vértice en C y el central con vértice en O. El central se llama central y no beta: GeoGebra reserva ese nombre.',
+     do:['sAC = Segmento(A, C)', 'sCB = Segmento(C, B)', 'sAO = Segmento(A, O)', 'sOB = Segmento(O, B)', [3, 0], [-3, 0], [0, 3], 'alfa = Ángulo(A, C, B)', g => g.angle180('alfa'), [3, 0], [0, 0], [0, 3], 'central = Ángulo(A, O, B)', g => g.wait(1000)]},
+    {m:0, say:'Arrastre C por el arco grande. El ángulo inscrito no cambia: sigue siendo la mitad del central.',
+     do:[[-3, 0], g => g.drag('C', [[-3, 0], [-2.12, -2.12], [0, -3], [2.12, -2.12, 900]], 4800)]},
+    {m:0, say:'Arrastre B: el central cambia y el inscrito lo sigue, siempre a la mitad.',
+     do:[[0, 3], g => g.drag('B', [[0, 3], [-2.12, 2.12, 1200], [0, 3]], 3800)]},
+    {m:-1, say:'El caso que suele omitirse. Un indicador dice si C está en el arco de A a B, comparando el ángulo A O C con el central.',
+     do:['gammaC = Ángulo(A, O, C)', 'enArco = gammaC < central', g => g.hide(['gammaC']), g => g.wait(1500)]},
+    {m:0, say:'Lleve C al arco entre A y B. Ahora el inscrito abarca el otro arco: ya no es la mitad del central, sino la mitad de lo que falta para trescientos sesenta.',
+     do:[g => g.drag('C', [[2.12, -2.12], [2.9, -0.78], [2.12, 2.12, 1500]], 4200)]}
+   ]},
+  {key:'e4', n:4, title:'Convolución como área móvil', ref:'Ejemplo 4', view:[-1, 11, -0.4, 1.6],
+   uso:'Ver la convolución como el área del producto de una función fija y otra que se desliza, y trazar su valor para cada t.',
+   reto:'¿En qué valor de t el área es máxima? Explíquelo mirando dónde está el pulso respecto de la exponencial.',
+   watch(api) { if (!api.exists('A')) return ''; return nota('Ahora', `t = ${num(api, 't', 1)} · área = ${num(api, 'A', 3)}`); },
+   steps:[
+    {m:-1, say:'Dos funciones definidas por tramos con Si: una exponencial que empieza en cero y un pulso rectangular. El tercer argumento, cero, es el valor fuera de la condición; sin él, la integral queda indefinida.',
+     do:['f(x) = Si(x >= 0, exp(-x), 0)', 'g(x) = Si(0 <= x <= 2, 1, 0)', g => g.wait(1500)]},
+    {m:25, say:'Un deslizador t y el producto de f por el pulso reflejado y desplazado: g de t menos x.',
+     do:['t = Deslizador(0, 10, 0.1, 1, 220, false, true, false, false)', g => g.value('t', 1), 'h(x) = f(x) g(t - x)', g => g.hide(['g']), g => g.wait(1200)]},
+    {m:-1, say:'Integral sombrea el área bajo el producto entre cero y t, y devuelve el número. El punto P guarda ese valor y deja rastro.',
+     do:['A = Integral(h, 0, t)', 'P = (t, A)', g => g.trace('P'), g => g.wait(1000)]},
+    {m:0, say:'Mueva t. El pulso avanza, el área sombreada cambia y P va dibujando la convolución.',
+     do:[g => g.slide('t', [1, 0, 6], 0.1)]},
+    {m:-1, say:'La curva completa, de una vez: una Secuencia que calcula la integral para cada valor de s. Dentro de la secuencia, Integral lleva tres argumentos.',
+     do:['conv = Secuencia((s, Integral(f(x) g(s - x), 0, s)), s, 0, 10, 0.25)', 'curva = Poligonal(conv)', g => g.wait(1500)]}
+   ]},
+  {key:'e5', n:5, title:'Regresión lineal con residuos condicionados', ref:'Ejemplo 5', view:[-1, 12, -1, 12],
+   uso:'Ver cómo un solo punto cambia la recta de ajuste, R² y la suma de cuadrados, y mostrar los cuadrados de los residuos solo cuando se pidan.',
+   reto:'Arrastre Q hasta dejar R² por debajo de 0.8. Después desmarque «Incluir Q»: ¿cuánto pesa un solo dato en el ajuste?',
+   watch(api) { if (!api.exists('r2')) return ''; return nota('Ahora', `R² = ${num(api, 'r2', 3)} · suma de errores cuadrados = ${num(api, 'SCE', 2)} · Q ${yes(api, 'est_incluirQ') ? 'incluido' : 'excluido'}`); },
+   steps:[
+    {m:-1, say:'Diez datos en una lista y un punto más, Q, que se puede arrastrar.',
+     do:['datos = {(1, 2.1), (2, 2.9), (3, 3.6), (4, 4.8), (5, 5.1), (6, 6.3), (7, 6.8), (8, 8.1), (9, 8.7), (10, 9.9)}', 'Q = (8, 9)', g => g.color('Q', 239, 51, 64), g => g.wait(1000)]},
+    {m:52, say:'Una casilla decide si Q entra en el ajuste. El conjunto se arma con un Si: los datos con Q, o los datos solos.',
+     do:['est_incluirQ = true', 'conjunto = Si(est_incluirQ, Añade(datos, Q), datos)', g => g.caption('est_incluirQ', 'Incluir Q en el ajuste', 0), g => g.wait(1000)]},
+    {m:-1, say:'La recta de ajuste, R cuadrado y la suma de errores cuadrados.',
+     do:['recta = AjusteLineal(conjunto)', 'fr = AjustePolinómico(conjunto, 1)', 'r2 = RCuadrado(conjunto, fr)', 'SCE = SumaErroresCuadrados(conjunto, fr)', g => g.hide(['fr']), g => g.wait(1200)]},
+    {m:-1, say:'Los residuos, con Zip: un segmento vertical de cada dato a la recta.',
+     do:['resPos = Zip(Si(y(W) > fr(x(W)), Segmento(W, (x(W), fr(x(W))))), W, conjunto)', 'resNeg = Zip(Si(y(W) <= fr(x(W)), Segmento(W, (x(W), fr(x(W))))), W, conjunto)', g => g.color('resPos', 46, 125, 50), g => g.color('resNeg', 178, 106, 0), g => g.wait(1200)]},
+    {m:0, say:'Arrastre Q lejos de la tendencia: la recta gira hacia él y R cuadrado baja.',
+     do:[[8, 9], g => g.drag('Q', [[8, 9], [9, 2, 1500], [2, 10, 1500], [8, 9]], 7500)]},
+    {m:52, say:'Los cuadrados de los residuos, con otra casilla. Solo se muestran cuando se marca: primero se estima, después se verifica.',
+     do:['est_verCuadrados = false', 'cuadrados = Zip(Polígono((x(W), y(W)), (x(W), fr(x(W))), (x(W) + (y(W) - fr(x(W))), fr(x(W))), (x(W) + (y(W) - fr(x(W))), y(W))), W, conjunto)',
+       g => g.caption('est_verCuadrados', 'Mostrar cuadrados', 1), g => g.cond(['cuadrados'], 'est_verCuadrados'), g => g.xy('Q', 9, 3), g => g.wait(1000), g => g.check('est_verCuadrados', true), g => g.wait(2200)]},
+    {m:0, say:'Desmarque Incluir Q: el ajuste vuelve a los diez datos y el cuadrado grande desaparece.',
+     do:[g => g.check('est_incluirQ', false), g => g.wait(2200)]}
+   ]},
+  {key:'e6', n:6, title:'La derivada en cuatro fases', ref:'Ejemplo 6', view:[-3, 5, -2, 8],
+   uso:'Recorrer en orden las cuatro fases de la actividad: secante, cociente incremental, tangente y función derivada.',
+   reto:'Con a = 1, anote la pendiente de la secante para h = 1, 0.5, 0.1 y 0.01. ¿A qué número se acerca? Compárelo con el valor de la derivada en la fase 4.',
+   watch(api) { if (!api.exists('m_sec')) return ''; return nota('Ahora', `a = ${num(api, 'a', 1)}, h = ${num(api, 'hh')} · pendiente de la secante = ${num(api, 'm_sec', 3)}`); },
+   steps:[
+    {m:-1, say:'La función y dos deslizadores: el punto a y el incremento, que aquí se llama h h.',
+     do:['f(x) = x^2 / 2 + 1', 'a = Deslizador(-2, 3, 0.1, 1, 180, false, true, false, false)', 'hh = Deslizador(0.01, 3, 0.01, 1, 180, false, true, false, false)', g => { g.value('a', 1); g.value('hh', 1.5); }, g => g.wait(1000)]},
+    {m:2, say:'Fase uno. Dos puntos sobre la gráfica, P y Q, y con Recta, la secante.',
+     do:['P = (a, f(a))', 'Q = (a + hh, f(a + hh))', [1, 1.5], [2.5, 4.125], 'sec = Recta(P, Q)', g => g.wait(1200)]},
+    {m:16, say:'Fase dos. El triángulo de los incrementos y el cociente: lo que sube entre lo que avanza.',
+     do:['m_sec = (f(a + hh) - f(a)) / hh', 'triangulo = Polígono(P, (a + hh, f(a)), Q)', g => g.wait(1200)]},
+    {m:0, say:'Acerque Q a P reduciendo h. La pendiente de la secante se va estabilizando.',
+     do:[g => g.slide('hh', [1.5, 0.05], 0.05), g => g.value('hh', 0.01), g => g.wait(1500)]},
+    {m:-1, say:'Fase tres. La tangente en P, y un punto R que guarda la pendiente y deja rastro.',
+     do:['tang = Recta(P, Vector((1, f\'(a))))', 'R = (a, f\'(a))', g => g.color('tang', 239, 51, 64), g => g.trace('R'), g => g.wait(1000), g => g.slide('a', [1, -2, 3], 0.1)]},
+    {m:-1, say:'Fase cuatro. La función derivada: pasa exactamente por el rastro que dejó R.',
+     do:['df(x) = f\'(x)', g => g.wait(1800)]}
+   ]}
+  ];
+
+  /* estado */
+  const CANCEL = {cancel:true};
+  let api = null, loading = null, ci = 0, idx = 0, token = 0, playing = false, voice = true, busy = false, mem = {};
+  const fails = [];
+  const host = $('#vgHost');
+  const sleep = (ms, my) => new Promise((res, rej) => setTimeout(() => my === token ? res() : rej(CANCEL), ms));
+  function makeG(anim, my) {
+    const ok = c => { let r = false; try { r = api.evalCommand(toEN(c)); } catch (e) {} if (!r) { console.warn('GeoGebra no aceptó:', c); if (!fails.includes(c)) fails.push(c); } return r; };
+    const chk = () => { if (my !== token) throw CANCEL; };
+    const each = (list, fn) => list.forEach(n => { try { fn(n); } catch (e) {} });
+    return {
+      mode(m) { chk(); try { api.setMode(m); } catch (e) {} },
+      cmd(c) { chk(); return ok(c); },
+      cmdAny(list) { chk(); for (const c of list) { let r = false; try { r = api.evalCommand(toEN(c)); } catch (e) {} if (r) return true; } fails.push(list.join(' | ')); return false; },
+      xy(n, x, y) { chk(); try { api.setCoords(n, x, y); } catch (e) {} },
+      color(n, r, g, b) { try { api.setColor(n, r, g, b); } catch (e) {} },
+      aux(list) { each(list, n => { api.setColor(n, 150, 160, 175); api.setLineStyle(n, 1); api.setLineThickness(n, 2); api.setLabelVisible(n, false); }); },
+      hide(list) { each(list, n => api.setVisible(n, false)); },
+      trace(n) { try { api.setTrace(n, true); } catch (e) {} },
+      cond(list, c) { each(list, n => api.evalCommand(`SetConditionToShowObject(${n}, ${c})`)); },
+      angle180(n) { try { api.evalXML(`<element type="angle" label="${n}"><angleStyle val="1"/></element>`); } catch (e) {} },
+      fix(list) { each(list, n => api.setFixed(n, true, false)); },
+      dash(n) { try { api.setLineStyle(n, 1); api.setColor(n, 61, 90, 138); } catch (e) {} },
+      caption(n, t, row = 0) { try { api.evalXML(`<element type="boolean" label="${n}"><labelOffset x="30" y="${215 + row * 32}"/></element>`); api.setVisible(n, true); api.setCaption(n, t); api.setLabelStyle(n, 3); api.setLabelVisible(n, true); } catch (e) {} },
+      value(n, v) { chk(); try { api.setValue(n, v); } catch (e) {} },
+      check(n, on) { chk(); try { api.setValue(n, on ? 1 : 0); } catch (e) {} },
+      async wait(ms) { if (anim) await sleep(ms, my); },
+      async tap(x, y) {
+        if (!anim) return; chk();
+        let made = false; try { made = api.evalCommand(`toque = Circunferencia((${x}, ${y}), 0.28)`); } catch (e) {}
+        if (made) { try { api.setColor('toque', 239, 51, 64); api.setLineThickness('toque', 9); api.setLabelVisible('toque', false); api.setAuxiliary('toque', true); api.setFixed('toque', true, false); } catch (e) {} }
+        try { await sleep(380, my); } finally { try { api.deleteObject('toque'); } catch (e) {} }
+        await sleep(280, my);
+      },
+      async drag(name, path, ms) {
+        chk(); const last = path[path.length - 1];
+        if (!anim) { api.setCoords(name, last[0], last[1]); return; }
+        const holds = path.reduce((s, p) => s + (p[2] || 0), 0), seg = Math.max(300, (ms - holds) / (path.length - 1));
+        for (let i = 0; i < path.length - 1; i++) {
+          const [x0, y0] = path[i], [x1, y1] = path[i + 1], t0 = performance.now();
+          for (;;) { const s = Math.min(1, (performance.now() - t0) / seg), e = s * s * (3 - 2 * s); api.setCoords(name, x0 + (x1 - x0) * e, y0 + (y1 - y0) * e); if (s >= 1) break; await sleep(30, my); }
+          if (path[i + 1][2]) await sleep(path[i + 1][2], my);
+        }
+      },
+      async slide(name, vals, stepV = 1, deg = false) {
+        chk(); const k = deg ? Math.PI / 180 : 1, inc = deg ? 3 : stepV;
+        if (!anim) { api.setValue(name, vals[vals.length - 1] * k); return; }
+        let v = vals[0]; api.setValue(name, v * k);
+        for (const T of vals.slice(1)) { while (Math.abs(v - T) > 1e-9) { v += Math.sign(T - v) * Math.min(inc, Math.abs(T - v)); api.setValue(name, v * k); await sleep(deg ? 70 : (stepV < 1 ? 90 : 240), my); } await sleep(600, my); }
+      }
+    };
+  }
+  async function runStep(step, g) {
+    g.mode(step.m >= 0 ? step.m : 0);
+    for (const it of step.do) { if (typeof it === 'string') g.cmd(it); else if (Array.isArray(it)) await g.tap(it[0], it[1]); else await it(g); }
+  }
+  function setup(c) {
+    api.newConstruction(); mem = {};
+    try { api.setGridVisible(true); api.setAxesVisible(true, true); api.setCoordSystem(...c.view); api.setMode(0); } catch (e) {}
+  }
+  async function rebuild(n, my) { setup(CAPS[ci]); for (let k = 0; k < n; k++) await runStep(CAPS[ci].steps[k], makeG(false, my)); try { api.setMode(0); } catch (e) {} }
+
+  function pickVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    const vs = speechSynthesis.getVoices();
+    return ['es-CR', 'es-MX', 'es-US', 'es-419', 'es-CO', 'es-AR', 'es-CL', 'es-PE'].map(l => vs.find(v => v.lang.replace('_', '-') === l)).find(Boolean) || vs.find(v => /^es/i.test(v.lang)) || null;
+  }
+  function speakP(text, my) {
+    const read = Math.max(1800, text.length * 55 / VOZ.rate);
+    if (!voice || !('speechSynthesis' in window)) return sleep(read, my);
+    return new Promise((res, rej) => {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text), v = pickVoice();
+      if (v) u.voice = v; u.lang = v ? v.lang : 'es-MX'; u.rate = VOZ.rate;
+      let done = false; const fin = () => { if (done) return; done = true; my === token ? res() : rej(CANCEL); };
+      u.onend = fin; u.onerror = fin; setTimeout(fin, text.length * 95 / VOZ.rate + 4000);
+      speechSynthesis.speak(u);
+    });
+  }
+
+  function msg(html) { const m = $('#vgMsg'); if (html === null) { m.hidden = true; return; } m.hidden = false; m.innerHTML = html; }
+  function renderSteps() {
+    const c = CAPS[ci];
+    $('#vgList').innerHTML = c.steps.map((s, k) => {
+      const st = k < idx ? 'done' : (k === idx ? 'now' : '');
+      return `<li class="${st}" ${k === idx ? 'aria-current="step"' : ''}><button type="button" data-vgstep="${k}"><span class="st">${k < idx ? '✓' : k + 1}</span><span><b>${esc(toolName(s.m))}</b><small>${esc(s.say)}</small></span></button></li>`;
+    }).join('');
+    const k = Math.min(idx, c.steps.length - 1), s = c.steps[k], done = idx >= c.steps.length;
+    $('#vgNow').innerHTML = done
+      ? `<span class="vg-k">Construcción completa</span><p class="vg-say">Ahora es su turno. ${esc(c.reto)}</p>`
+      : `<span class="vg-k">Paso ${k + 1} de ${c.steps.length}</span><div class="vg-tool">Herramienta: <b>${esc(toolName(s.m))}</b></div><p class="vg-where">${esc(toolHow(s.m))}</p><p class="vg-say">${esc(s.say)}</p>`;
+    $('#vgPlay').innerHTML = playing ? '&#10074;&#10074; Pausar' : (idx >= c.steps.length ? '&#8634; Ver de nuevo' : (idx > 0 ? '&#9654; Continuar' : '&#9654; Reproducir en GeoGebra'));
+    $('#vgPlay').setAttribute('aria-pressed', String(playing));
+    $('#vgPrev').disabled = idx === 0 && !playing; $('#vgNext').disabled = idx >= c.steps.length;
+  }
+  function inFrame() { try { return window.self !== window.top; } catch (e) { return true; } }
+  function failMsg() {
+    return `<p><b>No se pudo cargar GeoGebra aquí.</b></p><p class="small">${inFrame() ? 'El recurso parece abierto dentro de una vista previa que bloquea programas externos. Descargue el archivo y ábralo con doble clic en Chrome, Edge o Firefox.' : 'Revise la conexión a internet y vuelva a pulsar Reproducir.'}</p><p class="small">Mientras tanto puede leer los pasos de la lista y copiar el listado de comandos.</p>`;
+  }
+  function ensure() {
+    if (api) return Promise.resolve(api);
+    if (loading) return loading;
+    msg('<p><b>Cargando GeoGebra…</b></p><p class="small">La primera vez puede tardar unos segundos.</p>');
+    loading = loadDeploy().then(() => new Promise((res, rej) => {
+      $('#vgBox').innerHTML = '<div id="vgAppletHost"></div>';
+      const params = {id:'ggbCap', appName:'classic', width:Math.max(320, host.clientWidth), height:host.clientHeight || 520, language:'es', perspective:'AG',
+        showToolBar:true, showToolBarHelp:true, showAlgebraInput:true, showMenuBar:true, showResetIcon:false, enableShiftDragZoom:true, enableRightClick:true,
+        errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF', appletOnLoad:a => { api = a; msg(null); res(a); }};
+      try { new GGBApplet(params, true).inject('vgAppletHost'); } catch (e) { rej(e); }
+      setTimeout(() => { if (!api) rej(new Error('timeout')); }, 40000);
+    })).catch(e => { loading = null; msg(failMsg()); throw e; });
+    return loading;
+  }
+  async function play() {
+    if (busy) return;
+    const c = CAPS[ci]; if (idx >= c.steps.length) idx = 0;
+    try { await ensure(); } catch (e) { return; }
+    const my = ++token; playing = true; renderSteps();
+    try {
+      busy = true; await rebuild(idx, my); busy = false;
+      while (idx < c.steps.length) {
+        renderSteps();
+        const voz = speakP(c.steps[idx].say, my);
+        await sleep(350, my); await runStep(c.steps[idx], makeG(true, my)); await voz;
+        try { api.setMode(0); } catch (e) {}
+        idx++; renderSteps(); await sleep(500, my);
+      }
+      playing = false; renderSteps();
+    } catch (e) { busy = false; if (e !== CANCEL) console.error(e); }
+  }
+  async function stopAndSync() {
+    const my = ++token; playing = false;
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    renderSteps();
+    if (api) { busy = true; try { await rebuild(idx, my); } catch (e) {} busy = false; }
+  }
+  async function single(k) {
+    if (busy) return;
+    try { await ensure(); } catch (e) { return; }
+    const my = ++token; playing = false; idx = k; renderSteps();
+    try {
+      busy = true; await rebuild(idx, my); busy = false;
+      const voz = speakP(CAPS[ci].steps[idx].say, my);
+      await sleep(350, my); await runStep(CAPS[ci].steps[idx], makeG(true, my)); await voz; try { api.setMode(0); } catch (e) {}
+      idx++; renderSteps();
+    } catch (e) { busy = false; if (e !== CANCEL) console.error(e); }
+  }
+  function load(i) {
+    token++; playing = false; if ('speechSynthesis' in window) speechSynthesis.cancel();
+    ci = i; idx = 0; mem = {}; const c = CAPS[i];
+    $$('#vtList [role=tab]').forEach((b, k) => { b.setAttribute('aria-selected', String(k === i)); b.tabIndex = k === i ? 0 : -1; });
+    $('#vtTitle').textContent = c.title;
+    const tools = [...new Set(c.steps.map(s => toolName(s.m)))].join(' · ');
+    const CONS = {"e1": "cap09-ejemplo1", "e2": "cap09-ejemplo2", "e3": "cap09-ejemplo3", "e4": "cap09-ejemplo4", "e5": "cap09-ejemplo5", "e6": "cap09-ejemplo6"};
+    $('#vtMeta').innerHTML = `<a class="chip" href="../construcciones/${CONS[c.key]}.html">Construcción terminada</a><span class="chip dark">Libro: sección 9.${c.n}, ${esc(c.ref.toLowerCase())}</span><span class="chip">${c.steps.length} pasos</span>`;
+    $('#vgTools').innerHTML = `<b>Herramientas:</b> ${esc(tools)}`;
+    $('#vgUso').innerHTML = `<div class="note ok"><span class="ic">Propósito</span><span>${esc(c.uso)}</span></div><div class="note" style="margin-top:8px"><span class="ic">Reto</span><span>${esc(c.reto)}</span></div>`;
+    renderCode($('#vtCmd'), MANUAL[c.key].lines); $('#vgWatch').innerHTML = '';
+    renderSteps();
+    if (api) { const my = token; rebuild(0, my).catch(() => {}); }
+  }
+  /* estado en vivo de la construcción */
+  setInterval(() => { const c = CAPS[ci]; if (!api || !c.watch) return; let h = ''; try { h = c.watch(api, mem); } catch (e) {} const box = $('#vgWatch'); if (box.innerHTML !== h) box.innerHTML = h; }, 400);
+
+  $('#vtList').innerHTML = CAPS.map((c, i) => `<button type="button" role="tab" aria-controls="vtPanel" data-clip="${i}"><span class="vnum">${c.n}</span><span><b>${esc(c.title)}</b><small>${esc(c.ref)} · ${c.steps.length} pasos</small></span></button>`).join('');
+  $('#vtList').addEventListener('click', e => { const b = e.target.closest('[data-clip]'); if (b) load(+b.dataset.clip); });
+  $('#vtList').addEventListener('keydown', e => {
+    const tabs = $$('#vtList [role=tab]'), i = tabs.indexOf(document.activeElement); if (i < 0) return;
+    const j = ['ArrowDown', 'ArrowRight'].includes(e.key) ? (i + 1) % tabs.length : ['ArrowUp', 'ArrowLeft'].includes(e.key) ? (i + tabs.length - 1) % tabs.length : -1;
+    if (j >= 0) { e.preventDefault(); tabs[j].focus(); load(j); }
+  });
+  $('#vgPlay').addEventListener('click', () => { if (playing) stopAndSync(); else play(); });
+  document.addEventListener('click', e => { if (e.target.closest('[data-vgplay]')) play(); });
+  $('#vgRestart').addEventListener('click', async () => { await stopAndSync(); idx = 0; play(); });
+  $('#vgNext').addEventListener('click', async () => { if (playing) await stopAndSync(); if (idx < CAPS[ci].steps.length) single(idx); });
+  $('#vgPrev').addEventListener('click', async () => { if (playing) await stopAndSync(); idx = Math.max(0, idx - 1); renderSteps(); if (api) { const my = ++token; busy = true; try { await rebuild(idx, my); } catch (e) {} busy = false; } });
+  $('#vgList').addEventListener('click', async e => { const b = e.target.closest('[data-vgstep]'); if (!b) return; if (playing) await stopAndSync(); single(+b.dataset.vgstep); });
+  $('#vgVoice').addEventListener('change', e => {
+    voice = e.target.checked;
+    if (voice && !('speechSynthesis' in window)) { toast('Este navegador no tiene narración por voz; el texto sigue disponible.'); e.target.checked = false; voice = false; }
+    if (!voice && 'speechSynthesis' in window) speechSynthesis.cancel();
+  });
+  if (!('speechSynthesis' in window)) { voice = false; $('#vgVoice').checked = false; } else speechSynthesis.getVoices();
+  $('#vgRate').value = String(VOZ.rate);
+  $('#vgRate').addEventListener('change', e => { VOZ.set(parseFloat(e.target.value)); toast('Velocidad de la voz: ' + e.target.value); });
+  window.addEventListener('resize', () => { if (api) try { api.setSize(host.clientWidth, host.clientHeight); } catch (e) {} });
+  $('#cmdCopy').addEventListener('click', () => copyText(manualText(CAPS[ci].key), 'Comandos copiados'));
+  $('#cmdRun').addEventListener('click', () => runManual(CAPS[ci].key));
+  $('#vtCmd').addEventListener('click', e => { const l = e.target.closest('button.line'); if (l) copyText(l.textContent, 'Línea copiada'); });
+  load(0);
+  /* Prueba silenciosa: ejecuta todos los pasos de todas las cápsulas sin animación y devuelve los comandos rechazados. */
+  async function selfTest() {
+    await ensure(); const out = {};
+    for (let i = 0; i < CAPS.length; i++) { fails.length = 0; ci = i; const my = ++token; await rebuild(CAPS[i].steps.length, my); out[CAPS[i].key] = {rechazados:[...fails], objetos:api.getAllObjectNames().length}; }
+    load(0); return out;
+  }
+  return {CAPS, load, play, selfTest, fails, get api() { return api; }, get ci() { return ci; }};
+})();
+
+/* enlaces directos: #ej1 … #ej6 abren la cápsula correspondiente */
+function fromHash() {
+  const m = /^#ej([1-6])$/.exec(location.hash); if (!m) return;
+  VG.load(+m[1] - 1); $('#capsulas').scrollIntoView({behavior:'auto', block:'start'});
+}
+window.addEventListener('hashchange', fromHash); fromHash();
+document.addEventListener('click', e => { const b = e.target.closest('[data-goto-cap]'); if (!b) return; VG.load(+b.dataset.gotoCap); $('#capsulas').scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block:'start'}); });
+
+/* ============================================================
+   Práctica graduada
+   ============================================================ */
+const QUIZ = [
+  {lvl:'Nivel 1 · Construcción condicionada', items:[
+    {say:'Para que el vértice aparezca solo al verificar, basta con ocultarlo a mano y pedirle al estudiante que lo muestre.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Ocultar a mano no es una condición: el objeto no depende de nada y el recurso no puede volver a su estado inicial. Lo que se necesita es una condición para mostrar el objeto ligada a un valor de estado.'},
+      {t:'No se sostiene: el vértice debe tener como condición de visibilidad un booleano de estado, que la casilla cambia.', ok:true, fb:'Correcto. Es el patrón del ejemplo 1: est_verificar gobierna el vértice, el eje y las raíces, y el botón Reiniciar lo devuelve a falso.'}]},
+    {say:'En el ejemplo 1, las raíces deben mostrarse cuando est_verificar es verdadero.', opts:[
+      {t:'Se sostiene tal cual.', ok:false, fb:'Falta el caso límite: con a = 0 no hay parábola y Raíz devuelve un valor indefinido. La condición del libro es est_verificar && a != 0.'},
+      {t:'Falta una condición: que a sea distinto de cero.', ok:true, fb:'Correcto. Prever el caso degenerado en la condición es parte del diseño, no un detalle técnico.'}]},
+    {say:'Un guion de botón puede cambiar directamente el texto que ve el estudiante.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'El texto es un objeto dependiente: se define con Si a partir del estado. Un guion que escribe sobre un dependiente da error o no hace nada.'},
+      {t:'No se sostiene: el guion cambia un objeto libre de estado y el texto depende de él.', ok:true, fb:'Correcto. Es el principio P1 del libro: los guiones escriben solo sobre objetos libres, con prefijo est_.'}]}
+  ]},
+  {lvl:'Nivel 2 · Lo que solo se ve al ejecutar', items:[
+    {say:'beta = Ángulo(A, O, B) crea un ángulo llamado beta.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Al ejecutarlo, GeoGebra creó beta_1: beta y gamma están reservados para las funciones del mismo nombre. Toda línea posterior que usaba beta falló. El libro tuvo este error hasta la prueba del 10 de noviembre de 2026.'},
+      {t:'No se sostiene: beta es un nombre reservado y el objeto queda con otro nombre.', ok:true, fb:'Correcto. Por eso el ángulo central del ejemplo 3 se llama ahora central. El nombre era plausible y nadie lo había ejecutado.'}]},
+    {say:'f(x) = Si(x >= 0, exp(-x)) define una función que vale cero para x negativo.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Sin tercer argumento, la función queda indefinida fuera de la condición, no en cero. Un producto con ella también, y su integral devuelve indefinido. Así fallaba el ejemplo 4.'},
+      {t:'No se sostiene: fuera de la condición queda indefinida; hay que escribir Si(x >= 0, exp(-x), 0).', ok:true, fb:'Correcto. La diferencia no se ve en la gráfica, solo cuando otra operación necesita el valor.'}]},
+    {say:'Ángulo(D, A, B) y Ángulo(B, A, D) miden lo mismo.', opts:[
+      {t:'Se sostiene: es el mismo ángulo.', ok:false, fb:'Ángulo mide en sentido antihorario desde el primer punto. En la actividad 2 del capítulo 10, uno dio 68,2° y el otro 291,8°.'},
+      {t:'No se sostiene: el orden de los puntos decide si se obtiene el ángulo o su reflejo.', ok:true, fb:'Correcto. Los dos suman 360°. El orden importa siempre que el ángulo no esté restringido a 0°–180° en su configuración.'}]}
+  ]},
+  {lvl:'Nivel 3 · Diseño de la tarea', items:[
+    {say:'En el ejemplo 3, si el estudiante escribe 2 y el recurso responde «Correcto», la actividad cumplió su propósito.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Acertar el número no dice nada sobre el caso en que C pasa al arco entre A y B, donde la relación cambia. La consigna pide llevar C ahí y explicar qué ocurre.'},
+      {t:'No se sostiene: falta el caso en que C está en el arco de A a B, que es donde la conjetura se pone a prueba.', ok:true, fb:'Correcto. El indicador enArco existe para que ese caso no pase inadvertido.'}]},
+    {say:'En el ejemplo 5 conviene mostrar los cuadrados de los residuos desde el inicio, para que el estudiante los vea.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Si todo está a la vista desde el principio, no queda nada por anticipar. El libro los condiciona a una casilla para que primero se estime qué punto pesa más.'},
+      {t:'No se sostiene: se muestran al pedirlos, después de que el estudiante haya anticipado.', ok:true, fb:'Correcto. La condición de visibilidad es una decisión didáctica: ordena qué se piensa antes de qué.'}]},
+    {say:'El ejemplo 6 podría mostrar las cuatro fases a la vez; el orden lo pone el docente al explicar.', opts:[
+      {t:'Se sostiene.', ok:false, fb:'Con las cuatro capas visibles, la tangente y la derivada tapan la pregunta sobre la secante. Las fases están en el recurso para que el orden no dependa de quién lo proyecte.'},
+      {t:'No se sostiene: el entero est_fase hace que cada capa aparezca cuando corresponde.', ok:true, fb:'Correcto. Un solo valor de estado gobierna la visibilidad de todo, y los botones Siguiente y Anterior solo lo cambian.'}]}
+  ]}
+];
+(function quiz() {
+  const root = $('#quiz');
+  root.innerHTML = QUIZ.map((L, li) => `
+    <div class="card" data-level="${li}">
+      <div class="level-head"><h3 class="sub-title" style="margin:0">${L.lvl}</h3><div class="btn-row" style="align-items:center"><span class="score" id="score${li}">0 de ${L.items.length}</span><button class="btn ghost sm" type="button" data-reset-level="${li}">Reiniciar nivel</button></div></div>
+      ${L.items.map((it, qi) => `
+        <div class="qitem">
+          <div class="bubble"><span class="who">Afirmación</span>${esc(it.say)}</div>
+          <div class="answers">${it.opts.map((o, oi) => `<button type="button" data-ans="${li}-${qi}-${oi}">${String.fromCharCode(97 + oi)}) ${esc(o.t)}</button>`).join('')}</div>
+          <div class="fb" hidden aria-live="polite"></div>
+        </div>`).join('')}
+    </div>`).join('');
+  const answered = QUIZ.map(L => L.items.map(() => null));
+  const upd = li => { $('#score' + li).textContent = `${answered[li].filter(x => x === true).length} de ${QUIZ[li].items.length}`; };
+  root.addEventListener('click', e => {
+    const b = e.target.closest('[data-ans]');
+    if (b) {
+      const [li, qi, oi] = b.dataset.ans.split('-').map(Number), o = QUIZ[li].items[qi].opts[oi], box = b.closest('.qitem');
+      $$('.answers button', box).forEach(x => { x.classList.remove('sel-ok', 'sel-no'); x.removeAttribute('aria-pressed'); });
+      b.classList.add(o.ok ? 'sel-ok' : 'sel-no'); b.setAttribute('aria-pressed', 'true');
+      const fb = $('.fb', box); fb.hidden = false; fb.className = 'fb ' + (o.ok ? 'ok' : 'no');
+      fb.innerHTML = `<b>${o.ok ? '✓ Correcto' : '✗ Revisemos'}</b>${esc(o.fb)}`;
+      if (answered[li][qi] !== true) answered[li][qi] = o.ok; upd(li); return;
+    }
+    const r = e.target.closest('[data-reset-level]');
+    if (r) {
+      const li = +r.dataset.resetLevel; answered[li] = answered[li].map(() => null);
+      $$(`[data-level="${li}"] .answers button`).forEach(x => { x.classList.remove('sel-ok', 'sel-no'); x.removeAttribute('aria-pressed'); });
+      $$(`[data-level="${li}"] .fb`).forEach(x => { x.hidden = true; x.innerHTML = ''; }); upd(li);
+    }
+  });
+})();
+
+/* ============================================================
+   Panel de GeoGebra: ejecuta el listado del libro
+   ============================================================ */
+const drawer = $('#drawer');
+let ggbApi = null, ggbLoading = null, lastFocus = null;
+function log(msg) { $('#ggbLog').textContent = msg; }
+function ggbMsg(html) { const m = $('#ggbMsg'); if (html === null) { m.hidden = true; return; } m.hidden = false; m.innerHTML = html; }
+function fallbackHtml() {
+  let framed = true; try { framed = window.self !== window.top; } catch (e) {}
+  return `<p><b>No se pudo cargar GeoGebra aquí.</b></p><p class="small">${framed ? 'El recurso parece abierto dentro de una vista previa que bloquea programas externos: descargue el archivo y ábralo con doble clic.' : 'Revise la conexión a internet.'} También puede abrir GeoGebra en otra pestaña y pegar los comandos copiados.</p><a class="btn sm" href="https://www.geogebra.org/classic" target="_blank" rel="noopener">Abrir GeoGebra Classic 6</a>`;
+}
+function loadDeploy() {
+  if (window.GGBApplet) return Promise.resolve();
+  return new Promise((res, rej) => {
+    const s = document.createElement('script'); s.src = 'https://www.geogebra.org/apps/deployggb.js';
+    s.onload = () => res(); s.onerror = () => rej(new Error('deployggb'));
+    document.head.appendChild(s); setTimeout(() => rej(new Error('timeout')), 20000);
+  });
+}
+function inject() {
+  ggbApi = null;
+  const host = $('#ggbHost'); $('#ggbBox').innerHTML = '<div id="ggbPanelHost"></div>';
+  ggbMsg('<p>Cargando GeoGebra Classic 6…</p>');
+  ggbLoading = new Promise((res, rej) => {
+    const params = {id:'ggbPanel', appName:'classic', perspective:'AG', width:Math.max(300, host.clientWidth), height:Math.max(300, host.clientHeight), language:'es',
+      showToolBar:true, showToolBarHelp:true, showAlgebraInput:true, showMenuBar:true, showResetIcon:false, enableShiftDragZoom:true, enableRightClick:true,
+      errorDialogsActive:false, useBrowserForJS:false, borderColor:'#FFFFFF',
+      appletOnLoad:api => { ggbApi = api; ggbMsg(null); log('GeoGebra listo. Puede construir o recibir comandos.'); res(api); }};
+    try { new GGBApplet(params, true).inject('ggbPanelHost'); } catch (e) { rej(e); }
+    setTimeout(() => { if (!ggbApi) rej(new Error('timeout applet')); }, 40000);
+  });
+  ggbLoading.catch(() => { ggbMsg(fallbackHtml()); log('GeoGebra no cargó.'); });
+  return ggbLoading;
+}
+function ensureGgb() {
+  if (ggbApi) return Promise.resolve(ggbApi);
+  if (ggbLoading) return ggbLoading;
+  ggbMsg('<p>Cargando GeoGebra…</p>');
+  return loadDeploy().then(inject).catch(e => { ggbMsg(fallbackHtml()); log('GeoGebra no cargó.'); ggbLoading = null; throw e; });
+}
+function openDrawer() {
+  lastFocus = document.activeElement; drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false');
+  setTimeout(() => $('#ggbClose').focus(), 50);
+  return new Promise(r => setTimeout(r, 380)).then(ensureGgb).catch(() => null);
+}
+function closeDrawer() { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+$('#ggbClose').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer(); });
+document.addEventListener('click', e => { if (e.target.closest('[data-open-ggb]')) openDrawer(); });
+$('#ggbNew').addEventListener('click', () => { if (ggbApi) { ggbApi.newConstruction(); log('Lienzo nuevo.'); } else toast('GeoGebra todavía no está listo.'); });
+window.addEventListener('resize', () => { if (ggbApi && drawer.classList.contains('open')) { const h = $('#ggbHost'); try { ggbApi.setSize(h.clientWidth, h.clientHeight); } catch (e) {} } });
+
+function evalManual(a, key) {
+  const sc = MANUAL[key], cmds = sc.lines.filter(l => !l.startsWith('#')).map(soloCodigo), fails = [];
+  a.newConstruction();
+  try { a.setGridVisible(true); a.setAxesVisible(true, true); } catch (e) {}
+  cmds.forEach(l => { let ok = false; try { ok = a.evalCommand(toEN(l)); } catch (e) { ok = false; } if (!ok) fails.push(l); });
+  try { a.setCoordSystem(...sc.view); } catch (e) {}
+  return {total:cmds.length, fails};
+}
+async function runManual(key) {
+  const a = await openDrawer();
+  if (!a) { copyText(manualText(key), 'GeoGebra no cargó; comandos copiados'); return null; }
+  const r = evalManual(a, key);
+  log(r.fails.length ? `Se ejecutaron ${r.total - r.fails.length} de ${r.total} comandos. Revise: ${r.fails.join(' · ')}` : `✓ Se ejecutaron los ${r.total} comandos. Faltan los ajustes marcados con # en el listado. Arrastre los puntos libres.`);
+  return r;
+}
+/* Prueba silenciosa de los cinco listados del libro en el panel. */
+async function testManual() { const a = await openDrawer(); const out = {}; for (const k of Object.keys(MANUAL)) out[k] = evalManual(a, k); return out; }
+</script>
+</body>
+</html>
